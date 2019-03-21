@@ -20,16 +20,17 @@ public class CarController {
     }
 
     @PostMapping
-    public ModelAndView create(Car car) {
-        ModelAndView modelAndView = new ModelAndView("car");
+    public String create(Car car) {
         carService.create(car);
-        modelAndView.addObject("car", car);
-        return modelAndView;
+        return "redirect:/cars";
     }
 
     @GetMapping("/{id}")
-    public Car get(@PathVariable("id") int id) {
-        return carService.read(id);
+    public ModelAndView get(@PathVariable("id") int id) {
+        ModelAndView modelAndView = new ModelAndView("car");
+        Car car = carService.read(id);
+        modelAndView.addObject("car", car);
+        return modelAndView;
     }
 
     @GetMapping

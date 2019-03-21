@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car</title>
+</head>
+<body>
+
+<form method="post" th:object="${car}" th:action="@{/cars}">
+    <label for="make">Марка</label>
+    <input type="text" placeholder="make" id="make" th:field="*{make}"/>
+    <label for="model">Модель</label>
+    <input type="text" placeholder="model" id="model" th:field="*{model}"/>
+    <input type="submit">
+</form>
+
+</body>
+</html>

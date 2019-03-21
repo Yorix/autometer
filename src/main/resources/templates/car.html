@@ -1,12 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Car</title>
+<meta charset="UTF-8">
+<title>Car</title>
+
+<!--
+Add the English language translation file
+-->
+<script src="/js/lang/ru.js"></script>
+<!--
+Add the datepicker script and set the ARIA describedby property to point to
+the table that explains keyboard controls (by passing it in a JSON block
+within the script tag). Don't worry, you don't have to set the describedby
+parameter, I'm just showing you how it can be done.
+-->
+<script src="/js/datepicker.js">{
+"describedby"
+:
+"fd-dp-aria-describedby"
+}</script>
+
+<!--&lt;!&ndash; Styles for the demo &ndash;&gt;-->
+<!--<link href="/css/demo.css" rel="stylesheet" type="text/css"/>-->
+<!--<link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic' rel='stylesheet' type='text/css'>-->
+<!--<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>-->
+
+<!-- Add the datepicker stylesheet -->
+<link href="/css/datepicker.css" rel="stylesheet" type="text/css"/>
 </head>
+
+
 <body>
 
-car
+
+<p th:text="${car.getMake()}+' '+${car.getModel()}"></p>
+
+<form method="post" action="">
+<fieldset>
+<input type="text" class="w16em" id="datePicker" name="datePicker" value=""/>
+</fieldset>
+<script>
+datePickerController.createDatePicker({
+formElements: {"datePicker": "%d/%m/%Y"},
+showWeeks: true,
+statusFormat: "%l, %d%S %F %Y",
+staticPos: true,
+fillGrid: true,
+// Remove the associated input from the U.I.
+hideInput: true
+});
+</script>
+</form>
+
+
+<a href="./">back</a>
 
 </body>
 </html>
