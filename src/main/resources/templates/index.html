@@ -6,11 +6,23 @@
 </head>
 <body>
 
-<a href="/cars">Add new car</a>
+<a href="/cars/newCar">Add new car</a>
 
-<div th:list="${cars}">
 
-</div>
+<table>
+    <tr th:each="car : ${cars}" th:with="carId=@{'/cars/'+${car.getId()}}">
+        <td>
+            <a th:href="${carId}" th:text="${car.getId()}"></a>
+        </td>
+        <td>
+            <a th:href="${carId}" th:text="${car.getMake()}"></a>
+        </td>
+        <td>
+            <a th:href="${carId}" th:text="${car.getModel()}"></a>
+        </td>
+    </tr>
+</table>
+
 
 </body>
 </html>

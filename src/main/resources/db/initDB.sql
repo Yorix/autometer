@@ -15,6 +15,6 @@ CREATE TABLE note
 (
   id     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   value  VARCHAR(255),
-  car_id INT             NOT NULL UNIQUE,
+  car_id INT             NOT NULL,
   FOREIGN KEY (car_id) REFERENCES car (id)
 );
