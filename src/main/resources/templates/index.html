@@ -10,15 +10,15 @@
 
 
 <table>
-    <tr th:each="car : ${cars}" th:with="carId=@{'/cars/'+${car.getId()}}">
+    <tr th:each="car : ${cars}" th:with="carId=@{'/cars/'+${car.id}}">
         <td>
-            <a th:href="${carId}" th:text="${car.getId()}"></a>
+            <a th:href="${carId}" th:text="${car.id}"></a>
         </td>
         <td>
-            <a th:href="${carId}" th:text="${car.getMake()}"></a>
+            <a th:href="${carId}" th:text="${car.make}"></a>
         </td>
         <td>
-            <a th:href="${carId}" th:text="${car.getModel()}"></a>
+            <a th:href="${carId}" th:text="${car.model}"></a>
         </td>
     </tr>
 </table>
