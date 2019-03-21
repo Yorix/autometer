@@ -3,26 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Main page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-<body>
+<body class="bg-dark text-light">
 
-<a href="/cars/newCar">Add new car</a>
+<form method="get" th:action="@{/cars/newCar}">
+    <button type="submit" class="btn btn-outline-light">Add new car</button>
+</form>
 
-
-<table>
-    <tr th:each="car : ${cars}" th:with="carId=@{'/cars/'+${car.id}}">
-        <td>
-            <a th:href="${carId}" th:text="${car.id}"></a>
-        </td>
-        <td>
-            <a th:href="${carId}" th:text="${car.make}"></a>
-        </td>
-        <td>
-            <a th:href="${carId}" th:text="${car.model}"></a>
-        </td>
-    </tr>
-</table>
-
+<div class="card-columns">
+    <div class="container" th:each="car:${cars}" th:with="carId=@{'/cars/'+${car.id}}">
+        <a th:href="${carId}">
+            <div class="card text-white bg-info">
+                <div class="card-header" th:text="${car.make}+' '+${car.model}"></div>
+                <div class="card-body">
+                    <img th:src="'/images'+${carId}+'.jpg'"
+                         style="max-width: 100%;"
+                         alt="Car image">
+                </div>
+                <div class="card-footer">
+                    <p class="card-text">смотреть</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
 
 </body>
 </html>
