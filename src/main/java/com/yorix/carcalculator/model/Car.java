@@ -2,6 +2,8 @@ package com.yorix.carcalculator.model;
 
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,6 +13,7 @@ import java.util.Set;
 @Table(name = "car")
 @Data
 @ToString(exclude = "notes")
+@Component
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +30,7 @@ public class Car {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
     private Set<Note> notes;
+
+    @Column(name = "img_filename")
+    private String imgFilename;
 }

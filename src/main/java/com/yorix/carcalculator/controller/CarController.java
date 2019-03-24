@@ -3,6 +3,7 @@ package com.yorix.carcalculator.controller;
 import com.yorix.carcalculator.model.Car;
 import com.yorix.carcalculator.servise.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,6 +39,13 @@ public class CarController {
         ModelAndView modelAndView = new ModelAndView("index");
         List<Car> cars = carService.readAll();
         modelAndView.addObject("cars", cars);
+        return modelAndView;
+    }
+
+    @GetMapping("/newCar")
+    public ModelAndView newCarPage() {
+        ModelAndView modelAndView = new ModelAndView("newCar");
+        modelAndView.addObject("car", new Car());
         return modelAndView;
     }
 

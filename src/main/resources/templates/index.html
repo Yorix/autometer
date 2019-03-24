@@ -7,9 +7,13 @@
 </head>
 <body class="bg-dark text-light">
 
-<form method="get" th:action="@{/cars/newCar}">
-    <button type="submit" class="btn btn-outline-light">Add new car</button>
-</form>
+<br>
+<div class="container">
+    <form method="get" th:action="@{/cars/newCar}">
+        <button type="submit" class="btn btn-outline-light">Add new car</button>
+    </form>
+</div>
+<br>
 
 <div class="card-columns">
     <div class="container" th:each="car:${cars}" th:with="carId=@{'/cars/'+${car.id}}">
@@ -17,7 +21,8 @@
             <div class="card text-white bg-info">
                 <div class="card-header" th:text="${car.make}+' '+${car.model}"></div>
                 <div class="card-body">
-                    <img th:src="'/images'+${carId}+'.jpg'"
+                    <p th:text="${car.imgFilename}"></p>
+                    <img th:src="'/images'+${car.imgFilename}"
                          style="max-width: 100%;"
                          alt="Car image">
                 </div>

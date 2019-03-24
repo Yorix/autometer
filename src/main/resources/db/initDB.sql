@@ -3,13 +3,14 @@ DROP TABLE IF EXISTS note, car, visit;
 CREATE TABLE visit
 (
   id          INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  description VARCHAR(255)
+  description VARCHAR(100)
 );
 CREATE TABLE car
 (
-  id    INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  make  VARCHAR(255)    NOT NULL,
-  model VARCHAR(255)
+  id           INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  make         VARCHAR(100)    NOT NULL,
+  model        VARCHAR(100),
+  img_filename VARCHAR(255)
 );
 CREATE TABLE note
 (

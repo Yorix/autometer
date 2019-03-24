@@ -9,25 +9,18 @@
 
 <form method="post" th:object="${car}" th:action="@{/cars}">
     <div class="form-group row col-sm-4">
-        <label for="make">Марка</label>
-        <input type="text" class="form-control" id="make" placeholder="make" th:field="*{make}"/>
+        <input type="text" class="form-control" id="make" placeholder="Марка" th:field="*{make}"/>
     </div>
     <div class="form-group row col-sm-4">
-        <label for="model">Модель</label>
-        <input type="text" class="form-control" id="model" placeholder="model" th:field="*{model}"/>
+        <input type="text" class="form-control" id="model" placeholder="Модель" th:field="*{model}"/>
+    </div>
+    <div class="form-group row col-sm-4">
+        <input type="file" class="form-control-file" id="img" placeholder="Фото" th:field="*{imgFilename}"/>
     </div>
     <div class="form-group row col-sm-4">
         <button type="submit" class="btn btn-outline-light">Добавить</button>
     </div>
 </form>
-
-<!--<form method="post" th:object="${car}" th:action="@{/cars}">-->
-    <!--<label for="make">Марка</label>-->
-    <!--<input type="text" placeholder="make" id="make" th:field="*{make}"/>-->
-    <!--<label for="model">Модель</label>-->
-    <!--<input type="text" placeholder="model" id="model" th:field="*{model}"/>-->
-    <!--<input type="submit">-->
-<!--</form>-->
 
 </body>
 </html>
