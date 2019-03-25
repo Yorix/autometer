@@ -1,6 +1,6 @@
 package com.yorix.carcalculator;
 
-import com.yorix.carcalculator.servise.FileStorageService;
+import com.yorix.carcalculator.servise.ImageStorageService;
 import com.yorix.carcalculator.storage.StorageProperties;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,10 +17,10 @@ public class CarcalculatorApplication {
     }
 
     @Bean
-    CommandLineRunner init(FileStorageService fileStorageService) {
+    CommandLineRunner init(ImageStorageService imageStorageService) {
         return (args) -> {
-//            fileStorageService.deleteAll();
-            fileStorageService.init();
+//            imageStorageService.deleteAll();
+            imageStorageService.init();
         };
     }
 }

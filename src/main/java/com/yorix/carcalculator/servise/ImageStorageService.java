@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-public interface FileStorageService {
+public interface ImageStorageService {
     void init();
 
     void store(MultipartFile file);
