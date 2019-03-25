@@ -2,10 +2,11 @@ package com.yorix.carcalculator.controller;
 
 import com.yorix.carcalculator.model.Car;
 import com.yorix.carcalculator.servise.CarService;
+import com.yorix.carcalculator.servise.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -14,15 +15,19 @@ import java.util.List;
 @RequestMapping("/cars")
 public class CarController {
     private final CarService carService;
+    private final FileStorageService fileStorageService;
 
     @Autowired
-    public CarController(CarService carService) {
+    public CarController(CarService carService, FileStorageService fileStorageService) {
         this.carService = carService;
+        this.fileStorageService = fileStorageService;
     }
 
     @PostMapping
-    public String create(Car car) {
+    public String create(Car car, @RequestParam("file") MultipartFile file) {
+        car.setImgFilename(file.getOriginalFilename());
         carService.create(car);
+        fileStorageService.store(file);
         return "redirect:/cars";
     }
 

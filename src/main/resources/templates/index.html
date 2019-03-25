@@ -9,7 +9,7 @@
 
 <br>
 <div class="container">
-    <form method="get" th:action="@{/cars/newCar}">
+    <form method="get" action="/cars/newCar">
         <button type="submit" class="btn btn-outline-light">Add new car</button>
     </form>
 </div>
@@ -22,7 +22,7 @@
                 <div class="card-header" th:text="${car.make}+' '+${car.model}"></div>
                 <div class="card-body">
                     <p th:text="${car.imgFilename}"></p>
-                    <img th:src="'/images'+${car.imgFilename}"
+                    <img th:src="'/files/'+${car.imgFilename}"
                          style="max-width: 100%;"
                          alt="Car image">
                 </div>
