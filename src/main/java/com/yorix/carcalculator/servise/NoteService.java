@@ -5,6 +5,7 @@ import com.yorix.carcalculator.storage.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -21,26 +22,26 @@ public class NoteService {
         return note;
     }
 
-    public Note read(int id) {
-        return noteRepository.getOne(id);
+    public Note read(LocalDate date) {
+        return noteRepository.getByDate(date);
     }
 
     public List<Note> readAll() {
         return noteRepository.findAll();
     }
 
-    public Note update(int id, Note car) {
-        if (car.getId() == id)
-            noteRepository.save(car);
-        else car = null;
-        return car;
+    public Note update(LocalDate date, Note note) {
+        if (note.getDate() == date)
+            noteRepository.save(note);
+        else note = null;
+        return note;
     }
 
     public void delete(Note car) {
         noteRepository.delete(car);
     }
 
-    public void deleteById(int id) {
-        noteRepository.deleteById(id);
+    public void deleteByDate(LocalDate date) {
+        noteRepository.deleteByDate(date);
     }
 }

@@ -3,15 +3,15 @@ package com.yorix.carcalculator.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "entity")
+@Table(name = "note")
 @Data
 public class Note {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
 
     @Column(name = "value")
     private String value;
