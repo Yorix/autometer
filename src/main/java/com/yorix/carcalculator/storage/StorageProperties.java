@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("storage")
 public class StorageProperties {
-    private String location = "d:/Y/Study/Projects/carcalculatorImages/";
+    private String location = "c:/ProgramData/CarCalculator/";
 
     public String getLocation() {
         return location;

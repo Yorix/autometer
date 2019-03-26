@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.websocket.server.PathParam;
+
 @Controller
 @RequestMapping("/notes")
 public class NoteController {
@@ -18,8 +20,9 @@ public class NoteController {
     }
 
     @GetMapping
-    public ModelAndView getAll() {
+    public ModelAndView get(@PathParam("date") String date) {
         ModelAndView modelAndView = new ModelAndView("note");
+        modelAndView.addObject("date", date);
         return modelAndView;
     }
 }

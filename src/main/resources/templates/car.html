@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Car</title>
-    <script src="/js/lang/ru.js"></script>
-    <script src="/js/datepicker.js"></script>
     <link href="/css/datepicker.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
@@ -13,23 +11,35 @@
 
 <p th:text="${car.getMake()}+' '+${car.getModel()}"></p>
 
-<form action="/notes" method="get">
+<form id="dateform">
 
-    <input type="submit" id="date" name="date" value=""/>
+    <input id="datepicker" name="date"/>
 
-    <script>
-        datePickerController.createDatePicker({
-            formElements: {"date": "%d/%m/%Y"},
-            showWeeks: false,
-            statusFormat: "%l, %j %F %Y",
-            staticPos: true,
-            fillGrid: false,
-            hideInput: false
-        });
-    </script>
 </form>
 
 <a href="./">back</a>
+
+
+<script src="/js/lang/ru.js"></script>
+<script src="/js/datepicker.js"></script>
+<script>
+    datePickerController.createDatePicker({
+        formElements: {"datepicker": "%d.%m.%Y"},
+        statusFormat: "%l, %j %F %Y",
+        staticPos: true,
+        hideInput: true,
+        callbackFunctions: {
+            "datereturned": [formsubmit]
+        }
+    });
+
+    function formsubmit() {
+        var form = document.getElementById('dateform');
+        form.action = "/notes";
+        form.submit();
+    }
+
+</script>
 
 </body>
 </html>
