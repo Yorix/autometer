@@ -9,7 +9,7 @@ CREATE TABLE car
 (
   id           INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   make         VARCHAR(100)    NOT NULL,
-  model        VARCHAR(100),
+  model        VARCHAR(100)    NOT NULL,
   img_filename VARCHAR(255)
 );
 CREATE TABLE note

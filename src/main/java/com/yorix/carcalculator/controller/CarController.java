@@ -1,5 +1,6 @@
 package com.yorix.carcalculator.controller;
 
+import com.yorix.carcalculator.config.CardTextProperties;
 import com.yorix.carcalculator.model.Car;
 import com.yorix.carcalculator.servise.CarService;
 import com.yorix.carcalculator.servise.ImageStorageService;
@@ -16,11 +17,15 @@ import java.util.List;
 public class CarController {
     private final CarService carService;
     private final ImageStorageService imageStorageService;
+    private final CardTextProperties properties;
 
     @Autowired
-    public CarController(CarService carService, ImageStorageService imageStorageService) {
+    public CarController(CarService carService,
+                         ImageStorageService imageStorageService,
+                         CardTextProperties properties) {
         this.carService = carService;
         this.imageStorageService = imageStorageService;
+        this.properties = properties;
     }
 
     @PostMapping
@@ -44,6 +49,7 @@ public class CarController {
         ModelAndView modelAndView = new ModelAndView("index");
         List<Car> cars = carService.readAll();
         modelAndView.addObject("cars", cars);
+        modelAndView.addObject("textProperties", properties);
         return modelAndView;
     }
 

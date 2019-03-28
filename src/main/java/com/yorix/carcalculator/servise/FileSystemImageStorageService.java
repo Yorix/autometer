@@ -2,7 +2,7 @@ package com.yorix.carcalculator.servise;
 
 import com.yorix.carcalculator.storage.StorageException;
 import com.yorix.carcalculator.storage.StorageFileNotFoundException;
-import com.yorix.carcalculator.storage.StorageProperties;
+import com.yorix.carcalculator.config.StorageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

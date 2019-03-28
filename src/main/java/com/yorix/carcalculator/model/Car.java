@@ -20,11 +20,10 @@ public class Car {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "make")
-    @NotNull
+    @Column(name = "make", nullable = false)
     private String make;
 
-    @Column(name = "model")
+    @Column(name = "model", nullable = false)
     @NotNull
     private String model;
 
