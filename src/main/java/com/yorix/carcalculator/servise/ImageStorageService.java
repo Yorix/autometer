@@ -17,5 +17,7 @@ public interface ImageStorageService {
 
     Resource loadAsResource(String filename);
 
+    void delete(Path path);
+
     void deleteAll();
 }

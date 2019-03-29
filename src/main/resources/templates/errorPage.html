@@ -2,16 +2,23 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Note</title>
+    <title>Ошибка</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body class="bg-secondary text-light">
 
-<p th:text="${carId}"></p>
-<p th:text="${date}"></p>
+<br/>
+<div class="container">
+    <div class="card bg-danger text-white">
 
-<div class="col-2">
-    <button type="button" id="back_btn" class="btn btn-outline-light"><< Назад</button>
+        <div th:text="${msg}"></div>
+
+    </div>
+
+    <br/>
+    <div class="container">
+        <button type="button" id="back_btn" class="btn btn-outline-light"><< Назад</button>
+    </div>
 </div>
 
 <script src="/js/app/app.js"></script>

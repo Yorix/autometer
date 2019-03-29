@@ -1,8 +1,8 @@
 package com.yorix.carcalculator.servise;
 
-import com.yorix.carcalculator.storage.StorageException;
-import com.yorix.carcalculator.storage.StorageFileNotFoundException;
 import com.yorix.carcalculator.config.StorageProperties;
+import com.yorix.carcalculator.errors.StorageException;
+import com.yorix.carcalculator.errors.StorageFileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -11,13 +11,11 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
 @Service
@@ -33,6 +31,11 @@ public class FileSystemImageStorageService implements ImageStorageService {
     @Override
     public void store(MultipartFile file) {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        Path fullPath = this.rootLocation.resolve(filename);
+
+        if (file.isEmpty() && (filename == null || filename.length() == 0)) {
+            return;
+        }
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file " + filename);
@@ -43,9 +46,9 @@ public class FileSystemImageStorageService implements ImageStorageService {
                         "Cannot store file with relative path outside current directory "
                                 + filename);
             }
-            try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, this.rootLocation.resolve(filename),
-                        StandardCopyOption.REPLACE_EXISTING);
+            try (InputStream is = new BufferedInputStream(file.getInputStream());
+                 OutputStream os = new BufferedOutputStream(Files.newOutputStream(fullPath))) {
+                os.write(is.readAllBytes());
             }
         } catch (IOException e) {
             throw new StorageException("Failed to store file " + filename, e);
@@ -61,7 +64,6 @@ public class FileSystemImageStorageService implements ImageStorageService {
         } catch (IOException e) {
             throw new StorageException("Failed to read stored files", e);
         }
-
     }
 
     @Override
@@ -83,6 +85,15 @@ public class FileSystemImageStorageService implements ImageStorageService {
             }
         } catch (MalformedURLException e) {
             throw new StorageFileNotFoundException("Could not read file: " + filename, e);
+        }
+    }
+
+    @Override
+    public void delete(Path path) {
+        try {
+            Files.delete(path);
+        } catch (IOException e) {
+            throw new StorageException("Could not delete file: " + path.getFileName(), e);
         }
     }
 

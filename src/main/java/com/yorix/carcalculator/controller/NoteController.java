@@ -24,7 +24,7 @@ public class NoteController {
     @PostMapping("/{id}")
     public String create(@PathVariable String id, Note note) {
         noteService.create(note);
-        return "redirect:/cars/" + id + "/notes";
+        return "redirect:/cars" + id + "/notes";
     }
 
     @GetMapping("/{id}/notes")

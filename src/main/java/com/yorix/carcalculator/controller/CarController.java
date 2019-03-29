@@ -33,7 +33,7 @@ public class CarController {
         car.setImgFilename(file.getOriginalFilename());
         carService.create(car);
         imageStorageService.store(file);
-        return "redirect:/cars";
+        return "redirect:/cars" + car.getId();
     }
 
     @GetMapping("/{id}")
@@ -73,5 +73,12 @@ public class CarController {
     @DeleteMapping
     public void delete(Car car) {
         carService.delete(car);
+    }
+
+    @ExceptionHandler
+    public ModelAndView errorHandler(Exception e) {
+        ModelAndView modelAndView = new ModelAndView("errorPage");
+        modelAndView.addObject("msg", e.getMessage());
+        return modelAndView;
     }
 }

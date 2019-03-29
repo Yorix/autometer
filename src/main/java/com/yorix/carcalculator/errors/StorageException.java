@@ -1,4 +1,4 @@
-package com.yorix.carcalculator.storage;
+package com.yorix.carcalculator.errors;
 
 public class StorageException extends RuntimeException {
     public StorageException(String message) {

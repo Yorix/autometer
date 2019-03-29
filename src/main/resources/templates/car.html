@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Car</title>
-    <link href="/css/datepicker.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/css/datepicker.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-<body class="bg-dark text-light">
+<body class="bg-secondary text-light">
 
 <br/>
 <div class="container">
-    <div class="card text-white bg-secondary">
+    <div class="card text-white bg-dark">
         <div class="card-header">
             <div th:text="${car.getMake()}+' '+${car.getModel()}"></div>
         </div>
@@ -28,39 +28,15 @@
             </div>
         </div>
         <div class="card-footer">
-
+            <button type="button" id="back_btn" class="btn btn-outline-light"><< К выбору авто</button>
         </div>
     </div>
 </div>
 
-<br/>
-<div class="container">
-    <form method="get" action="/cars">
-        <button type="submit" class="btn btn-outline-light"><< К выбору авто</button>
-    </form>
-</div>
-<br/>
+<script src="/js/datepicker/lang/ru.js"></script>
+<script src="/js/datepicker/datepicker.js"></script>
+<script src="/js/datepicker/datepickerController.js"></script>
 
-
-<script src="/js/lang/ru.js"></script>
-<script src="/js/datepicker.js"></script>
-<script>
-    datePickerController.createDatePicker({
-        formElements: {"datepicker": "%d.%m.%Y"},
-        statusFormat: "%l, %j %F %Y",
-        staticPos: true,
-        hideInput: true,
-        callbackFunctions: {
-            "datereturned": [formsubmit]
-        }
-    });
-
-    function formsubmit() {
-        var form = document.getElementById('dateform');
-        form.submit();
-    }
-
-</script>
-
+<script src="/js/app/app.js"></script>
 </body>
 </html>

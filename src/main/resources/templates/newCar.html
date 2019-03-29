@@ -5,51 +5,53 @@
     <title>Car</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-<body class="bg-dark text-light">
+<body class="bg-secondary text-light">
 
 <br/>
 <div class="container">
-    <div class="card text-white bg-secondary">
+    <div class="card bg-dark text-white">
         <form action="/cars" method="post" enctype="multipart/form-data" th:object="${car}">
             <div class="card-header" id="header">
             </div>
             <div class="card-body">
                 <div class="form-group col-6">
-                    <input type="text" class="form-control" id="make" placeholder="Марка" th:field="*{make}"/>
+                    <input type="text" class="form-control" id="inputMake" placeholder="Марка" th:field="*{make}"/>
                 </div>
                 <div class="form-group col-6">
-                    <input type="text" class="form-control" id="model" placeholder="Модель" th:field="*{model}"/>
+                    <input type="text" class="form-control" id="inputModel" placeholder="Модель" th:field="*{model}"/>
                 </div>
                 <div class="form-group">
                     <input type="file" class="form-control-file" id="img" placeholder="Фото" name="file"/>
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-outline-success">Добавить</button>
+                <div class="row">
+                    <div class="col-10">
+                        <button type="submit" class="btn btn-outline-success">Добавить</button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" id="back_btn" class="btn btn-outline-danger"><< Отмена</button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<br/>
-<div class="container">
-    <form method="get" action="/cars">
-        <button type="submit" class="btn btn-outline-danger"><< Отмена</button>
-    </form>
-</div>
 
 <script>
-    var make = document.getElementById('make');
-    var model = document.getElementById('model');
+    var inputMake = document.getElementById('inputMake');
+    var inputModel = document.getElementById('inputModel');
     var header = document.getElementById('header');
 
-    make.addEventListener('keyup', input);
-    model.addEventListener('keyup', input);
+    inputMake.addEventListener('keyup', input);
+    inputModel.addEventListener('keyup', input);
 
     function input() {
-        header.textContent = make.value + ' ' + model.value;
+        header.textContent = inputMake.value + ' ' + inputModel.value;
     }
 </script>
 
+<script src="/js/app/app.js"></script>
 </body>
 </html>
