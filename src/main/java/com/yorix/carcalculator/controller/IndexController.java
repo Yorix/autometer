@@ -24,6 +24,6 @@ public class IndexController {
         Visit visit = new Visit();
         visit.setDescription(String.format("Visited at %s", LocalDateTime.now()));
         visitRepository.save(visit);
-        return "redirect:/cars";
+        return "redirect:/cars/";
     }
 }

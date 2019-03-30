@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/cars")
 public class CarController {
@@ -33,22 +31,20 @@ public class CarController {
         car.setImgFilename(file.getOriginalFilename());
         carService.create(car);
         imageStorageService.store(file);
-        return "redirect:/cars" + car.getId();
+        return String.format("redirect:/cars/%s/", car.getId());
     }
 
     @GetMapping("/{id}")
     public ModelAndView get(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("car");
-        Car car = carService.read(id);
-        modelAndView.addObject("car", car);
+        modelAndView.addObject("car", carService.read(id));
         return modelAndView;
     }
 
     @GetMapping
     public ModelAndView getAll() {
         ModelAndView modelAndView = new ModelAndView("index");
-        List<Car> cars = carService.readAll();
-        modelAndView.addObject("cars", cars);
+        modelAndView.addObject("cars", carService.readAll());
         modelAndView.addObject("textProperties", properties);
         return modelAndView;
     }

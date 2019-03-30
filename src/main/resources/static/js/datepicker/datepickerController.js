@@ -4,11 +4,11 @@ datePickerController.createDatePicker({
     staticPos: true,
     hideInput: true,
     callbackFunctions: {
-        "datereturned": [formsubmit]
+        "datereturned": [following]
     }
 });
 
-function formsubmit() {
-    var form = document.getElementById('dateform');
-    form.submit();
+function following() {
+    var datepickerInput = document.getElementById('datepicker');
+    window.location.href = datepickerInput.value + '/';
 }
