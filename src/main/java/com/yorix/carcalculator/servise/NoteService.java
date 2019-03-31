@@ -1,5 +1,6 @@
 package com.yorix.carcalculator.servise;
 
+import com.yorix.carcalculator.model.Car;
 import com.yorix.carcalculator.model.Note;
 import com.yorix.carcalculator.storage.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,26 +23,31 @@ public class NoteService {
         return note;
     }
 
-    public Note read(LocalDate date) {
-        return noteRepository.getByDate(date);
+    public Note read(Car car, int id) {
+        return noteRepository.getByCarAndId(car, id);
+    }
+
+    public List<Note> readAllByCarAndDate(Car car, LocalDate date) {
+        return noteRepository.getAllByCarAndDate(car, date);
+    }
+
+    public List<Note> readAllByCar(Car car) {
+        return noteRepository.getAllByCar(car);
     }
 
     public List<Note> readAll() {
         return noteRepository.findAll();
     }
 
-    public Note update(LocalDate date, Note note) {
-        if (note.getDate() == date)
-            noteRepository.save(note);
-        else note = null;
-        return note;
+//    public Note update(LocalDate date, Note note) {
+//        if (note.getDate() == date)
+//            noteRepository.save(note);
+//        else note = null;
+//        return note;
+//    }
+
+    public void delete(Note note) {
+        noteRepository.delete(note);
     }
 
-    public void delete(Note car) {
-        noteRepository.delete(car);
-    }
-
-    public void deleteByDate(LocalDate date) {
-        noteRepository.deleteByDate(date);
-    }
 }

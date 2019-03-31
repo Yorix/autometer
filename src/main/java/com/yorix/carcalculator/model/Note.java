@@ -10,13 +10,16 @@ import java.time.LocalDate;
 @Data
 public class Note {
     @Id
-    @Column(name = "date", nullable = false)
-    private LocalDate date;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(name = "value")
     private String value;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "car_id", unique = true, nullable = false)
+    @JoinColumn(name = "car_id", nullable = false)
     private Car car;
+
+    @Column(name = "date")
+    private LocalDate date = LocalDate.now();
 }

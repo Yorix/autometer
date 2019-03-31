@@ -2,32 +2,30 @@ package com.yorix.carcalculator.model;
 
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "car")
 @Data
 @ToString(exclude = "notes")
-@Component
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "make", nullable = false)
+    @Column(name = "make")
+    @NotNull
     private String make;
 
-    @Column(name = "model", nullable = false)
+    @Column(name = "model")
     @NotNull
     private String model;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
-    private Set<Note> notes;
+    private List<Note> notes;
 
     @Column(name = "img_filename")
     private String imgFilename;

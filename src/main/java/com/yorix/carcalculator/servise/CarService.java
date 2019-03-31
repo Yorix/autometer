@@ -29,16 +29,12 @@ public class CarService {
         return carRepository.findAll();
     }
 
-    public Car update(int id, Car car) {
-        if (car.getId() == id)
-            carRepository.save(car);
-        else car = null;
-        return car;
-    }
-
-    public void delete(Car car) {
-        carRepository.delete(car);
-    }
+//    public Car update(int id, Car car) {
+//        if (car.getId() == id)
+//            carRepository.save(car);
+//        else car = null;
+//        return car;
+//    }
 
     public void deleteById(int id) {
         carRepository.deleteById(id);

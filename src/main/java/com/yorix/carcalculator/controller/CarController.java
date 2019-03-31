@@ -2,6 +2,7 @@ package com.yorix.carcalculator.controller;
 
 import com.yorix.carcalculator.config.CardTextProperties;
 import com.yorix.carcalculator.model.Car;
+import com.yorix.carcalculator.model.Note;
 import com.yorix.carcalculator.servise.CarService;
 import com.yorix.carcalculator.servise.ImageStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,10 @@ public class CarController {
 
     @GetMapping("/{id}")
     public ModelAndView get(@PathVariable("id") int id) {
+        Car car = carService.read(id);
         ModelAndView modelAndView = new ModelAndView("car");
-        modelAndView.addObject("car", carService.read(id));
+        modelAndView.addObject("car", car);
+        modelAndView.addObject("note", new Note());
         return modelAndView;
     }
 
@@ -56,19 +59,14 @@ public class CarController {
         return modelAndView;
     }
 
-    @PutMapping("/{id}")
-    public Car update(@PathVariable("id") int id, Car car) {
-        return carService.update(id, car);
-    }
+//    @PutMapping("/{id}")
+//    public Car update(@PathVariable("id") int id, Car car) {
+//        return carService.update(id, car);
+//    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         carService.deleteById(id);
-    }
-
-    @DeleteMapping
-    public void delete(Car car) {
-        carService.delete(car);
     }
 
     @ExceptionHandler

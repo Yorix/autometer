@@ -1,0 +1,95 @@
+POST http://localhost/cars/2/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "id": 0,
+  "value": "test",
+  "car": {
+    "id": 1,
+    "make": "mers",
+    "model": "600",
+    "imageFilename": "1.jpg"
+  },
+  "date": "22.11.1982"
+}
+
+###
+
+POST http://localhost/cars/2/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "id": 0,
+  "value": "test",
+  "car": {
+    "id": 1,
+    "make": "mers",
+    "model": "600",
+    "imageFilename": "1.jpg"
+  },
+  "date": "22.11.1982"
+}
+
+###
+
+POST http://localhost/cars/3/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "id": 0,
+  "value": "test",
+  "car": {
+    "id": 1,
+    "make": "mers",
+    "model": "600",
+    "imageFilename": "1.jpg"
+  },
+  "date": "22.11.1982"
+}
+
+###
+
+POST http://localhost/cars/3/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "id": 0,
+  "value": "test",
+  "car": {
+    "id": 1,
+    "make": "mers",
+    "model": "600",
+    "imageFilename": "1.jpg"
+  },
+  "date": "22.11.1982"
+}
+
+###
+
+POST http://localhost/cars/3/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "id": 0,
+  "value": "test",
+  "car": {
+    "id": 1,
+    "make": "mers",
+    "model": "600",
+    "imageFilename": "1.jpg"
+  },
+  "date": "22.11.1982"
+}
+
+###
+
