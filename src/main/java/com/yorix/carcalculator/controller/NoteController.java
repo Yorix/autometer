@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/cars")
@@ -37,10 +38,10 @@ public class NoteController {
     }
 
     @GetMapping("/{id}/{date}")
-    public ModelAndView get(@PathVariable("id") int id, @PathVariable("date") LocalDate date) {
+    public ModelAndView get(@PathVariable("id") int id, @PathVariable("date") LocalDateTime date) {
         Car car = carService.read(id);
-        ModelAndView modelAndView = new ModelAndView("note");
-        modelAndView.addObject("note", noteService.read(car, id));
+        ModelAndView modelAndView = new ModelAndView("notes");
+        modelAndView.addObject("notes", noteService.readAllByCarAndDate(car, date));
         return modelAndView;
     }
 }

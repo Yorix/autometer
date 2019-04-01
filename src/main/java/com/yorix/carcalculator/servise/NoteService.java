@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,7 +28,7 @@ public class NoteService {
         return noteRepository.getByCarAndId(car, id);
     }
 
-    public List<Note> readAllByCarAndDate(Car car, LocalDate date) {
+    public List<Note> readAllByCarAndDate(Car car, LocalDateTime date) {
         return noteRepository.getAllByCarAndDate(car, date);
     }
 

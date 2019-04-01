@@ -35,7 +35,7 @@
                 <form th:action="'/cars/'+${car.id}" method="post" th:object="${note}">
                     <div class="input-group">
                         <input type="hidden" th:field="*{id}">
-                        <input type="text" autofocus class="form-control" placeholder="Запись" th:field="*{value}"/>
+                        <input type="text" autofocus class="form-control" placeholder="Запись" th:field="*{description}"/>
                         <div class="input-group-append">
                             <button id="test" type="submit" class="btn btn-outline-success"> >></button>
                         </div>
@@ -43,7 +43,7 @@
                 </form>
             </div>
             <div class="col-4" th:each="note:${car.notes}">
-                <p th:text="${note.value}"></p>
+                <p th:text="${note.description}"></p>
                 <p th:text="${note.date}"></p>
             </div>
             <div class="col-4">

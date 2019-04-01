@@ -2159,7 +2159,7 @@ var datePickerController = (function datePickerController() {
     datePicker.prototype.setRangeLow = function(range) {
         if(String(range).search(rangeRegExp) == -1) {
             if(debug) {
-                throw "Invalid value passed to setRangeLow method: " + range;
+                throw "Invalid description passed to setRangeLow method: " + range;
             };
             return false;
         };
@@ -2171,7 +2171,7 @@ var datePickerController = (function datePickerController() {
     datePicker.prototype.setRangeHigh = function(range) {
         if(String(range).search(rangeRegExp) == -1) {
             if(debug) {
-                throw "Invalid value passed to setRangeHigh method: " + range;
+                throw "Invalid description passed to setRangeHigh method: " + range;
             };
             return false;
         };
@@ -3508,7 +3508,7 @@ var datePickerController = (function datePickerController() {
         cleanUp:                function() { cleanUp(); },
         // Pretty print a date object according to the format passed in
         printFormattedDate:     function(dt, fmt, useImportedLocale) { return printFormattedDate(dt, fmt, useImportedLocale); },
-        // Update the internal date using the form element value
+        // Update the internal date using the form element description
         setDateFromInput:       function(inpID) { if(!inpID || !(inpID in datePickers)) return false; datePickers[inpID].setDateFromInput(); },
         // Set low and high date ranges
         setRangeLow:            function(inpID, yyyymmdd) { if(!inpID || !(inpID in datePickers)) { return false; }; datePickers[inpID].setRangeLow(dateToYYYYMMDD(yyyymmdd)); },

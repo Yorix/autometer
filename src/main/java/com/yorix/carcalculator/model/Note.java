@@ -3,7 +3,7 @@ package com.yorix.carcalculator.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.*;
 
 @Entity
 @Table(name = "note")
@@ -13,13 +13,16 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "value")
-    private String value;
+    private double value;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
     @Column(name = "date")
-    private LocalDate date = LocalDate.now();
+    private LocalDateTime date = ZonedDateTime.now(ZoneOffset.ofHours(3)).toLocalDateTime();
 }

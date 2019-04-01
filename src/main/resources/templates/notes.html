@@ -7,22 +7,17 @@
 </head>
 <body class="bg-secondary text-light">
 
-
 <div class="container">
     <div class="row">
-        <div class="col-7">
-
+        <div class="col-7" th:each="note:${notes}">
+            <p th:text="${note.description}"></p>
+            <p th:text="${note.value}"></p>
         </div>
         <div class="col-5">
             <!-- Content -->
         </div>
     </div>
 </div>
-
-
-
-
-
 
 <div class="col-2">
     <button type="button" id="back_btn" class="btn btn-outline-light"><< Назад</button>

@@ -1,5 +1,7 @@
+DROP SCHEMA IF EXISTS carcalculator;
+CREATE SCHEMA carcalculator;
 USE carcalculator;
-DROP TABLE IF EXISTS note, car, visit;
+
 CREATE TABLE visit
 (
   id          INT PRIMARY KEY AUTO_INCREMENT,
@@ -14,9 +16,10 @@ CREATE TABLE car
 );
 CREATE TABLE note
 (
-  id     INT PRIMARY KEY AUTO_INCREMENT,
-  value  VARCHAR(255),
-  car_id INT  NOT NULL,
-  date   DATE NOT NULL,
+  id          INT PRIMARY KEY AUTO_INCREMENT,
+  description VARCHAR(255),
+  value       DECIMAL(11, 2),
+  car_id      INT      NOT NULL,
+  date        DATETIME NOT NULL,
   FOREIGN KEY (car_id) REFERENCES car (id)
 );
