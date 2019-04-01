@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 @Controller
 @RequestMapping("/cars")
 public class NoteController {
@@ -38,10 +35,18 @@ public class NoteController {
     }
 
     @GetMapping("/{id}/{date}")
-    public ModelAndView get(@PathVariable("id") int id, @PathVariable("date") LocalDateTime date) {
+    public ModelAndView get(@PathVariable("id") int id, @PathVariable("date") String date) {
         Car car = carService.read(id);
         ModelAndView modelAndView = new ModelAndView("notes");
         modelAndView.addObject("notes", noteService.readAllByCarAndDate(car, date));
+        return modelAndView;
+    }
+
+    @GetMapping("/{id}/allNotes")
+    public ModelAndView getAll(@PathVariable("id") int id) {
+        Car car = carService.read(id);
+        ModelAndView modelAndView = new ModelAndView("notes");
+        modelAndView.addObject("notes", noteService.readAllByCar(car));
         return modelAndView;
     }
 }

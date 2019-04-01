@@ -8,20 +8,17 @@
 <body class="bg-secondary text-light">
 
 <div class="container">
-    <div class="row">
-        <div class="col-7" th:each="note:${notes}">
-            <p th:text="${note.description}"></p>
-            <p th:text="${note.value}"></p>
-        </div>
-        <div class="col-5">
-            <!-- Content -->
+    <div class="card-body">
+        <div class="card bg-secondary" th:each="note:${notes}">
+            <div class="container row" th:object="${note}">
+                <div class="col-2" th:text="*{date}"></div>
+                <div class="col-7" th:text="*{description}"></div>
+                <div class="col-3" th:text="*{value}"></div>
+            </div>
         </div>
     </div>
 </div>
-
-<div class="col-2">
-    <button type="button" id="back_btn" class="btn btn-outline-light"><< Назад</button>
-</div>
+<button type="button" id="back_btn" class="btn btn-outline-light"><< Назад</button>
 
 <script src="/js/app/app.js"></script>
 </body>

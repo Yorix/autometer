@@ -1,6 +1,6 @@
 var backBtn = document.getElementById('back_btn');
 var newCarBtn = document.getElementById('new_car_btn');
-
+var allNotesBtn = document.getElementById('all_notes_btn');
 
 if (backBtn !== null) {
     /* Go backBtn by backspace pressing */
@@ -22,4 +22,9 @@ if (backBtn !== null) {
 if (newCarBtn !== null)
     newCarBtn.addEventListener('click', function () {
         window.location.href = '/cars/newCar/';
+    });
+
+if (allNotesBtn !== null)
+    allNotesBtn.addEventListener('click', function () {
+        window.location.href = 'allNotes/';
     });

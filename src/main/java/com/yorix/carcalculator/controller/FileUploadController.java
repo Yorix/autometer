@@ -25,7 +25,7 @@ public class FileUploadController {
         Resource file = imageStorageService.loadAsResource(filename);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + filename + "\"")
+                        "attachment; filename=\"" + filename + "\"")
                 .body(file);
     }
 

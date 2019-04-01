@@ -3,7 +3,8 @@ package com.yorix.carcalculator.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "note")
@@ -24,5 +25,5 @@ public class Note {
     private Car car;
 
     @Column(name = "date")
-    private LocalDateTime date = ZonedDateTime.now(ZoneOffset.ofHours(3)).toLocalDateTime();
+    private String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 }

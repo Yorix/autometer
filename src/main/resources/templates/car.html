@@ -23,35 +23,62 @@
 
         </div>
         <div class="card-footer">
-            <button type="button" id="back_btn" class="btn btn-outline-light"><< К выбору авто</button>
+            <div class="row">
+                <div class="col-10">
+                    <button type="button" id="back_btn" class="btn btn-outline-light"><< К выбору авто</button>
+                </div>
+                <div class="col-2">
+                    <button type="button" id="all_notes_btn" class="btn btn-outline-light">Все записи >></button>
+                </div>
+            </div>
         </div>
     </div>
 
     <br>
 
     <div class="card text-white bg-dark">
-        <div class="card-body row">
-            <div class="col-4">
-                <form th:action="'/cars/'+${car.id}" method="post" th:object="${note}">
-                    <div class="input-group">
+        <div class="card-header">
+            <form th:action="'/cars/'+${car.id}" method="post" th:object="${note}">
+                <div class="row">
+                    <div class="col-8">
                         <input type="hidden" th:field="*{id}">
-                        <input type="text" autofocus class="form-control" placeholder="Запись" th:field="*{description}"/>
-                        <div class="input-group-append">
-                            <button id="test" type="submit" class="btn btn-outline-success"> >></button>
+                        <input type="text" class="form-control" placeholder="Запись" th:field="*{description}"/>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-group">
+                            <input type="number" oninput="up(this)" step="0.01" min="0" max="999999999" class="form-control"
+                                   placeholder="0.00" th:field="*{value}"/>
+                            <div class="input-group-append">
+                                <button id="test" type="submit" class="btn btn-outline-success"> >></button>
+                            </div>
                         </div>
                     </div>
-                </form>
+                </div>
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="card bg-secondary" th:each="note:${car.notes}">
+                <div class="container row" th:object="${note}">
+                    <div class="col-4" th:text="*{date}"></div>
+                    <div class="col-4" th:text="*{description}"></div>
+                    <div class="col-4" th:text="*{value}"></div>
+                </div>
             </div>
-            <div class="col-4" th:each="note:${car.notes}">
-                <p th:text="${note.description}"></p>
-                <p th:text="${note.date}"></p>
-            </div>
-            <div class="col-4">
+        </div>
+        <div class="card-footer">
 
-            </div>
         </div>
     </div>
 </div>
+
+
+<script>
+    function up(e) {
+        if (e.value.indexOf(".") != '-1') {
+            e.value = e.value.substring(0, e.value.indexOf(".") + 3);
+        }
+    }
+</script>
 
 <script src="/js/datepicker/lang/ru.js"></script>
 <script src="/js/datepicker/datepicker.js"></script>
