@@ -24,8 +24,6 @@ public class NoteController {
         this.carService = carService;
     }
 
-    //TODO !!!!!!!!!!!
-
     @PostMapping("/{id}")
     public String create(@PathVariable int id, Note note) {
         Car car = carService.read(id);
@@ -35,18 +33,22 @@ public class NoteController {
     }
 
     @GetMapping("/{id}/{date}")
-    public ModelAndView get(@PathVariable("id") int id, @PathVariable("date") String date) {
+    public ModelAndView getByCarAndDate(@PathVariable("id") int id, @PathVariable("date") String date) {
         Car car = carService.read(id);
         ModelAndView modelAndView = new ModelAndView("notes");
+        modelAndView.addObject("car", car);
         modelAndView.addObject("notes", noteService.readAllByCarAndDate(car, date));
+        modelAndView.addObject("sum", noteService.getSumByCarAndDate(car, date));
         return modelAndView;
     }
 
     @GetMapping("/{id}/allNotes")
-    public ModelAndView getAll(@PathVariable("id") int id) {
+    public ModelAndView getByCar(@PathVariable("id") int id) {
         Car car = carService.read(id);
         ModelAndView modelAndView = new ModelAndView("notes");
+        modelAndView.addObject("car", car);
         modelAndView.addObject("notes", noteService.readAllByCar(car));
+        modelAndView.addObject("sum", noteService.getSumByCar(car));
         return modelAndView;
     }
 }

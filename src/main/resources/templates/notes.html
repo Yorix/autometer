@@ -7,18 +7,43 @@
 </head>
 <body class="bg-secondary text-light">
 
+<br/>
 <div class="container">
-    <div class="card-body">
-        <div class="card bg-secondary" th:each="note:${notes}">
-            <div class="container row" th:object="${note}">
-                <div class="col-2" th:text="*{date}"></div>
-                <div class="col-7" th:text="*{description}"></div>
-                <div class="col-3" th:text="*{value}"></div>
+    <div class="card bg-dark">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-6">
+                    <h5 th:text="${car.make+' '+car.model}"></h5>
+                </div>
+                <div class="col-3">
+                    <div class="image-blurred-edge"></div>
+                    <img th:src="'/files/'+${car.imgFilename}" style="max-width: 100%; max-height: 50px;"/>
+                </div>
+                <div class="col-1">
+                    Сумма:
+                </div>
+                <div class="col-2">
+                    <p th:text="${sum}"></p>
+                </div>
             </div>
+        </div>
+        <div class="card-body">
+            <div class="card bg-dark" th:each="note:${notes}">
+                <div class="container row" th:object="${note}">
+                    <div class="col-2" th:text="*{date}"></div>
+                    <div class="col-6" th:text="*{description}"></div>
+                    <div class="col-2" th:text="*{value}"></div>
+                    <div class="col-2">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="button" id="back_btn" class="btn btn-outline-light"><< Назад</button>
         </div>
     </div>
 </div>
-<button type="button" id="back_btn" class="btn btn-outline-light"><< Назад</button>
 
 <script src="/js/app/app.js"></script>
 </body>

@@ -178,7 +178,7 @@
     }
 /*
     A base64 encoded image-sprite is used for the activation button. IE6 and 7
-    get fed "normal" png images within the rule that follows.
+    getByCarAndDate fed "normal" png images within the rule that follows.
 */
 .date-picker-control:link,
 .date-picker-control:visited
@@ -638,7 +638,7 @@
     */
     }
 /*
-    Keyboard users get a scaled cursor. webKit exhibits buggy behaviour when 
+    Keyboard users getByCarAndDate a scaled cursor. webKit exhibits buggy behaviour when
     scaling TD cells so commented out until I find a curious CSS based fix.
     Opera no longer appears to apply the scale... ho hum...
 */

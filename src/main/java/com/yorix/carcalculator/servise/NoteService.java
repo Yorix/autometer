@@ -38,6 +38,23 @@ public class NoteService {
         return noteRepository.findAll();
     }
 
+    public float getSumByCar(Car car) {
+        List<Note> notes = readAllByCar(car);
+        return getSum(notes);
+    }
+
+    public float getSumByCarAndDate(Car car, String date) {
+        List<Note> notes = readAllByCarAndDate(car, date);
+        return getSum(notes);
+    }
+
+    private float getSum(List<Note> notes) {
+        double sum = 0;
+        for (Note note : notes)
+            sum += note.getValue();
+        return (float) (int) (sum * 100) / 100;
+    }
+
 //    public Note update(LocalDate date, Note note) {
 //        if (note.getDate() == date)
 //            noteRepository.save(note);
