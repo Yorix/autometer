@@ -28,3 +28,10 @@ if (allNotesBtn !== null)
     allNotesBtn.addEventListener('click', function () {
         window.location.href = 'allNotes/';
     });
+
+
+function cuttingDecimalPlaces(e) {
+    if (e.value.indexOf(".") !== -1) {
+        e.value = e.value.substring(0, e.value.indexOf(".") + 3);
+    }
+}

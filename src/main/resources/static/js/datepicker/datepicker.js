@@ -965,7 +965,7 @@ var datePickerController = (function datePickerController() {
 
             // If we are in an animation
             if(o.timerSet) {
-                // Speed the timer up a little bit to make the pause between updates quicker
+                // Speed the timer cuttingDecimalPlaces a little bit to make the pause between updates quicker
                 o.timerInc = 50 + Math.round(((o.timerInc - 50) / 1.8));
                 // Recall this function in a timeout
                 o.timer = window.setTimeout(o.updateTable, o.timerInc);
