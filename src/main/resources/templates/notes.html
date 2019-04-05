@@ -72,14 +72,20 @@
                         <div th:text="*{date}"></div>
                     </div>
                     <div class="col-6">
-                        <div th:id="'desc_txt'+*{id}" th:value="*{description}" th:text="*{description}"></div>
+                        <div th:id="'desc_div'+*{id}" th:text="*{description}"></div>
                     </div>
                     <div class="col-2">
-                        <div th:id="'value_txt'+*{id}" th:value="*{value}" th:text="*{value}"></div>
+                        <div th:id="'value_div'+*{id}" th:text="*{value}"></div>
                     </div>
                     <div class="col-2">
-                        <button th:id="'change_btn'+*{id}" type="button" th:onclick="'clickChange(\''+${note.id}+'\');'" class="btn btn-outline-light" style="display: block">редактировать</button>
-                        <button th:id="'submit_btn'+*{id}" type="button" th:onclick="'clickSubmit(\''+${note.id}+', '+${note.car.id}+'\');'" class="btn btn-outline-light" style="display: none">отправить</button>
+                        <button th:id="'change_btn'+*{id}" type="button"
+                                th:onclick="'clickChange(\''+${note.id}+'\');'"
+                                class="btn btn-outline-light" style="display: block">редактировать
+                        </button>
+                        <button th:id="'submit_btn'+*{id}" type="button"
+                                th:onclick="'clickSubmit(\''+${note.id}+'\', \''+${note.car.id}+'\');'"
+                                class="btn btn-outline-success" style="display: none">отправить
+                        </button>
                     </div>
                 </div>
             </div>
@@ -91,7 +97,51 @@
 </div>
 
 
-<script src="/js/app/notes.js"></script>
+<script th:inline="javascript">
+
+
+
+    /*<![CDATA[*/
+
+    function clickChange(id) {
+        var descDiv = document.getElementById('desc_div' + id);
+        var valueDiv = document.getElementById('value_div' + id);
+        var changeBtn = document.getElementById('change_btn' + id);
+        var submitBtn = document.getElementById('submit_btn' + id);
+
+        descDiv.setAttribute('contentEditable', 'true');
+        valueDiv.setAttribute('contentEditable', 'true');
+        changeBtn.style.display = 'none';
+        submitBtn.style.display = 'block';
+    }
+
+    function clickSubmit(id, carId) {
+        var descDiv = document.getElementById('desc_div' + id);
+        var valueDiv = document.getElementById('value_div' + id);
+        var changeBtn = document.getElementById('change_btn' + id);
+        var submitBtn = document.getElementById('submit_btn' + id);
+
+        var formData = new FormData();
+
+        formData.append('id', id);
+        formData.append('description', descDiv.textContent);
+        formData.append('value', valueDiv.textContent);
+        formData.append('date', [[*{date}]]); // TODO insert date
+
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/cars/" + carId);
+        xhr.send(formData);
+
+
+        descDiv.setAttribute('contentEditable', 'false');
+        valueDiv.setAttribute('contentEditable', 'false');
+        changeBtn.style.display = 'block';
+        submitBtn.style.display = 'none';
+    }
+
+    /*]]>*/
+</script>
 <script src="/js/app/app.js"></script>
 </body>
 </html>
