@@ -83,7 +83,10 @@
                                 class="btn btn-outline-light" style="display: block">редактировать
                         </button>
                         <button th:id="'submit_btn'+*{id}" type="button"
-                                th:onclick="'clickSubmit(\''+${note.id}+'\', \''+${note.car.id}+'\');'"
+                                th:data-1="${note.id}"
+                                th:data-2="${note.car.id}"
+                                th:data-3="${note.date}"
+                                th:onclick="|clickSubmit(getAttribute('data-1'), getAttribute('data-2'), getAttribute('data-3'));|"
                                 class="btn btn-outline-success" style="display: none">отправить
                         </button>
                     </div>
@@ -97,51 +100,7 @@
 </div>
 
 
-<script th:inline="javascript">
-
-
-
-    /*<![CDATA[*/
-
-    function clickChange(id) {
-        var descDiv = document.getElementById('desc_div' + id);
-        var valueDiv = document.getElementById('value_div' + id);
-        var changeBtn = document.getElementById('change_btn' + id);
-        var submitBtn = document.getElementById('submit_btn' + id);
-
-        descDiv.setAttribute('contentEditable', 'true');
-        valueDiv.setAttribute('contentEditable', 'true');
-        changeBtn.style.display = 'none';
-        submitBtn.style.display = 'block';
-    }
-
-    function clickSubmit(id, carId) {
-        var descDiv = document.getElementById('desc_div' + id);
-        var valueDiv = document.getElementById('value_div' + id);
-        var changeBtn = document.getElementById('change_btn' + id);
-        var submitBtn = document.getElementById('submit_btn' + id);
-
-        var formData = new FormData();
-
-        formData.append('id', id);
-        formData.append('description', descDiv.textContent);
-        formData.append('value', valueDiv.textContent);
-        formData.append('date', [[*{date}]]); // TODO insert date
-
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/cars/" + carId);
-        xhr.send(formData);
-
-
-        descDiv.setAttribute('contentEditable', 'false');
-        valueDiv.setAttribute('contentEditable', 'false');
-        changeBtn.style.display = 'block';
-        submitBtn.style.display = 'none';
-    }
-
-    /*]]>*/
-</script>
+<script src="/js/app/notes.js"></script>
 <script src="/js/app/app.js"></script>
 </body>
 </html>

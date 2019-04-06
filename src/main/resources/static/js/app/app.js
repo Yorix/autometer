@@ -10,6 +10,11 @@ if (backBtn !== null) {
             for (var i = 0; i < inputs.length; i++)
                 if (inputs[i] === document.activeElement)
                     return;
+
+            var divs = document.getElementsByTagName('div');
+            for (var i = 0; i < divs.length; i++)
+                if (divs[i].getAttribute('contentEditable') === 'true')
+                    return;
             window.location.href = '../';
         }
     });
