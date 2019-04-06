@@ -69,7 +69,7 @@
             <div class="card bg-dark" th:each="note:${notes}">
                 <div class="container row" th:object="${note}">
                     <div class="col-2">
-                        <div th:text="*{date}"></div>
+                        <div th:id="'date_div'+*{id}" th:text="*{date}"></div>
                     </div>
                     <div class="col-6">
                         <div th:id="'desc_div'+*{id}" th:text="*{description}"></div>

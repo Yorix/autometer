@@ -5,6 +5,7 @@ import com.yorix.carcalculator.model.Car;
 import com.yorix.carcalculator.model.Note;
 import com.yorix.carcalculator.servise.CarService;
 import com.yorix.carcalculator.servise.ImageStorageService;
+import com.yorix.carcalculator.servise.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,17 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/cars")
 public class CarController {
     private final CarService carService;
+    private final NoteService noteService;
     private final ImageStorageService imageStorageService;
     private final CardTextProperties properties;
 
     @Autowired
     public CarController(CarService carService,
+                         NoteService noteService,
                          ImageStorageService imageStorageService,
                          CardTextProperties properties) {
         this.carService = carService;
+        this.noteService = noteService;
         this.imageStorageService = imageStorageService;
         this.properties = properties;
     }
@@ -40,6 +44,7 @@ public class CarController {
         Car car = carService.read(id);
         ModelAndView modelAndView = new ModelAndView("car");
         modelAndView.addObject("car", car);
+        modelAndView.addObject("sum", noteService.getSumByCar(car));
         modelAndView.addObject("note", new Note());
         return modelAndView;
     }

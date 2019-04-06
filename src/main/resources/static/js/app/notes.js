@@ -1,9 +1,11 @@
 function clickChange(id) {
+    var dateDiv = document.getElementById('date_div' + id);
     var descDiv = document.getElementById('desc_div' + id);
     var valueDiv = document.getElementById('value_div' + id);
     var changeBtn = document.getElementById('change_btn' + id);
     var submitBtn = document.getElementById('submit_btn' + id);
 
+    dateDiv.setAttribute('contentEditable', 'true');
     descDiv.setAttribute('contentEditable', 'true');
     valueDiv.setAttribute('contentEditable', 'true');
     changeBtn.style.display = 'none';
@@ -11,6 +13,7 @@ function clickChange(id) {
 }
 
 function clickSubmit(id, carId, date) {
+    var dateDiv = document.getElementById('date_div' + id);
     var descDiv = document.getElementById('desc_div' + id);
     var valueDiv = document.getElementById('value_div' + id);
     var changeBtn = document.getElementById('change_btn' + id);
@@ -21,7 +24,7 @@ function clickSubmit(id, carId, date) {
     formData.append('id', id);
     formData.append('description', descDiv.textContent);
     formData.append('value', valueDiv.textContent);
-    formData.append('date', date);
+    formData.append('date', dateDiv.textContent);
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/cars/" + carId);
