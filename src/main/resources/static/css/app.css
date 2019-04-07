@@ -1,36 +1,6 @@
-
-.placeholder {
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: auto;
-    width: 200px;
-    height: 100px;
-    position: relative;
-}
-
-.bg-image-blur, .bg-image {
-    background-image: url('/files/[[${car.imgFilename}]]');
-    background-size: auto 100%;
-    background-repeat: no-repeat;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.bg-image-blur {
-    filter: blur(10px);
-}
-
-.content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    color: #fff;
-    text-shadow: 0 0 5px #000;
-    text-align: center;
-    font-size: 30px;
+:root {
+    --pos-color: #88ff88;
+    --neg-color: #ff8888;
+    --zer-color: #ffffff;
+    --var-color: #ffffff;
 }

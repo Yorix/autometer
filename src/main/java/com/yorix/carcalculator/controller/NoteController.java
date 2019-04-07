@@ -32,23 +32,15 @@ public class NoteController {
         return String.format("redirect:/cars/%s/", id);
     }
 
-    @GetMapping("/{id}/{date}")
-    public ModelAndView getByCarAndDate(@PathVariable("id") int id, @PathVariable("date") String date) {
-        Car car = carService.read(id);
-        ModelAndView modelAndView = new ModelAndView("notes");
-        modelAndView.addObject("car", car);
-        modelAndView.addObject("notes", noteService.readAllByCarAndDate(car, date));
-        modelAndView.addObject("sum", noteService.getSumByCarAndDate(car, date));
-        return modelAndView;
-    }
-
     @GetMapping("/{id}/allNotes")
     public ModelAndView getByCar(@PathVariable("id") int id) {
         Car car = carService.read(id);
         ModelAndView modelAndView = new ModelAndView("notes");
         modelAndView.addObject("car", car);
         modelAndView.addObject("notes", noteService.readAllByCar(car));
-        modelAndView.addObject("sum", noteService.getSumByCar(car));
+        modelAndView.addObject("spending", noteService.getSpendingByCar(car));
+        modelAndView.addObject("income", noteService.getIncomeByCar(car));
+        modelAndView.addObject("balance", noteService.getBalanceByCar(car));
         return modelAndView;
     }
 }

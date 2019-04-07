@@ -6,7 +6,7 @@ if (backBtn !== null) {
     /* Go backBtn by backspace pressing */
     document.addEventListener('keydown', function (ev) {
         if (ev.key.charCodeAt(8)) {
-            var inputs = document.getElementsByTagName('input');
+            var inputs = document.getElementsByTagName('noteValueInput');
             for (var i = 0; i < inputs.length; i++)
                 if (inputs[i] === document.activeElement)
                     return;
@@ -40,3 +40,19 @@ function cuttingDecimalPlaces(e) {
         e.value = e.value.substring(0, e.value.indexOf(".") + 3);
     }
 }
+
+
+// Set CSS variables
+
+var root = document.querySelector(':root');
+var rootStyles = getComputedStyle(root);
+
+var balance = document.getElementById('balance_info').getAttribute('value');
+var posColor = rootStyles.getPropertyValue('--pos-color');
+var negColor = rootStyles.getPropertyValue('--neg-color');
+var zerColor = rootStyles.getPropertyValue('--zer-color');
+if (balance < 0)
+    root.style.setProperty('--var-color', negColor);
+else if (balance > 0)
+    root.style.setProperty('--var-color', posColor);
+else root.style.setProperty('--var-color', zerColor);

@@ -44,7 +44,9 @@ public class CarController {
         Car car = carService.read(id);
         ModelAndView modelAndView = new ModelAndView("car");
         modelAndView.addObject("car", car);
-        modelAndView.addObject("sum", noteService.getSumByCar(car));
+        modelAndView.addObject("spending", noteService.getSpendingByCar(car));
+        modelAndView.addObject("income", noteService.getIncomeByCar(car));
+        modelAndView.addObject("balance", noteService.getBalanceByCar(car));
         modelAndView.addObject("note", new Note());
         return modelAndView;
     }

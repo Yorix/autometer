@@ -1,10 +1,14 @@
-var form = document.getElementById('note_form');
-var input = document.getElementById('note_value_input');
-var button = document.getElementById('note_submit');
+var noteForm = document.getElementById('note_form');
+var noteValueInput = document.getElementById('note_value_input');
+var negativeSelect = document.getElementById('negative_select');
+var noteSubmit = document.getElementById('note_submit');
 
-input.value = '';
+noteValueInput.value = '';
 
-button.addEventListener('click', function () {
-    if (input.value.length > 0)
-        form.submit();
+noteSubmit.addEventListener('click', function () {
+    if (noteValueInput.value.length > 0)
+        if (negativeSelect.selectedIndex === 0)
+            noteValueInput.value = noteValueInput.value * -1;
+    noteForm.submit();
+
 });

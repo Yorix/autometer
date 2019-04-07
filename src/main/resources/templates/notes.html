@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Note</title>
+    <link rel="stylesheet" href="/css/app.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
     <style th:inline="css">
         .placeholder {
             margin-right: auto;
@@ -16,7 +16,7 @@
         }
 
         .bg-image-blur, .bg-image {
-            background-image: url('/files/[[${car.imgFilename}]]');
+            background-image: url("/files/[[${car.imgFilename}]]");
             background-size: auto 100%;
             background-repeat: no-repeat;
             position: absolute;
@@ -52,16 +52,19 @@
             <div class="row">
                 <div class="col-8">
                     <div class="placeholder">
-                        <div class="bg-image-blur"></div>
+                        <div id="img_filename" class="bg-image-blur" th:value="${car.imgFilename}"></div>
                         <div class="bg-image"></div>
                         <div class="content" th:text="${car.make+' '+car.model}"></div>
                     </div>
                 </div>
-                <div class="col-2">
-                    Сумма:
-                </div>
-                <div class="col-2">
-                    <p th:text="${sum}"></p>
+                <div class="col-4" id="balance_info" th:value="${balance}">
+                    <p style="color: var(--neg-color);">Расход: <span style="padding-left: 2em;"
+                                                                      th:text="${spending}"></span></p>
+                    <p style="color: var(--pos-color);">Доход: <span style="padding-left: 2em;"
+                                                                     th:text="${income}"></span>
+                    </p>
+                    <p style="color: var(--var-color);">
+                        Баланс: <span style="padding-left: 2em;" th:text="${balance}"></span></p>
                 </div>
             </div>
         </div>
@@ -100,7 +103,7 @@
 </div>
 
 
-<script src="/js/app/notes.js"></script>
 <script src="/js/app/app.js"></script>
+<script src="/js/app/notes.js"></script>
 </body>
 </html>

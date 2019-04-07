@@ -38,32 +38,47 @@ public class NoteService {
         return noteRepository.findAll();
     }
 
-    public float getSumByCar(Car car) {
+    public void delete(Note note) {
+        noteRepository.delete(note);
+    }
+
+
+    public float getSpendingByCar(Car car) {
         List<Note> notes = readAllByCar(car);
-        return getSum(notes);
+        return getSpending(notes);
     }
 
-    public float getSumByCarAndDate(Car car, String date) {
-        List<Note> notes = readAllByCarAndDate(car, date);
-        return getSum(notes);
+    public float getIncomeByCar(Car car) {
+        List<Note> notes = readAllByCar(car);
+        return getIncome(notes);
     }
 
-    private float getSum(List<Note> notes) {
+
+    public float getBalanceByCar(Car car) {
+        List<Note> notes = readAllByCar(car);
+        return getBalance(notes);
+    }
+
+    private float getSpending(List<Note> notes) {
+        double sum = 0;
+        for (Note note : notes)
+            if (note.getValue() < 0)
+                sum += note.getValue();
+        return (float) (int) (sum * 100) / 100;
+    }
+
+    private float getIncome(List<Note> notes) {
+        double sum = 0;
+        for (Note note : notes)
+            if (note.getValue() > 0)
+                sum += note.getValue();
+        return (float) (int) (sum * 100) / 100;
+    }
+
+    private float getBalance(List<Note> notes) {
         double sum = 0;
         for (Note note : notes)
             sum += note.getValue();
         return (float) (int) (sum * 100) / 100;
     }
-
-//    public Note update(LocalDate date, Note note) {
-//        if (note.getDate() == date)
-//            noteRepository.save(note);
-//        else note = null;
-//        return note;
-//    }
-
-    public void delete(Note note) {
-        noteRepository.delete(note);
-    }
-
 }
