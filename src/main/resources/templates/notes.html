@@ -27,7 +27,11 @@
         }
 
         .bg-image-blur {
-            filter: blur(20px);
+            filter: blur(10px);
+        }
+
+        .bg-image {
+            filter: opacity(70%);
         }
 
         .content {
@@ -57,14 +61,21 @@
                         <div class="content" th:text="${car.make+' '+car.model}"></div>
                     </div>
                 </div>
-                <div class="col-4" id="balance_info" th:value="${balance}">
-                    <p style="color: var(--neg-color);">Расход: <span style="padding-left: 2em;"
-                                                                      th:text="${spending}"></span></p>
-                    <p style="color: var(--pos-color);">Доход: <span style="padding-left: 2em;"
-                                                                     th:text="${income}"></span>
-                    </p>
-                    <p style="color: var(--var-color);">
-                        Баланс: <span style="padding-left: 2em;" th:text="${balance}"></span></p>
+                <div class="col-4">
+                    <table cellpadding="10">
+                        <tr style="color: var(--neg-color);">
+                            <td>Расходы:</td>
+                            <td th:text="${spending}"></td>
+                        </tr>
+                        <tr style="color: var(--pos-color);">
+                            <td>Выручка:</td>
+                            <td th:text="${income}"></td>
+                        </tr>
+                        <tr style="color: var(--var-color);">
+                            <td>Прибыль:</td>
+                            <td id="balance_info" th:data-balance="${spending+income}" th:text="${spending+income}"></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -88,8 +99,7 @@
                         <button th:id="'submit_btn'+*{id}" type="button"
                                 th:data-1="${note.id}"
                                 th:data-2="${note.car.id}"
-                                th:data-3="${note.date}"
-                                th:onclick="|clickSubmit(getAttribute('data-1'), getAttribute('data-2'), getAttribute('data-3'));|"
+                                th:onclick="|clickSubmit(getAttribute('data-1'), getAttribute('data-2'));|"
                                 class="btn btn-outline-success" style="display: none">отправить
                         </button>
                     </div>

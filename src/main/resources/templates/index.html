@@ -16,7 +16,7 @@
 <div class="card-columns">
     <div class="container" th:each="car:${cars}">
         <a th:href="'/cars/'+${car.id}+'/'">
-            <div class="card text-white bg-info">
+            <div class="card text-white bg-dark">
                 <div class="card-header">
                     <div th:text="${car.make}+' '+${car.model}"></div>
                     <div th:text="${textProperties.header}"></div>

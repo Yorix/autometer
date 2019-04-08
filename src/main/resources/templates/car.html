@@ -19,13 +19,21 @@
             <div class="col-8">
                 <img th:src="'/files/'+${car.imgFilename}" style="max-width: 100%; max-height: 370px;">
             </div>
-            <div class="col-4" id="balance_info" th:value="${balance}">
-                <p style="color: var(--neg-color);">Расход: <span style="padding-left: 2em;"
-                                                                  th:text="${spending}"></span></p>
-                <p style="color: var(--pos-color);">Доход: <span style="padding-left: 2em;" th:text="${income}"></span>
-                </p>
-                <p style="color: var(--var-color);">
-                    Баланс: <span style="padding-left: 2em;" th:text="${balance}"></span></p>
+            <div class="col-4">
+                <table cellpadding="10">
+                    <tr style="color: var(--neg-color);">
+                        <td>Расходы:</td>
+                        <td th:text="${spending}"></td>
+                    </tr>
+                    <tr style="color: var(--pos-color);">
+                        <td>Выручка:</td>
+                        <td th:text="${income}"></td>
+                    </tr>
+                    <tr style="color: var(--var-color);">
+                        <td>Прибыль:</td>
+                        <td id="balance_info" th:data-balance="${spending+income}" th:text="${spending+income}"></td>
+                    </tr>
+                </table>
             </div>
         </div>
         <div class="card-footer">

@@ -54,11 +54,6 @@ public class NoteService {
     }
 
 
-    public float getBalanceByCar(Car car) {
-        List<Note> notes = readAllByCar(car);
-        return getBalance(notes);
-    }
-
     private float getSpending(List<Note> notes) {
         double sum = 0;
         for (Note note : notes)
@@ -72,13 +67,6 @@ public class NoteService {
         for (Note note : notes)
             if (note.getValue() > 0)
                 sum += note.getValue();
-        return (float) (int) (sum * 100) / 100;
-    }
-
-    private float getBalance(List<Note> notes) {
-        double sum = 0;
-        for (Note note : notes)
-            sum += note.getValue();
         return (float) (int) (sum * 100) / 100;
     }
 }

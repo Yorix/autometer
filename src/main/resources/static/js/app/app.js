@@ -2,11 +2,18 @@ var backBtn = document.getElementById('back_btn');
 var newCarBtn = document.getElementById('new_car_btn');
 var allNotesBtn = document.getElementById('all_notes_btn');
 
+// var budget =
+
+// var div = document.createElement('div');
+// div.className = "alert alert-success";
+// div.innerHTML = "<strong>Бютжет:</strong> ";
+
+
 if (backBtn !== null) {
     /* Go backBtn by backspace pressing */
     document.addEventListener('keydown', function (ev) {
         if (ev.key.charCodeAt(8)) {
-            var inputs = document.getElementsByTagName('noteValueInput');
+            var inputs = document.getElementsByTagName('input');
             for (var i = 0; i < inputs.length; i++)
                 if (inputs[i] === document.activeElement)
                     return;
@@ -47,7 +54,7 @@ function cuttingDecimalPlaces(e) {
 var root = document.querySelector(':root');
 var rootStyles = getComputedStyle(root);
 
-var balance = document.getElementById('balance_info').getAttribute('value');
+var balance = document.getElementById('balance_info').dataset.balance;
 var posColor = rootStyles.getPropertyValue('--pos-color');
 var negColor = rootStyles.getPropertyValue('--neg-color');
 var zerColor = rootStyles.getPropertyValue('--zer-color');

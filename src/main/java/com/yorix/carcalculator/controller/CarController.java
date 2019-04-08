@@ -46,7 +46,6 @@ public class CarController {
         modelAndView.addObject("car", car);
         modelAndView.addObject("spending", noteService.getSpendingByCar(car));
         modelAndView.addObject("income", noteService.getIncomeByCar(car));
-        modelAndView.addObject("balance", noteService.getBalanceByCar(car));
         modelAndView.addObject("note", new Note());
         return modelAndView;
     }

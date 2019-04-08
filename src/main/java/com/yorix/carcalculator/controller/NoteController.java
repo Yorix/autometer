@@ -40,7 +40,6 @@ public class NoteController {
         modelAndView.addObject("notes", noteService.readAllByCar(car));
         modelAndView.addObject("spending", noteService.getSpendingByCar(car));
         modelAndView.addObject("income", noteService.getIncomeByCar(car));
-        modelAndView.addObject("balance", noteService.getBalanceByCar(car));
         return modelAndView;
     }
 }
