@@ -9,7 +9,5 @@ import java.util.List;
 public interface NoteRepository extends JpaRepository<Note, Integer> {
     List<Note> getAllByCar(Car car);
 
-    List<Note> getAllByCarAndDate(Car car, String date);
-
     Note getByCarAndId(Car car, int id);
 }

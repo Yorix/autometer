@@ -17,13 +17,13 @@ public class Note {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "value")
+    @Column(name = "value", nullable = false)
     private double value;
+
+    @Column(name = "date")
+    private String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
-
-    @Column(name = "date")
-    private String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 }

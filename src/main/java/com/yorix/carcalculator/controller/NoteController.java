@@ -2,8 +2,8 @@ package com.yorix.carcalculator.controller;
 
 import com.yorix.carcalculator.model.Car;
 import com.yorix.carcalculator.model.Note;
-import com.yorix.carcalculator.servise.CarService;
-import com.yorix.carcalculator.servise.NoteService;
+import com.yorix.carcalculator.service.CarService;
+import com.yorix.carcalculator.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +24,7 @@ public class NoteController {
         this.carService = carService;
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/notes")
     public String create(@PathVariable int id, Note note) {
         Car car = carService.read(id);
         note.setCar(car);
@@ -32,7 +32,7 @@ public class NoteController {
         return String.format("redirect:/cars/%s/", id);
     }
 
-    @GetMapping("/{id}/allNotes")
+    @GetMapping("/{id}/notes")
     public ModelAndView getByCar(@PathVariable("id") int id) {
         Car car = carService.read(id);
         ModelAndView modelAndView = new ModelAndView("notes");

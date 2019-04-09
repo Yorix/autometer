@@ -3,13 +3,11 @@ package com.yorix.carcalculator.controller;
 import com.yorix.carcalculator.config.CardTextProperties;
 import com.yorix.carcalculator.model.Car;
 import com.yorix.carcalculator.model.Note;
-import com.yorix.carcalculator.servise.CarService;
-import com.yorix.carcalculator.servise.ImageStorageService;
-import com.yorix.carcalculator.servise.NoteService;
+import com.yorix.carcalculator.service.CarService;
+import com.yorix.carcalculator.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -17,25 +15,20 @@ import org.springframework.web.servlet.ModelAndView;
 public class CarController {
     private final CarService carService;
     private final NoteService noteService;
-    private final ImageStorageService imageStorageService;
     private final CardTextProperties properties;
 
     @Autowired
     public CarController(CarService carService,
                          NoteService noteService,
-                         ImageStorageService imageStorageService,
                          CardTextProperties properties) {
         this.carService = carService;
         this.noteService = noteService;
-        this.imageStorageService = imageStorageService;
         this.properties = properties;
     }
 
     @PostMapping
-    public String create(Car car, @RequestParam("file") MultipartFile file) {
-        car.setImgFilename(file.getOriginalFilename());
+    public String create(Car car) {
         carService.create(car);
-        imageStorageService.store(file);
         return String.format("redirect:/cars/%s/", car.getId());
     }
 
@@ -64,11 +57,6 @@ public class CarController {
         modelAndView.addObject("car", new Car());
         return modelAndView;
     }
-
-//    @PutMapping("/{id}")
-//    public Car update(@PathVariable("id") int id, Car car) {
-//        return carService.update(id, car);
-//    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {

@@ -1,4 +1,4 @@
-package com.yorix.carcalculator.servise;
+package com.yorix.carcalculator.service;
 
 import com.yorix.carcalculator.model.Car;
 import com.yorix.carcalculator.model.Note;
@@ -18,16 +18,11 @@ public class NoteService {
     }
 
     public Note create(Note note) {
-        noteRepository.save(note);
-        return note;
+        return noteRepository.save(note);
     }
 
     public Note read(Car car, int id) {
         return noteRepository.getByCarAndId(car, id);
-    }
-
-    public List<Note> readAllByCarAndDate(Car car, String date) {
-        return noteRepository.getAllByCarAndDate(car, date);
     }
 
     public List<Note> readAllByCar(Car car) {

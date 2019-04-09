@@ -29,9 +29,9 @@ function clickSubmit(id, carId) {
 
     var formData = new FormData();
     formData.append('id', id);
-    formData.append('description', descDiv.textContent);
-    formData.append('value', valueDiv.textContent);
-    formData.append('date', dateDiv.textContent);
+    formData.append('description', descDiv.innerText);
+    formData.append('value', valueDiv.innerText);
+    formData.append('date', dateDiv.innerText);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/cars/" + carId);
     xhr.send(formData);

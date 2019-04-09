@@ -1,4 +1,4 @@
-package com.yorix.carcalculator.servise;
+package com.yorix.carcalculator.service;
 
 import com.yorix.carcalculator.model.Car;
 import com.yorix.carcalculator.storage.CarRepository;
@@ -17,8 +17,7 @@ public class CarService {
     }
 
     public Car create(Car car) {
-        carRepository.save(car);
-        return car;
+        return carRepository.save(car);
     }
 
     public Car read(int id) {

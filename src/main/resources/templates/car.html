@@ -13,11 +13,21 @@
 <div class="container">
     <div class="card text-white bg-dark">
         <div class="card-header">
-            <h5 th:text="${car.make}+' '+${car.model}"></h5>
+            <div id="car_id" class="row" th:object="${car}" th:data-id="*{id}">
+                <div id="make_div" th:text="*{make}" style="margin-left: 20px; font-size: 30px;"></div>
+                <div id="model_div" th:text="*{model}" style="margin-left: 20px; font-size: 30px;"></div>
+                <div style="margin-left: 20px;">
+                    <button type="button" id="edit_carname_btn" class="btn btn-outline-warning"><<</button>
+                    <button type="button" id="submit_carname_btn" class="btn btn-outline-success"
+                            style="display: none;">>>
+                    </button>
+                </div>
+            </div>
         </div>
         <div class="card-body row">
             <div class="col-8">
-                <img th:src="'/files/'+${car.imgFilename}" style="max-width: 100%; max-height: 370px;">
+                <a href="img/">Добавить фото</a>
+                <!--<img th:src="'/files/'+${car.imgFilename}" style="max-width: 100%; max-height: 370px;">-->
             </div>
             <div class="col-4">
                 <table cellpadding="10">
@@ -42,7 +52,7 @@
                     <button type="button" id="back_btn" class="btn btn-outline-light"><< К выбору авто</button>
                 </div>
                 <div class="col-2">
-                    <button type="button" id="all_notes_btn" class="btn btn-outline-light">Все записи >></button>
+                    <button type="button" id="notes_btn" class="btn btn-outline-light">Все записи >></button>
                 </div>
             </div>
         </div>
@@ -52,13 +62,12 @@
 
     <div class="card text-white bg-dark">
 
-        <form id='note_form' th:action="'/cars/'+${car.id}" method="post" th:object="${note}">
+        <form id='note_form' th:action="'/cars/'+${car.id}+'/notes'" method="post" th:object="${note}">
             <div class="card-body form-group row">
                 <div class="col-2 input-group">
                     <input id="datepicker" name="date" class="form-control" placeholder="дд.мм.гггг"
                            th:field="${note.date}"/>
-                    <div id="pos" class="input-group-append">
-                    </div>
+                    <div id="pos" class="input-group-append"></div>
                 </div>
                 <div class="col-5">
                     <input type="hidden" th:field="*{id}"/>

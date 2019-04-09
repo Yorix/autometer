@@ -1,6 +1,5 @@
 var backBtn = document.getElementById('back_btn');
 var newCarBtn = document.getElementById('new_car_btn');
-var allNotesBtn = document.getElementById('all_notes_btn');
 
 // var budget =
 
@@ -19,7 +18,7 @@ if (backBtn !== null) {
                     return;
 
             var divs = document.getElementsByTagName('div');
-            for (var i = 0; i < divs.length; i++)
+            for (i = 0; i < divs.length; i++)
                 if (divs[i].getAttribute('contentEditable') === 'true')
                     return;
             window.location.href = '../';
@@ -34,11 +33,6 @@ if (backBtn !== null) {
 if (newCarBtn !== null)
     newCarBtn.addEventListener('click', function () {
         window.location.href = '/cars/newCar/';
-    });
-
-if (allNotesBtn !== null)
-    allNotesBtn.addEventListener('click', function () {
-        window.location.href = 'allNotes/';
     });
 
 

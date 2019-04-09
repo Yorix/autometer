@@ -1,6 +1,6 @@
 package com.yorix.carcalculator;
 
-import com.yorix.carcalculator.servise.ImageStorageService;
+import com.yorix.carcalculator.service.ImageStorageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

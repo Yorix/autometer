@@ -5,47 +5,47 @@
     <title>Note</title>
     <link rel="stylesheet" href="/css/app.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style th:inline="css">
-        .placeholder {
-            margin-right: auto;
-            margin-left: auto;
-            margin-top: auto;
-            width: 100%;
-            height: 100px;
-            position: relative;
-        }
+    <!--<style th:inline="css">-->
+        <!--.placeholder {-->
+            <!--margin-right: auto;-->
+            <!--margin-left: auto;-->
+            <!--margin-top: auto;-->
+            <!--width: 100%;-->
+            <!--height: 100px;-->
+            <!--position: relative;-->
+        <!--}-->
 
-        .bg-image-blur, .bg-image {
-            background-image: url("/files/[[${car.imgFilename}]]");
-            background-size: auto 100%;
-            background-repeat: no-repeat;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+        <!--.bg-image-blur, .bg-image {-->
+            <!--/*background-image: url("/files/[[${car.imgFilename}]]");*/-->
+            <!--background-size: auto 100%;-->
+            <!--background-repeat: no-repeat;-->
+            <!--position: absolute;-->
+            <!--top: 0;-->
+            <!--left: 0;-->
+            <!--width: 100%;-->
+            <!--height: 100%;-->
+        <!--}-->
 
-        .bg-image-blur {
-            filter: blur(10px);
-        }
+        <!--.bg-image-blur {-->
+            <!--filter: blur(10px);-->
+        <!--}-->
 
-        .bg-image {
-            filter: opacity(70%);
-        }
+        <!--.bg-image {-->
+            <!--filter: opacity(70%);-->
+        <!--}-->
 
-        .content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            color: #fff;
-            text-shadow: 0 0 5px #000;
-            text-align: center;
-            font-size: 30px;
-        }
-    </style>
+        <!--.content {-->
+            <!--position: absolute;-->
+            <!--top: 0;-->
+            <!--left: 0;-->
+            <!--width: 100%;-->
+            <!--height: 100%;-->
+            <!--color: #fff;-->
+            <!--text-shadow: 0 0 5px #000;-->
+            <!--text-align: center;-->
+            <!--font-size: 30px;-->
+        <!--}-->
+    <!--</style>-->
 </head>
 <body class="bg-secondary text-light">
 
@@ -55,11 +55,11 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-8">
-                    <div class="placeholder">
-                        <div id="img_filename" class="bg-image-blur" th:value="${car.imgFilename}"></div>
-                        <div class="bg-image"></div>
-                        <div class="content" th:text="${car.make+' '+car.model}"></div>
-                    </div>
+                    <!--<div class="placeholder">-->
+                        <!--<div id="img_filename" class="bg-image-blur" th:value="${car.imgFilename}"></div>-->
+                        <!--<div class="bg-image"></div>-->
+                        <!--<div class="content" th:text="${car.make+' '+car.model}"></div>-->
+                    <!--</div>-->
                 </div>
                 <div class="col-4">
                     <table cellpadding="10">
@@ -94,13 +94,13 @@
                     <div class="col-2">
                         <button th:id="'change_btn'+*{id}" type="button"
                                 th:onclick="'clickChange(\''+${note.id}+'\');'"
-                                class="btn btn-outline-light" style="display: block">редактировать
+                                class="btn btn-outline-warning btn-sm" style="display: block"><<
                         </button>
                         <button th:id="'submit_btn'+*{id}" type="button"
                                 th:data-1="${note.id}"
                                 th:data-2="${note.car.id}"
                                 th:onclick="|clickSubmit(getAttribute('data-1'), getAttribute('data-2'));|"
-                                class="btn btn-outline-success" style="display: none">отправить
+                                class="btn btn-outline-success btn-sm" style="display: none">>>
                         </button>
                     </div>
                 </div>

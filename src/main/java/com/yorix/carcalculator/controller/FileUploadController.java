@@ -1,6 +1,6 @@
 package com.yorix.carcalculator.controller;
 
-import com.yorix.carcalculator.servise.ImageStorageService;
+import com.yorix.carcalculator.service.ImageStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -28,5 +28,4 @@ public class FileUploadController {
                         "attachment; filename=\"" + filename + "\"")
                 .body(file);
     }
-
 }

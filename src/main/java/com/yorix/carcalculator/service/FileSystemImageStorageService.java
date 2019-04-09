@@ -1,4 +1,4 @@
-package com.yorix.carcalculator.servise;
+package com.yorix.carcalculator.service;
 
 import com.yorix.carcalculator.config.StorageProperties;
 import com.yorix.carcalculator.errors.StorageException;

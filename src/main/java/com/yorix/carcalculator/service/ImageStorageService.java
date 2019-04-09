@@ -1,4 +1,4 @@
-package com.yorix.carcalculator.servise;
+package com.yorix.carcalculator.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
