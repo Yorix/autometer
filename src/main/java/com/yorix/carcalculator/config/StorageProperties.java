@@ -8,5 +8,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("storage")
 @Data
 public class StorageProperties {
-    private String location = "c:/ProgramData/CarCalculator/";
+    private String location = "c:/ProgramData/Yorix/CarPark/";
+    private String defaultImageLocation;
+    private String defaultImageFilename;
 }

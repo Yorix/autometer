@@ -5,6 +5,7 @@ import com.yorix.carcalculator.errors.StorageException;
 import com.yorix.carcalculator.errors.StorageFileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
@@ -20,12 +21,15 @@ import java.util.stream.Stream;
 
 @Service
 public class FileSystemImageStorageService implements ImageStorageService {
-
+    private final StorageProperties properties;
     private final Path rootLocation;
+    private final ResourceLoader resourceLoader;
 
     @Autowired
-    public FileSystemImageStorageService(StorageProperties properties) {
+    public FileSystemImageStorageService(StorageProperties properties, ResourceLoader resourceLoader) {
+        this.properties = properties;
         this.rootLocation = Paths.get(properties.getLocation());
+        this.resourceLoader = resourceLoader;
     }
 
     @Override
@@ -81,7 +85,6 @@ public class FileSystemImageStorageService implements ImageStorageService {
             } else {
                 throw new StorageFileNotFoundException(
                         "Could not read file: " + filename);
-
             }
         } catch (MalformedURLException e) {
             throw new StorageFileNotFoundException("Could not read file: " + filename, e);
@@ -104,8 +107,17 @@ public class FileSystemImageStorageService implements ImageStorageService {
 
     @Override
     public void init() {
-        try {
+        String sourceImageLocation = properties.getDefaultImageLocation();
+        String sourceImageFilename = properties.getDefaultImageFilename();
+        String sourceImageFullName = sourceImageLocation + sourceImageFilename;
+
+        Resource resource = resourceLoader.getResource(sourceImageFullName);
+        Path outputFilepath = this.rootLocation.resolve(resource.getFilename());
+
+        try (InputStream is = new BufferedInputStream(resource.getInputStream());
+             OutputStream os = new BufferedOutputStream(Files.newOutputStream(outputFilepath))) {
             Files.createDirectories(rootLocation);
+            os.write(is.readAllBytes());
         } catch (IOException e) {
             throw new StorageException("Could not initialize storage", e);
         }

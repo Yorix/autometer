@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping("/cars")
+@RequestMapping("/cars/")
 public class ImgController {
     private final ImgService imgService;
     private final CarService carService;
@@ -24,20 +24,20 @@ public class ImgController {
         this.carService = carService;
     }
 
-    @PostMapping("/{id}/img")
+    @PostMapping("{id}/img/")
     public String create(@RequestParam("file") MultipartFile file, @PathVariable("id") int id) {
         Car car = carService.read(id);
         imgService.create(file, car);
         return String.format("redirect:/cars/%s/img/", id);
     }
 
-    @GetMapping("/{id}/img/{filename}")
+    @GetMapping("{id}/img/{filename}/")
     public Img getByFilename(@PathVariable("id") int id, @PathVariable("filename") String filename) {
         Car car = carService.read(id);
         return imgService.read(filename);
     }
 
-    @GetMapping("/{id}/img")
+    @GetMapping("{id}/img/")
     public ModelAndView getAllByCar(@PathVariable("id") int id) {
         Car car = carService.read(id);
         List<Img> imgs = imgService.readAllByCar(car);

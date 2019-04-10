@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/cars")
+@RequestMapping("/cars/")
 public class CarController {
     private final CarService carService;
     private final NoteService noteService;
@@ -32,7 +32,7 @@ public class CarController {
         return String.format("redirect:/cars/%s/", car.getId());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}/")
     public ModelAndView get(@PathVariable("id") int id) {
         Car car = carService.read(id);
         ModelAndView modelAndView = new ModelAndView("car");
@@ -51,14 +51,14 @@ public class CarController {
         return modelAndView;
     }
 
-    @GetMapping("/newCar")
+    @GetMapping("newCar/")
     public ModelAndView newCarPage() {
         ModelAndView modelAndView = new ModelAndView("newCar");
         modelAndView.addObject("car", new Car());
         return modelAndView;
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}/")
     public void delete(@PathVariable("id") int id) {
         carService.deleteById(id);
     }

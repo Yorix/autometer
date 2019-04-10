@@ -9,9 +9,10 @@ CREATE TABLE visit
 );
 CREATE TABLE car
 (
-  id    INT PRIMARY KEY AUTO_INCREMENT,
-  make  VARCHAR(100) NOT NULL,
-  model VARCHAR(100) NOT NULL
+  id           INT PRIMARY KEY AUTO_INCREMENT,
+  make         VARCHAR(100) NOT NULL,
+  model        VARCHAR(100) NOT NULL,
+  img_filename VARCHAR(255) NOT NULL
 );
 CREATE TABLE note
 (

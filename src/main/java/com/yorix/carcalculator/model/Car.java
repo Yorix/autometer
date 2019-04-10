@@ -21,6 +21,9 @@ public class Car {
     @Column(name = "model", nullable = false)
     private String model;
 
+    @Column(name = "img_filename", nullable = false)
+    private String imgFilename;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
     private List<Note> notes;
 

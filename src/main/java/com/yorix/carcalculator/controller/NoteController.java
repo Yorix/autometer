@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/cars")
+@RequestMapping("/cars/")
 public class NoteController {
     private final NoteService noteService;
     private final CarService carService;
@@ -24,7 +24,7 @@ public class NoteController {
         this.carService = carService;
     }
 
-    @PostMapping("/{id}/notes")
+    @PostMapping("{id}/notes/")
     public String create(@PathVariable int id, Note note) {
         Car car = carService.read(id);
         note.setCar(car);
@@ -32,7 +32,7 @@ public class NoteController {
         return String.format("redirect:/cars/%s/", id);
     }
 
-    @GetMapping("/{id}/notes")
+    @GetMapping("{id}/notes/")
     public ModelAndView getByCar(@PathVariable("id") int id) {
         Car car = carService.read(id);
         ModelAndView modelAndView = new ModelAndView("notes");

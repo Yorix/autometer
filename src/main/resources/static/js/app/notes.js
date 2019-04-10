@@ -33,7 +33,7 @@ function clickSubmit(id, carId) {
     formData.append('value', valueDiv.innerText);
     formData.append('date', dateDiv.innerText);
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/cars/" + carId);
+    xhr.open("POST", "/cars/" + carId + "/notes/");
     xhr.send(formData);
 
     xhr.onreadystatechange = function () {

@@ -9,7 +9,7 @@
 
 <br/>
 <div class="container">
-    <button type="button" id="new_car_btn" class="btn btn-outline-light">Новое авто</button>
+    <button type="button" class="btn btn-outline-light" onclick="goto('newCar/')">Новое авто</button>
 </div>
 <br/>
 
@@ -23,8 +23,8 @@
                 </div>
                 <div class="card-body">
                     <div th:text="${textProperties.body}"></div>
-                    <!--<img th:src="'/files/'+${car.imgFilename}"-->
-                         <!--style="max-width: 100%;">-->
+                    <img th:src="'/'+${car.imgFilename}"
+                         style="max-width: 100%;">
                 </div>
                 <div class="card-footer">
                     <div class="card-text" th:text="${textProperties.footer}"></div>

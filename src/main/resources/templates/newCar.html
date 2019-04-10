@@ -10,7 +10,7 @@
 <br/>
 <div class="container">
     <div class="card bg-dark text-white">
-        <form action="/cars" method="post" th:object="${car}">
+        <form action="/cars/" method="post" th:object="${car}">
             <div class="card-header">
                 <h5 id="header"></h5>
             </div>
@@ -29,7 +29,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col-10">
-                        <button type="button" id="back_btn" class="btn btn-outline-danger"><< Отмена</button>
+                        <button type="button" class="btn btn-outline-danger" onclick="goto('../')"><< Отмена</button>
                     </div>
                     <div class="col-2">
                         <button type="submit" class="btn btn-outline-success">Добавить >></button>

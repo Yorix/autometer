@@ -1,6 +1,3 @@
-var backBtn = document.getElementById('back_btn');
-var newCarBtn = document.getElementById('new_car_btn');
-
 // var budget =
 
 // var div = document.createElement('div');
@@ -8,38 +5,31 @@ var newCarBtn = document.getElementById('new_car_btn');
 // div.innerHTML = "<strong>Бютжет:</strong> ";
 
 
-if (backBtn !== null) {
-    /* Go backBtn by backspace pressing */
-    document.addEventListener('keydown', function (ev) {
-        if (ev.key.charCodeAt(8)) {
-            var inputs = document.getElementsByTagName('input');
-            for (var i = 0; i < inputs.length; i++)
-                if (inputs[i] === document.activeElement)
-                    return;
+/* Go backBtn by backspace pressing */
+document.addEventListener('keydown', function (ev) {
+    if (ev.key.charCodeAt(8)) {
+        var inputs = document.getElementsByTagName('input');
+        for (var i = 0; i < inputs.length; i++)
+            if (inputs[i] === document.activeElement)
+                return;
 
-            var divs = document.getElementsByTagName('div');
-            for (i = 0; i < divs.length; i++)
-                if (divs[i].getAttribute('contentEditable') === 'true')
-                    return;
-            window.location.href = '../';
-        }
-    });
+        var divs = document.getElementsByTagName('div');
+        for (i = 0; i < divs.length; i++)
+            if (divs[i].getAttribute('contentEditable') === 'true')
+                return;
+        goto('../');
+    }
+});
 
-    backBtn.addEventListener('click', function () {
-        window.location.href = '../';
-    });
+
+
+function goto(url) {
+    window.location.href = url;
 }
 
-if (newCarBtn !== null)
-    newCarBtn.addEventListener('click', function () {
-        window.location.href = '/cars/newCar/';
-    });
-
-
 function cuttingDecimalPlaces(e) {
-    if (e.value.indexOf(".") !== -1) {
+    if (e.value.indexOf(".") !== -1)
         e.value = e.value.substring(0, e.value.indexOf(".") + 3);
-    }
 }
 
 
