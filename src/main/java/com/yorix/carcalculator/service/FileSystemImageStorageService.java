@@ -114,10 +114,12 @@ public class FileSystemImageStorageService implements ImageStorageService {
         Resource resource = resourceLoader.getResource(sourceImageFullName);
         Path outputFilepath = this.rootLocation.resolve(resource.getFilename());
 
-        try (InputStream is = new BufferedInputStream(resource.getInputStream());
-             OutputStream os = new BufferedOutputStream(Files.newOutputStream(outputFilepath))) {
+        try {
             Files.createDirectories(rootLocation);
-            os.write(is.readAllBytes());
+            try (InputStream is = new BufferedInputStream(resource.getInputStream());
+                 OutputStream os = new BufferedOutputStream(Files.newOutputStream(outputFilepath))) {
+                os.write(is.readAllBytes());
+            }
         } catch (IOException e) {
             throw new StorageException("Could not initialize storage", e);
         }

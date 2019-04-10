@@ -4,3 +4,7 @@
     --zer-color: #ffffff;
     --var-color: #ffffff;
 }
+
+td {
+    padding: 10px;
+}

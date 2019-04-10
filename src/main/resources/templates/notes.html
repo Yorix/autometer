@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <table cellpadding="10">
+                    <table>
                         <tr style="color: var(--neg-color);">
                             <td>Расходы:</td>
                             <td th:text="${spending}"></td>
@@ -85,13 +85,13 @@
                     <div class="col-2">
                         <div th:id="'date_div'+*{id}" th:text="*{date}"></div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-7">
                         <div th:id="'desc_div'+*{id}" th:text="*{description}"></div>
                     </div>
                     <div class="col-2">
                         <div th:id="'value_div'+*{id}" th:text="*{value}"></div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                         <button th:id="'change_btn'+*{id}" type="button"
                                 th:onclick="'clickChange(\''+${note.id}+'\');'"
                                 class="btn btn-outline-warning btn-sm" style="display: block"><<
