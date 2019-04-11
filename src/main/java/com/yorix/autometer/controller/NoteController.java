@@ -39,11 +39,4 @@ public class NoteController {
         modelAndView.addObject("income", noteService.getIncomeByCar(car));
         return modelAndView;
     }
-
-    @ExceptionHandler
-    public ModelAndView errorHandler(Exception e) {
-        ModelAndView modelAndView = new ModelAndView("errorPage");
-        modelAndView.addObject("msg", e.getMessage());
-        return modelAndView;
-    }
 }

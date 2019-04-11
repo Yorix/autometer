@@ -5,6 +5,7 @@ import com.yorix.autometer.model.Img;
 import com.yorix.autometer.service.CarService;
 import com.yorix.autometer.service.ImgService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.source.ConfigurationProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,13 +45,6 @@ public class ImgController {
 
         ModelAndView modelAndView = new ModelAndView("images");
         modelAndView.addObject("imgs", imgs);
-        return modelAndView;
-    }
-
-    @ExceptionHandler
-    public ModelAndView errorHandler(Exception e) {
-        ModelAndView modelAndView = new ModelAndView("errorPage");
-        modelAndView.addObject("msg", e.getMessage());
         return modelAndView;
     }
 }

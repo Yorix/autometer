@@ -16,13 +16,16 @@
             <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Назад</button>
         </div>
         <div class="card-body">
-            <form action="./" method="POST" enctype="multipart/form-data">
+            <form id="sendFile" action="./" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     <div style="margin-left: 20px;">
-                        <input type="file" class="form-control-file" id="img" placeholder="Фото" name="file"/>
+                        <input id="file_input" name="file" type="file" class="form-control-file"/>
                     </div>
                     <div style="margin-left: 20px;">
-                        <button type="submit" class="btn btn-outline-success">>></button>
+                        <button type="button"
+                                class="btn btn-outline-success"
+                                th:data-maxFileSize="${maxFileSize}"
+                                th:onclick="|sendFile(getAttribute('data-maxFileSize'));|">>></button>
                     </div>
                 </div>
             </form>

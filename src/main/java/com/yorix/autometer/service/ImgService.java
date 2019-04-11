@@ -20,12 +20,13 @@ public class ImgService {
         this.imageStorageService = imageStorageService;
     }
 
-    public Img create(MultipartFile file, Car car) {
+    public void create(MultipartFile file, Car car) {
+        if (file == null) return;
         Img img = new Img();
         img.setFilename(file.getOriginalFilename());
         img.setCar(car);
         imageStorageService.store(file);
-        return imgRepository.save(img);
+        imgRepository.save(img);
     }
 
     public Img read(String filename) {

@@ -58,15 +58,14 @@ public class CarController {
         return modelAndView;
     }
 
+    @PutMapping("{id}/")
+    public String update(@PathVariable("id") int id, Car car) {
+        carService.update(id, car);
+        return String.format("redirect:/cars/%s/", id);
+    }
+
     @DeleteMapping("{id}/")
     public void delete(@PathVariable("id") int id) {
         carService.deleteById(id);
-    }
-
-    @ExceptionHandler
-    public ModelAndView errorHandler(Exception e) {
-        ModelAndView modelAndView = new ModelAndView("errorPage");
-        modelAndView.addObject("msg", e.getMessage());
-        return modelAndView;
     }
 }

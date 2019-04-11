@@ -28,11 +28,4 @@ public class FileUploadController {
                         "attachment; filename=\"" + filename + "\"")
                 .body(file);
     }
-
-    @ExceptionHandler
-    public ModelAndView errorHandler(Exception e) {
-        ModelAndView modelAndView = new ModelAndView("errorPage");
-        modelAndView.addObject("msg", e.getMessage());
-        return modelAndView;
-    }
 }
