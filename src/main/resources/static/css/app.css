@@ -5,6 +5,11 @@
     --var-color: #ffffff;
 }
 
+body {
+    background: #545454;
+    color: #ffffff;
+}
+
 td {
     padding: 10px;
 }

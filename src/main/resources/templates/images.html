@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Загрузка изображений</title>
-    <link rel="stylesheet" href="/css/app.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/app.css"/>
 </head>
-<body class="bg-secondary text-light">
+<body>
 
 
 <br/>
@@ -37,7 +37,8 @@
                                 class="btn btn-outline-light btn-sm"
                                 th:data-car="${img.car.id}"
                                 th:data-filename="${img.filename}"
-                                th:onclick="|setDefault(getAttribute('data-car'), getAttribute('data-filename'));|">V</button>
+                                th:onclick="|setDefault(getAttribute('data-car'), getAttribute('data-filename'));|">V
+                        </button>
                     </div>
                 </div>
             </div>

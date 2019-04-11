@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.yorix</groupId>
-    <artifactId>carcalculator</artifactId>
+    <artifactId>autometer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>carcalculator</name>
+    <name>AutoMeter</name>
     <description>Car accounting calculator</description>
 
     <properties>
