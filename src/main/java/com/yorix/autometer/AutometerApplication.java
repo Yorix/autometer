@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Bean;
 import java.io.IOException;
 
 @SpringBootApplication
-public class CarcalculatorApplication {
+public class AutometerApplication {
 
     public static void main(String[] args) throws IOException {
-        SpringApplication.run(CarcalculatorApplication.class, args);
+        SpringApplication.run(AutometerApplication.class, args);
 
         Runtime.
                 getRuntime().

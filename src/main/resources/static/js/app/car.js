@@ -22,11 +22,10 @@ submitCarnameBtn.addEventListener('click', function () {
     editCarnameBtn.style.display = 'block';
 
     var formData = new FormData();
-    formData.append('id', carId);
     formData.append('make', makeDiv.innerText);
     formData.append('model', modelDiv.innerText);
     var xmlHttpRequest = new XMLHttpRequest();
-    xmlHttpRequest.open('POST', '/cars/');
+    xmlHttpRequest.open('PUT', '/cars/' + carId + '/');
     xmlHttpRequest.send(formData);
 
     xmlHttpRequest.onreadystatechange = function () {

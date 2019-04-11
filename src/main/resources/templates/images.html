@@ -24,8 +24,8 @@
                     <div style="margin-left: 20px;">
                         <button type="button"
                                 class="btn btn-outline-success"
-                                th:data-maxFileSize="${maxFileSize}"
-                                th:onclick="|sendFile(getAttribute('data-maxFileSize'));|">>></button>
+                                onclick="sendFile();">>>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -35,13 +35,11 @@
             <div class="card-columns">
                 <div class="container" th:each="img:${imgs}">
                     <div class="card text-white bg-dark">
-                        <img style="max-width: 100%;" th:src="'/'+${img.filename}"/>
-                        <button type="button"
-                                class="btn btn-outline-light btn-sm"
-                                th:data-car="${img.car.id}"
-                                th:data-filename="${img.filename}"
-                                th:onclick="|setDefault(getAttribute('data-car'), getAttribute('data-filename'));|">V
-                        </button>
+                        <img style="max-width: 100%;"
+                             th:src="'/'+${img.filename}"
+                             th:data-car="${img.car.id}"
+                             th:data-filename="${img.filename}"
+                             th:onclick="|setDefault(getAttribute('data-car'), getAttribute('data-filename'));|"/>
                     </div>
                 </div>
             </div>

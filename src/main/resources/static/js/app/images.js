@@ -1,20 +1,14 @@
-function MaxFileSizeException(message) {
-    this.message = message;
-}
-
-function sendFile(maxFileSize) {
+function sendFile() {
     var form = document.getElementById("sendFile");
     var fileInput = document.getElementById('file_input');
     var fileSize = fileInput.files[0].size;
-    alert(maxFileSize);
-    // if (fileSize > maxFileSize) {
-    //     alert('Размер файла больше ' + (maxFileSize) + ' МБ.');
-    //     throw new MaxFileSizeException("Размер файла больше " + (maxFileSize) + " МБ.")
-    // }
+
+    if (fileSize > 2097152) {
+        alert("Файл слишком большой.");
+        return;
+    }
     form.submit();
 }
-
-//  / 1048576 + 1
 
 function setDefault(carId, filename) {
 
