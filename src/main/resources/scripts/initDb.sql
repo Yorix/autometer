@@ -23,9 +23,3 @@ CREATE TABLE note
   car_id      INT         NOT NULL,
   FOREIGN KEY (car_id) REFERENCES car (id)
 );
-CREATE TABLE img
-(
-  filename VARCHAR(255) NOT NULL PRIMARY KEY,
-  car_id   INT          NOT NULL,
-  FOREIGN KEY (car_id) REFERENCES car (id)
-)

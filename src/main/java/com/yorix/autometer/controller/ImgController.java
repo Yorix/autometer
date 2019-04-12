@@ -5,7 +5,7 @@ import com.yorix.autometer.model.Img;
 import com.yorix.autometer.service.CarService;
 import com.yorix.autometer.service.ImgService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.source.ConfigurationProperty;
+import org.springframework.boot.autoconfigure.web.servlet.MultipartProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,11 +18,13 @@ import java.util.List;
 public class ImgController {
     private final ImgService imgService;
     private final CarService carService;
+    private final MultipartProperties multipartProperties;
 
     @Autowired
-    public ImgController(ImgService imgService, CarService carService) {
+    public ImgController(ImgService imgService, CarService carService, MultipartProperties multipartProperties) {
         this.imgService = imgService;
         this.carService = carService;
+        this.multipartProperties = multipartProperties;
     }
 
     @PostMapping("{id}/img/")
@@ -42,9 +44,11 @@ public class ImgController {
     public ModelAndView getAllByCar(@PathVariable("id") int id) {
         Car car = carService.read(id);
         List<Img> imgs = imgService.readAllByCar(car);
-
+        long maxFileSize = multipartProperties.getMaxFileSize().toBytes();
         ModelAndView modelAndView = new ModelAndView("images");
+        modelAndView.addObject("car", car);
         modelAndView.addObject("imgs", imgs);
+        modelAndView.addObject("maxFileSize", maxFileSize);
         return modelAndView;
     }
 }

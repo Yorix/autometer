@@ -13,7 +13,10 @@
 <div class="container">
     <div class="card text-white bg-dark">
         <div class="card-header">
-            <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Назад</button>
+            <div class="row">
+                <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Назад</button>
+                <div th:text="${car.make}+' '+${car.model}" style="margin-left: 20px; font-size: 30px;"></div>
+            </div>
         </div>
         <div class="card-body">
             <form id="sendFile" action="./" method="POST" enctype="multipart/form-data">
@@ -24,7 +27,8 @@
                     <div style="margin-left: 20px;">
                         <button type="button"
                                 class="btn btn-outline-success"
-                                onclick="sendFile();">>>
+                                th:data-maxFileSize="${maxFileSize}"
+                                th:onclick="|sendFile(getAttribute('data-maxFileSize'));|">>>
                         </button>
                     </div>
                 </div>

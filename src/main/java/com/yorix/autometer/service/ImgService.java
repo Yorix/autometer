@@ -1,5 +1,6 @@
 package com.yorix.autometer.service;
 
+import com.yorix.autometer.errors.StorageException;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.Img;
 import com.yorix.autometer.storage.ImgRepository;
@@ -21,9 +22,14 @@ public class ImgService {
     }
 
     public void create(MultipartFile file, Car car) {
-        if (file == null) return;
-        Img img = new Img();
-        img.setFilename(file.getOriginalFilename());
+        String filename = file.getOriginalFilename();
+        if (filename == null || filename.equals(""))
+            throw new StorageException("Файл не выбран.");
+        Img img = imgRepository.readByFilename(filename);
+        if (img != null)
+            throw new StorageException("Файл с таким именем уже существует.");
+        img = new Img();
+        img.setFilename(filename);
         img.setCar(car);
         imageStorageService.store(file);
         imgRepository.save(img);
