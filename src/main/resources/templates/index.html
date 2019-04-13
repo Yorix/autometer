@@ -14,24 +14,25 @@
 </div>
 <br/>
 
-<div class="card-columns">
-    <div class="container" th:each="car:${cars}">
+<div class="container-fluid row">
+    <div class="container col-4" th:each="car:${cars}">
         <a th:href="'/cars/'+${car.id}+'/'">
             <div class="card text-white bg-dark">
                 <div class="card-header">
                     <div th:text="${car.make}+' '+${car.model}"></div>
                     <div th:text="${textProperties.header}"></div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="height: 400px;">
                     <div th:text="${textProperties.body}"></div>
                     <img th:src="'/'+${car.imgFilename}"
-                         style="max-width: 100%;">
+                         style="max-width: 100%; max-height: 350px;">
                 </div>
                 <div class="card-footer">
                     <div class="card-text" th:text="${textProperties.footer}"></div>
                 </div>
             </div>
         </a>
+        <br/>
     </div>
 </div>
 
