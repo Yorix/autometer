@@ -14,9 +14,9 @@ public class AutometerApplication {
     public static void main(String[] args) throws IOException {
         SpringApplication.run(AutometerApplication.class, args);
 
-        Runtime.
-                getRuntime().
-                exec("cmd /c \"c:/Program Files/autometer/show.bat\"");
+        Runtime
+                .getRuntime()
+                .exec("cmd /c \"c:/Program Files/autometer/show.cmd\"");
     }
 
     @Bean
