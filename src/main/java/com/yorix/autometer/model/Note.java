@@ -23,7 +23,7 @@ public class Note {
     @Column(name = "date")
     private String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 }

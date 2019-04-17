@@ -49,10 +49,10 @@
         </div>
         <div class="card-footer">
             <div class="row">
-                <div class="col-10">
+                <div class="col-6">
                     <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< К выбору авто</button>
                 </div>
-                <div class="col-2">
+                <div class="col-6" style="text-align: right;">
                     <button type="button" class="btn btn-outline-light" onclick="goto('notes/')">Все записи >></button>
                 </div>
             </div>
@@ -62,7 +62,6 @@
     <br/>
 
     <div class="card text-white bg-dark">
-
         <form id='note_form' th:action="'/cars/'+${car.id}+'/notes/'" method="post" th:object="${note}">
             <div class="card-body form-group row">
                 <div class="col-2 input-group">

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @Service
@@ -43,8 +44,10 @@ public class ImgService {
         return imgRepository.readAllByCar(car);
     }
 
-    public void delete(Img img) {
-        imgRepository.delete(img);
+    public void delete(String filename) {
+        Path path = imageStorageService.load(filename);
+        imageStorageService.delete(path);
+        imgRepository.deleteById(filename);
     }
 
     public void deleteAllByCar(Car car) {

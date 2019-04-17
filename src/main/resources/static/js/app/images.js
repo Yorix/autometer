@@ -27,3 +27,17 @@ function setDefault(carId, filename) {
             window.location = "../";
     };
 }
+
+function deleteImg(carId, filename) {
+
+    var formData = new FormData();
+    formData.append("filename", filename);
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "/cars/" + carId + "/img/");
+    xhr.send(formData);
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState === 4)
+            window.location.reload();
+    }
+}

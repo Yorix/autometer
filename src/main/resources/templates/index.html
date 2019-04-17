@@ -9,12 +9,15 @@
 <body>
 
 <br/>
-<div class="container">
-    <button type="button" class="btn btn-outline-light" onclick="goto('newCar/')">Новое авто</button>
+<div class="container-fluid row">
+    <div class="col-6">
+        <button type="button" class="btn btn-outline-light" onclick="goto('newCar/')">&#10010;</button>
+    </div>
+    <div class="col-6" style="text-align: right;">
+        <button type="button" class="btn btn-outline-light btn-small" onclick="goto('/updates/')">Проверить обновления</button>
+    </div>
 </div>
-<div class="container">
-    <button type="button" class="btn btn-outline-light" onclick="goto('/updates/')">Проверить обновления</button>
-</div>
+
 <br/>
 
 <div class="container-fluid row">

@@ -27,22 +27,22 @@ public class ImgController {
         this.multipartProperties = multipartProperties;
     }
 
-    @PostMapping("{id}/img/")
-    public String create(@RequestParam("file") MultipartFile file, @PathVariable("id") int id) {
-        Car car = carService.read(id);
+    @PostMapping("{carId}/img/")
+    public String create(@RequestParam("file") MultipartFile file, @PathVariable("carId") int carId) {
+        Car car = carService.read(carId);
         imgService.create(file, car);
-        return String.format("redirect:/cars/%s/img/", id);
+        return String.format("redirect:/cars/%s/img/", carId);
     }
 
-    @GetMapping("{id}/img/{filename}/")
-    public Img getByFilename(@PathVariable("id") int id, @PathVariable("filename") String filename) {
-        Car car = carService.read(id);
+    @GetMapping("{carId}/img/{filename}/")
+    public Img getByFilename(@PathVariable("carId") int carId, @PathVariable("filename") String filename) {
+        Car car = carService.read(carId);
         return imgService.read(filename);
     }
 
-    @GetMapping("{id}/img/")
-    public ModelAndView getAllByCar(@PathVariable("id") int id) {
-        Car car = carService.read(id);
+    @GetMapping("{carId}/img/")
+    public ModelAndView getAllByCar(@PathVariable("carId") int carId) {
+        Car car = carService.read(carId);
         List<Img> imgs = imgService.readAllByCar(car);
         long maxFileSize = multipartProperties.getMaxFileSize().toBytes();
         ModelAndView modelAndView = new ModelAndView("images");
@@ -50,5 +50,11 @@ public class ImgController {
         modelAndView.addObject("imgs", imgs);
         modelAndView.addObject("maxFileSize", maxFileSize);
         return modelAndView;
+    }
+
+    @DeleteMapping("{carId}/img/")
+    public String delete(@PathVariable("carId") int carId, String filename) {
+        imgService.delete(filename);
+        return String.format("redirect:/cars/%s/img/", carId);
     }
 }

@@ -19,31 +19,47 @@
             </div>
         </div>
         <div class="card-body">
-            <form id="sendFile" action="./" method="POST" enctype="multipart/form-data">
-                <div class="row">
-                    <div style="margin-left: 20px;">
-                        <input id="file_input" name="file" type="file" class="form-control-file"/>
+            <div class="card-header">
+                <form id="sendFile" action="./" method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <div style="margin-left: 20px;">
+                            <input id="file_input" name="file" type="file" class="form-control-file"/>
+                        </div>
+                        <div style="margin-left: 20px;">
+                            <button type="button"
+                                    class="btn btn-outline-success"
+                                    th:data-maxFileSize="${maxFileSize}"
+                                    th:onclick="|sendFile(getAttribute('data-maxFileSize'));|">>>
+                            </button>
+                        </div>
                     </div>
-                    <div style="margin-left: 20px;">
-                        <button type="button"
-                                class="btn btn-outline-success"
-                                th:data-maxFileSize="${maxFileSize}"
-                                th:onclick="|sendFile(getAttribute('data-maxFileSize'));|">>>
-                        </button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
 
             <br/>
 
             <div class="card-columns">
                 <div class="container" th:each="img:${imgs}">
-                    <div class="card text-white bg-dark">
-                        <img style="max-width: 100%;"
-                             th:src="'/'+${img.filename}"
-                             th:data-car="${img.car.id}"
-                             th:data-filename="${img.filename}"
-                             th:onclick="|setDefault(getAttribute('data-car'), getAttribute('data-filename'));|"/>
+                    <div class="card text-white bg-dark" style="position: relative;">
+                        <img style="position: relative; max-width: 100%;" th:src="'/'+${img.filename}"/>
+                        <button
+                                type="button"
+                                class="btn btn-outline-success"
+                                style="position: absolute; top: 5px; left: 5px;"
+                                th:data-car="${img.car.id}"
+                                th:data-filename="${img.filename}"
+                                th:onclick="|setDefault(getAttribute('data-car'), getAttribute('data-filename'));|"
+                        >&#10003;
+                        </button>
+                        <button
+                                type="button"
+                                class="btn btn-outline-danger"
+                                style="position: absolute; bottom: 5px; right: 5px;"
+                                th:data-car="${img.car.id}"
+                                th:data-filename="${img.filename}"
+                                th:onclick="|deleteImg(getAttribute('data-car'), getAttribute('data-filename'));|"
+                        >&#10008;
+                        </button>
                     </div>
                 </div>
             </div>

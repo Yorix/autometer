@@ -24,9 +24,9 @@ public class Car {
     @Column(name = "img_filename", nullable = false)
     private String imgFilename;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "car")
     private List<Note> notes;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "car")
     private List<Img> imgs;
 }
