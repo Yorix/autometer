@@ -39,4 +39,10 @@ public class NoteController {
         modelAndView.addObject("income", noteService.getIncomeByCar(car));
         return modelAndView;
     }
+
+    @DeleteMapping("{carId}/notes/{noteId}")
+    public String delete(@PathVariable("carId") int carId, @PathVariable("noteId") int noteId) {
+        noteService.deleteById(noteId);
+        return String.format("redirect:/cars/%s/notes/", carId);
+    }
 }

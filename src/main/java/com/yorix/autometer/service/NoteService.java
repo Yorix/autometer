@@ -33,8 +33,8 @@ public class NoteService {
         return noteRepository.findAll();
     }
 
-    public void delete(Note note) {
-        noteRepository.delete(note);
+    public void deleteById(int id) {
+        noteRepository.deleteById(id);
     }
 
 

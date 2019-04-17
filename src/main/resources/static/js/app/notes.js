@@ -12,6 +12,16 @@ function clickChange(id) {
     submitBtn.style.display = 'block';
 }
 
+function clickDelete(id, carId) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "/cars/" + carId + "/notes/" + id);
+    xhr.send();
+    xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200)
+            window.location.reload();
+    }
+}
+
 function clickSubmit(id, carId) {
     var dateDiv = document.getElementById('date_div' + id);
     var descDiv = document.getElementById('desc_div' + id);

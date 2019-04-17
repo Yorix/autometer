@@ -8,8 +8,7 @@ xhr.send();
 
 xhr.onreadystatechange = function () {
     if (this.readyState === 4) {
-        var budgetFrame = xhr.response;
-        budgetDiv.innerHTML = budgetFrame;
+        budgetDiv.innerHTML = xhr.response;
         budgetLabel.appendChild(budgetDiv);
     }
 };

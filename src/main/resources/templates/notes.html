@@ -50,6 +50,17 @@
 <body>
 
 <br/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4" style="text-align: right;">
+            <div id="budget"></div>
+        </div>
+    </div>
+</div>
+<br/>
+
 <div class="container">
     <div class="card bg-dark">
         <div class="card-header">
@@ -85,7 +96,7 @@
                     <div class="col-2">
                         <div th:id="'date_div'+*{id}" th:text="*{date}"></div>
                     </div>
-                    <div class="col-7">
+                    <div class="col-6">
                         <div th:id="'desc_div'+*{id}" th:text="*{description}"></div>
                     </div>
                     <div class="col-2">
@@ -101,6 +112,14 @@
                                 th:data-2="${note.car.id}"
                                 th:onclick="|clickSubmit(getAttribute('data-1'), getAttribute('data-2'));|"
                                 class="btn btn-outline-success btn-sm" style="display: none">>>
+                        </button>
+                    </div>
+                    <div class="col-1">
+                        <button type="button"
+                                th:data-1="${note.id}"
+                                th:data-2="${note.car.id}"
+                                th:onclick="|clickDelete(getAttribute('data-1'), getAttribute('data-2'));|"
+                                class="btn btn-outline-danger btn-sm" style="display: block">&#10008;
                         </button>
                     </div>
                 </div>

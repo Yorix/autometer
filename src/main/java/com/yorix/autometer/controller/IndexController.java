@@ -1,6 +1,5 @@
 package com.yorix.autometer.controller;
 
-import com.yorix.autometer.model.Note;
 import com.yorix.autometer.model.Visit;
 import com.yorix.autometer.service.NoteService;
 import com.yorix.autometer.service.ParamService;
@@ -14,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 @RequestMapping("/")
