@@ -48,6 +48,10 @@ public class NoteService {
         return getIncome(notes);
     }
 
+    public float getBalance() {
+        List<Note> notes = readAll();
+        return getSpending(notes) + getIncome(notes);
+    }
 
     private float getSpending(List<Note> notes) {
         double sum = 0;

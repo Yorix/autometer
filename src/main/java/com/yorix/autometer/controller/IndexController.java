@@ -1,24 +1,35 @@
 package com.yorix.autometer.controller;
 
+import com.yorix.autometer.model.Note;
 import com.yorix.autometer.model.Visit;
+import com.yorix.autometer.service.NoteService;
+import com.yorix.autometer.service.ParamService;
 import com.yorix.autometer.storage.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class IndexController {
     private final VisitRepository visitRepository;
+    private final ParamService paramService;
+    private final NoteService noteService;
 
     @Autowired
-    public IndexController(VisitRepository visitRepository) {
+    public IndexController(VisitRepository visitRepository,
+                           ParamService paramService,
+                           NoteService noteService) {
         this.visitRepository = visitRepository;
+        this.paramService = paramService;
+        this.noteService = noteService;
     }
 
     @GetMapping
@@ -27,6 +38,16 @@ public class IndexController {
         visit.setDescription(String.format("Visited at %s", LocalDateTime.now()));
         visitRepository.save(visit);
         return "redirect:/cars/";
+    }
+
+    @GetMapping("budget/")
+    public ModelAndView budgetFrame() {
+        int budget = paramService.read("budget");
+        float balance = noteService.getBalance();
+        ModelAndView modelAndView = new ModelAndView("budget");
+        modelAndView.addObject("budget", budget);
+        modelAndView.addObject("balance", balance);
+        return modelAndView;
     }
 
     @GetMapping("updates/")

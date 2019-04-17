@@ -1,6 +1,6 @@
-DROP SCHEMA IF EXISTS carcalculator;
-CREATE SCHEMA carcalculator;
-USE carcalculator;
+DROP SCHEMA IF EXISTS autometer;
+CREATE SCHEMA autometer;
+USE autometer;
 
 CREATE TABLE visit
 (
@@ -23,3 +23,15 @@ CREATE TABLE note
   car_id      INT         NOT NULL,
   FOREIGN KEY (car_id) REFERENCES car (id)
 );
+CREATE TABLE img
+(
+  filename VARCHAR(255) NOT NULL PRIMARY KEY,
+  car_id   INT          NOT NULL,
+  FOREIGN KEY (car_id) REFERENCES car (id)
+);
+CREATE TABLE param
+(
+  name  VARCHAR(50) NOT NULL PRIMARY KEY,
+  value INT DEFAULT 0
+);
+INSERT INTO param VALUE ('budget', '0');

@@ -1,9 +1,18 @@
-// var budget =
+var budgetDiv = document.createElement("div");
+var budgetLabel = document.getElementById("budget");
+budgetDiv.className = "card bg-dark";
 
-// var div = document.createElement('div');
-// div.className = "alert alert-success";
-// div.innerHTML = "<strong>Бютжет:</strong> ";
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "/budget/");
+xhr.send();
 
+xhr.onreadystatechange = function () {
+    if (this.readyState === 4) {
+        var budgetFrame = xhr.response;
+        budgetDiv.innerHTML = budgetFrame;
+        budgetLabel.appendChild(budgetDiv);
+    }
+};
 
 /* Go backBtn by backspace pressing */
 document.addEventListener('keydown', function (ev) {
@@ -22,7 +31,6 @@ document.addEventListener('keydown', function (ev) {
 });
 
 
-
 function goto(url) {
     window.location.href = url;
 }
@@ -33,7 +41,7 @@ function cuttingDecimalPlaces(e) {
 }
 
 
-// Set CSS variables
+/* Set CSS variables */
 
 var root = document.querySelector(':root');
 var rootStyles = getComputedStyle(root);
