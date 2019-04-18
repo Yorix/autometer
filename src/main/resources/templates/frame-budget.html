@@ -6,10 +6,37 @@
 
 <div class="card bg-dark">
     <div class="row" style="text-align: center;">
-        <div class="col" th:text="'Бютжет: '+${budget}"></div>
-        <div class="col" th:text="'Баланс: '+${budget+balance}"></div>
+        <div class="col-6">
+            <button id="btn-edit-budget" type="button"
+                    onclick="editBudget();"
+                    class="btn btn-outline-warning btn-sm">Изменить бютжет</button>
+            <input id="input-budget" type="number" step="0.01" min="0" max="999999999"
+                   class="form-control" placeholder="0.00" th:value="${budget}"/>
+            <button id="btn-submit-budget" type="button"
+                    onclick="submitBudget();"
+                    class="btn btn-outline-success btn-sm">>></button>
+        </div>
+        <div class="col-6" th:text="'Баланс: '+${budget+balance}"></div>
     </div>
 </div>
 
+<script>
+    var btnEditBudget = document.getElementById("btn-edit-budget");
+    var inputBudget = document.getElementById("input-budget");
+    var btnSubmitBudget = document.getElementById("btn-submit-budget");
+
+    inputBudget.style.display = "none";
+    btnSubmitBudget.style.display = "none";
+
+    function editBudget() {
+        btnEditBudget.style.display = "none";
+        inputBudget.style.display = "block";
+        btnSubmitBudget.style.display = "block";
+    }
+
+    function submitBudget() {
+
+    }
+</script>
 </body>
 </html>

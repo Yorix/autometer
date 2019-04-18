@@ -24,12 +24,12 @@
 <div class="container">
     <div class="card text-white bg-dark">
         <div class="card-header">
-            <div id="car_id" class="row" th:object="${car}" th:data-id="*{id}">
-                <div id="make_div" th:text="*{make}" style="margin-left: 20px; font-size: 30px;"></div>
-                <div id="model_div" th:text="*{model}" style="margin-left: 20px; font-size: 30px;"></div>
+            <div id="car-id" class="row" th:object="${car}" th:data-id="*{id}">
+                <div id="div-make" th:text="*{make}" style="margin-left: 20px; font-size: 30px;"></div>
+                <div id="div-model" th:text="*{model}" style="margin-left: 20px; font-size: 30px;"></div>
                 <div style="margin-left: 20px;">
-                    <button type="button" id="edit_carname_btn" class="btn btn-outline-warning"><<</button>
-                    <button type="button" id="submit_carname_btn" class="btn btn-outline-success"
+                    <button type="button" id="btn-edit-carname" class="btn btn-outline-warning"><<</button>
+                    <button type="button" id="btn-submit-carname" class="btn btn-outline-success"
                             style="display: none;">>>
                     </button>
                 </div>

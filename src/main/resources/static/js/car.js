@@ -1,8 +1,8 @@
-var carId = document.getElementById('car_id').dataset.id;
-var makeDiv = document.getElementById('make_div');
-var modelDiv = document.getElementById('model_div');
-var editCarnameBtn = document.getElementById('edit_carname_btn');
-var submitCarnameBtn = document.getElementById('submit_carname_btn');
+var carId = document.getElementById('car-id').dataset.id;
+var makeDiv = document.getElementById("div-make");
+var modelDiv = document.getElementById("div-model");
+var editCarnameBtn = document.getElementById("btn-edit-carname");
+var submitCarnameBtn = document.getElementById("btn-submit-carname");
 
 editCarnameBtn.addEventListener('click', function () {
     makeDiv.setAttribute('contentEditable', 'true');
