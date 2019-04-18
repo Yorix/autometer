@@ -23,19 +23,19 @@
 
 <div class="container">
     <div class="card bg-dark text-white">
-        <form action="/cars/" method="post" th:object="${car}">
+        <form id="form-new-car" action="/cars/" method="post" th:object="${car}">
             <div class="card-header">
                 <h5 id="header"></h5>
             </div>
             <div class="card-body">
                 <div class="form-group row">
                     <div class="col-6">
-                        <input type="text" class="form-control" id="inputMake" placeholder="Марка"
-                               th:field="*{make}"/>
+                        <input id="input-make" type="text" class="form-control"
+                               placeholder="Марка" th:field="*{make}"/>
                     </div>
                     <div class="col-6">
-                        <input type="text" class="form-control" id="inputModel" placeholder="Модель"
-                               th:field="*{model}"/>
+                        <input id="input-model" type="text" class="form-control"
+                               placeholder="Модель" th:field="*{model}"/>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                         <button type="button" class="btn btn-outline-danger" onclick="goto('../')"><< Отмена</button>
                     </div>
                     <div class="col-2">
-                        <button type="submit" class="btn btn-outline-success">Добавить >></button>
+                        <button id="btn-submit" type="button" class="btn btn-outline-success">Добавить >></button>
                     </div>
                 </div>
             </div>
@@ -67,6 +67,7 @@
     }
 </script>
 
+<script src="/js/new-car.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>

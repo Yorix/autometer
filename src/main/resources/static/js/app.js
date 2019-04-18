@@ -1,7 +1,6 @@
 /* Go backBtn by backspace pressing */
 document.addEventListener('keydown', function (ev) {
     if (ev.key.charCodeAt(8)) {
-        var inputs = document.getElementsByTagName('input');
         for (var i = 0; i < inputs.length; i++)
             if (inputs[i] === document.activeElement)
                 return;
