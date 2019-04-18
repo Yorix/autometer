@@ -53,7 +53,7 @@ public class CarController {
 
     @GetMapping("newCar/")
     public ModelAndView newCarPage() {
-        ModelAndView modelAndView = new ModelAndView("newCar");
+        ModelAndView modelAndView = new ModelAndView("new-car");
         modelAndView.addObject("car", new Car());
         return modelAndView;
     }

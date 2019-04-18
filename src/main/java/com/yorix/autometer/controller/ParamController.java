@@ -21,7 +21,7 @@ public class ParamController {
     }
 
     @GetMapping("{name}/")
-    public int get(@PathVariable("name") String name) {
+    public double get(@PathVariable("name") String name) {
         return paramService.read(name);
     }
 

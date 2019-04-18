@@ -19,7 +19,7 @@ CREATE TABLE note
   id          INT PRIMARY KEY AUTO_INCREMENT,
   description VARCHAR(255),
   value       DECIMAL(11, 2),
-  date        VARCHAR(10) NOT NULL,
+  date        VARCHAR(20) NOT NULL,
   car_id      INT         NOT NULL,
   FOREIGN KEY (car_id) REFERENCES car (id)
 );
@@ -32,6 +32,6 @@ CREATE TABLE img
 CREATE TABLE param
 (
   name  VARCHAR(50) NOT NULL PRIMARY KEY,
-  value INT DEFAULT 0
+  value DECIMAL DEFAULT 0
 );
-INSERT INTO param VALUE ('budget', '0');
+INSERT INTO param VALUE ('budget', 0);

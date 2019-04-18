@@ -2,7 +2,10 @@ package com.yorix.autometer.model;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "param")
@@ -13,5 +16,5 @@ public class Param {
     private String name;
 
     @Column(name = "value")
-    private int value;
+    private double value;
 }

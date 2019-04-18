@@ -19,7 +19,7 @@ public class ParamService {
         paramRepository.save(param);
     }
 
-    public int read(String name) {
+    public double read(String name) {
         return paramRepository.getOne(name).getValue();
     }
 

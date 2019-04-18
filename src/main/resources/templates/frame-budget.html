@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/app.css">
+
+<div class="card bg-dark">
+    <div class="row" style="text-align: center;">
+        <div class="col" th:text="'Бютжет: '+${budget}"></div>
+        <div class="col" th:text="'Баланс: '+${budget+balance}"></div>
+    </div>
+</div>
+
+</body>
+</html>

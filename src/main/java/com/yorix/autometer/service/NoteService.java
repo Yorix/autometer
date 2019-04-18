@@ -38,34 +38,34 @@ public class NoteService {
     }
 
 
-    public float getSpendingByCar(Car car) {
+    public double getSpendingByCar(Car car) {
         List<Note> notes = readAllByCar(car);
         return getSpending(notes);
     }
 
-    public float getIncomeByCar(Car car) {
+    public double getIncomeByCar(Car car) {
         List<Note> notes = readAllByCar(car);
         return getIncome(notes);
     }
 
-    public float getBalance() {
+    public double getBalance() {
         List<Note> notes = readAll();
         return getSpending(notes) + getIncome(notes);
     }
 
-    private float getSpending(List<Note> notes) {
+    private double getSpending(List<Note> notes) {
         double sum = 0;
         for (Note note : notes)
             if (note.getValue() < 0)
                 sum += note.getValue();
-        return (float) (int) (sum * 100) / 100;
+        return (double) (int) (sum * 100) / 100;
     }
 
-    private float getIncome(List<Note> notes) {
+    private double getIncome(List<Note> notes) {
         double sum = 0;
         for (Note note : notes)
             if (note.getValue() > 0)
                 sum += note.getValue();
-        return (float) (int) (sum * 100) / 100;
+        return (double) (int) (sum * 100) / 100;
     }
 }

@@ -1,7 +1,3 @@
-var noteForm = document.getElementById('note_form');
-var noteValueInput = document.getElementById('note_value_input');
-var negativeSelect = document.getElementById('negative_select');
-
 var carId = document.getElementById('car_id').dataset.id;
 var makeDiv = document.getElementById('make_div');
 var modelDiv = document.getElementById('model_div');
@@ -33,13 +29,3 @@ submitCarnameBtn.addEventListener('click', function () {
             window.location.reload();
     }
 });
-
-noteValueInput.value = '';
-
-
-function noteSubmit() {
-    if (noteValueInput.value.length > 0)
-        if (negativeSelect.selectedIndex === 0)
-            noteValueInput.value = noteValueInput.value * -1;
-    noteForm.submit();
-}

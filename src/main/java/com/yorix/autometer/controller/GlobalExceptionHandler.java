@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class GlobalExceptionHandler {
     @ExceptionHandler
     public ModelAndView errorPage(Exception ex) {
-        ModelAndView modelAndView = new ModelAndView("errorPage");
+        ModelAndView modelAndView = new ModelAndView("error-page");
         modelAndView.addObject("msg", ex.getMessage());
         return modelAndView;
     }

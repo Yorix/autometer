@@ -1,18 +1,3 @@
-var budgetDiv = document.createElement("div");
-var budgetLabel = document.getElementById("budget");
-budgetDiv.className = "card bg-dark";
-
-var xhr = new XMLHttpRequest();
-xhr.open("GET", "/budget/");
-xhr.send();
-
-xhr.onreadystatechange = function () {
-    if (this.readyState === 4) {
-        budgetDiv.innerHTML = xhr.response;
-        budgetLabel.appendChild(budgetDiv);
-    }
-};
-
 /* Go backBtn by backspace pressing */
 document.addEventListener('keydown', function (ev) {
     if (ev.key.charCodeAt(8)) {
@@ -32,11 +17,6 @@ document.addEventListener('keydown', function (ev) {
 
 function goto(url) {
     window.location.href = url;
-}
-
-function cuttingDecimalPlaces(e) {
-    if (e.value.indexOf(".") !== -1)
-        e.value = e.value.substring(0, e.value.indexOf(".") + 3);
 }
 
 
