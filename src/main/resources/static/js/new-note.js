@@ -1,14 +1,9 @@
-var noteDateInput = document.getElementById("date");
-var noteDescriptionInput = document.getElementById("description");
-var negativeSelect = document.getElementById("negative-select");
-var noteValueInput = document.getElementById("value");
+var noteDateInput = document.getElementById("input-note-date");
+var noteDescriptionInput = document.getElementById("input-note-desc");
+var negativeSelect = document.getElementById("select-negative");
+var noteValueInput = document.getElementById("input-note-value");
 
 noteValueInput.value = "";
-
-function cuttingDecimalPlaces(e) {
-    if (e.value.indexOf(".") !== -1)
-        e.value = e.value.substring(0, e.value.indexOf(".") + 3);
-}
 
 function noteSubmit(carId) {
     if (noteValueInput.value.length > 0) {

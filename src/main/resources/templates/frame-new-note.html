@@ -11,22 +11,22 @@
 <div class="card text-white bg-dark" th:object="${note}">
     <div class="card-body form-group row">
         <div class="col-3 input-group">
-            <input type="date" id="date" name="date" class="form-control" placeholder="дд.мм.гггг"
+            <input id="input-note-date" type="date" class="form-control" placeholder="дд.мм.гггг"
                    th:field="*{date}"/>
         </div>
         <div class="col-4">
-            <input id="description" type="text" class="form-control" placeholder="Запись"
+            <input id="input-note-desc" type="text" class="form-control" placeholder="Запись"
                    th:field="*{description}"/>
         </div>
         <div class="col-2">
-            <select id="negative-select" class="form-control">
+            <select id="select-negative" class="form-control">
                 <option>Расход</option>
                 <option>Приход</option>
             </select>
         </div>
         <div class="col-3 input-group">
-            <input id="value" oninput="cuttingDecimalPlaces(this)"
-                   type="number" step="0.01" min="0" max="999999999"
+            <input id="input-note-value" oninput="cuttingDecimalPlaces(this)"
+                   type="number" step="0.01" min="0" max="9999999"
                    class="form-control" placeholder="0.00" th:field="*{value}"/>
             <div class="input-group-append">
                 <button type="button" class="btn btn-outline-success" th:onclick="|noteSubmit('${carId}')|">>></button>
@@ -36,5 +36,6 @@
 </div>
 
 <script src="/js/new-note.js"></script>
+<script src="/js/app.js"></script>
 </body>
 </html>

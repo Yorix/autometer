@@ -18,6 +18,10 @@ function goto(url) {
     window.location.href = url;
 }
 
+function cuttingDecimalPlaces(e) {
+    if (e.value.indexOf(".") !== -1)
+        e.value = e.value.substring(0, e.value.indexOf(".") + 3);
+}
 
 /* Set CSS variables */
 

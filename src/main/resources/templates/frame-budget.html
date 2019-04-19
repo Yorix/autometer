@@ -9,12 +9,19 @@
         <div class="col-6">
             <button id="btn-edit-budget" type="button"
                     onclick="editBudget();"
-                    class="btn btn-outline-warning btn-sm">Изменить бютжет</button>
-            <input id="input-budget" type="number" step="0.01" min="0" max="999999999"
-                   class="form-control" placeholder="0.00" th:value="${budget}"/>
-            <button id="btn-submit-budget" type="button"
-                    onclick="submitBudget();"
-                    class="btn btn-outline-success btn-sm">>></button>
+                    class="btn btn-outline-warning btn-sm">Изменить бютжет
+            </button>
+            <div class="input-group">
+                <input id="input-budget" type="number" step="0.01" min="0" max="9999999"
+                       class="form-control-sm" placeholder="0.00" th:value="${budget}"
+                       oninput="cuttingDecimalPlaces(this)"/>
+                <div class="input-group-append">
+                    <button id="btn-submit-budget" type="button"
+                            onclick="submitBudget();"
+                            class="btn btn-outline-success btn-sm">>>
+                    </button>
+                </div>
+            </div>
         </div>
         <div class="col-6" th:text="'Баланс: '+${budget+balance}"></div>
     </div>
@@ -35,8 +42,22 @@
     }
 
     function submitBudget() {
+        btnEditBudget.style.display = "block";
+        inputBudget.style.display = "none";
+        btnSubmitBudget.style.display = "none";
 
+        var formData = new FormData();
+        formData.append("name", "budget");
+        formData.append("value", inputBudget.value);
+        var xhr = new XMLHttpRequest();
+        xhr.open("PUT", "/params/budget/");
+        xhr.send(formData);
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200)
+                window.parent.location.reload();
+        }
     }
 </script>
+<script src="/js/app.js"></script>
 </body>
 </html>
