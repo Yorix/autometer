@@ -1,6 +1,5 @@
 package com.yorix.autometer.controller;
 
-import com.yorix.autometer.model.Note;
 import com.yorix.autometer.model.Visit;
 import com.yorix.autometer.service.NoteService;
 import com.yorix.autometer.service.ParamService;
@@ -8,7 +7,6 @@ import com.yorix.autometer.storage.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,21 +38,13 @@ public class IndexController {
         return "redirect:/cars/";
     }
 
-    @GetMapping("budget/")
+    @GetMapping("header-menu/")
     public ModelAndView budgetFrame() {
         double budget = paramService.read("budget");
         double balance = noteService.getBalance();
-        ModelAndView modelAndView = new ModelAndView("frame-budget");
+        ModelAndView modelAndView = new ModelAndView("frame-header-menu");
         modelAndView.addObject("budget", budget);
         modelAndView.addObject("balance", balance);
-        return modelAndView;
-    }
-
-    @GetMapping("{carId}/new-note/")
-    public ModelAndView newNoteFrame(@PathVariable("carId") int carId) {
-        ModelAndView modelAndView = new ModelAndView("frame-new-note");
-        modelAndView.addObject("carId", carId);
-        modelAndView.addObject("note", new Note());
         return modelAndView;
     }
 

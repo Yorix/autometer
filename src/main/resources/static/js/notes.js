@@ -1,20 +1,20 @@
 function clickChange(id) {
-    var dateDiv = document.getElementById('date_div' + id);
-    var descDiv = document.getElementById('desc_div' + id);
-    var valueDiv = document.getElementById('value_div' + id);
-    var changeBtn = document.getElementById('change_btn' + id);
-    var submitBtn = document.getElementById('submit_btn' + id);
+    var dateDiv = document.getElementById("div-date" + id);
+    var descDiv = document.getElementById("div-desc" + id);
+    var valueDiv = document.getElementById("div-value" + id);
+    var changeBtn = document.getElementById("btn-change" + id);
+    var submitBtn = document.getElementById("btn-submit" + id);
 
-    dateDiv.setAttribute('contentEditable', 'true');
-    descDiv.setAttribute('contentEditable', 'true');
-    valueDiv.setAttribute('contentEditable', 'true');
-    changeBtn.style.display = 'none';
-    submitBtn.style.display = 'block';
+    dateDiv.setAttribute("contentEditable", "true");
+    descDiv.setAttribute("contentEditable", "true");
+    valueDiv.setAttribute("contentEditable", "true");
+    changeBtn.style.display = "none";
+    submitBtn.style.display = "block";
 }
 
-function clickDelete(id, carId) {
+function clickDelete(id) {
     var xhr = new XMLHttpRequest();
-    xhr.open("DELETE", "/cars/" + carId + "/notes/" + id);
+    xhr.open("DELETE", id + "/");
     xhr.send();
     xhr.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200)
@@ -22,28 +22,28 @@ function clickDelete(id, carId) {
     }
 }
 
-function clickSubmit(id, carId) {
-    var dateDiv = document.getElementById('date_div' + id);
-    var descDiv = document.getElementById('desc_div' + id);
-    var valueDiv = document.getElementById('value_div' + id);
-    var changeBtn = document.getElementById('change_btn' + id);
-    var submitBtn = document.getElementById('submit_btn' + id);
+function clickSubmit(id) {
+    var dateDiv = document.getElementById("div-date" + id);
+    var descDiv = document.getElementById("div-desc" + id);
+    var valueDiv = document.getElementById("div-value" + id);
+    var changeBtn = document.getElementById("btn-change" + id);
+    var submitBtn = document.getElementById("btn-submit" + id);
 
 
-    dateDiv.setAttribute('contentEditable', 'false');
-    descDiv.setAttribute('contentEditable', 'false');
-    valueDiv.setAttribute('contentEditable', 'false');
-    changeBtn.style.display = 'block';
-    submitBtn.style.display = 'none';
+    dateDiv.setAttribute("contentEditable", "false");
+    descDiv.setAttribute("contentEditable", "false");
+    valueDiv.setAttribute("contentEditable", "false");
+    changeBtn.style.display = "block";
+    submitBtn.style.display = "none";
 
 
     var formData = new FormData();
-    formData.append('id', id);
-    formData.append('description', descDiv.innerText);
-    formData.append('value', valueDiv.innerText);
-    formData.append('date', dateDiv.innerText);
+    formData.append("id", id);
+    formData.append("description", descDiv.innerText);
+    formData.append("value", valueDiv.innerText);
+    formData.append("date", dateDiv.innerText);
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/cars/" + carId + "/notes/");
+    xhr.open("POST", window.location.href);
     xhr.send(formData);
 
     xhr.onreadystatechange = function () {

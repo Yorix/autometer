@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/cars/")
+@RequestMapping("/cars/{carId}/notes/")
 public class NoteController {
     private final NoteService noteService;
     private final CarService carService;
@@ -21,17 +21,17 @@ public class NoteController {
         this.carService = carService;
     }
 
-    @PostMapping("{id}/notes/")
-    public String create(@PathVariable int id, Note note) {
-        Car car = carService.read(id);
+    @PostMapping
+    public String create(@PathVariable("carId") int carId, Note note) {
+        Car car = carService.read(carId);
         note.setCar(car);
         noteService.create(note);
-        return String.format("redirect:/cars/%s/", id);
+        return String.format("redirect:/cars/%s/", carId);
     }
 
-    @GetMapping("{id}/notes/")
-    public ModelAndView getByCar(@PathVariable("id") int id) {
-        Car car = carService.read(id);
+    @GetMapping
+    public ModelAndView getByCar(@PathVariable("carId") int carId) {
+        Car car = carService.read(carId);
         ModelAndView modelAndView = new ModelAndView("notes");
         modelAndView.addObject("car", car);
         modelAndView.addObject("notes", noteService.readAllByCar(car));
@@ -40,7 +40,15 @@ public class NoteController {
         return modelAndView;
     }
 
-    @DeleteMapping("{carId}/notes/{noteId}")
+    @GetMapping("new-note/")
+    public ModelAndView newNoteFrame(@PathVariable("carId") int carId) {
+        ModelAndView modelAndView = new ModelAndView("frame-new-note");
+        modelAndView.addObject("carId", carId);
+        modelAndView.addObject("note", new Note());
+        return modelAndView;
+    }
+
+    @DeleteMapping("{noteId}/")
     public String delete(@PathVariable("carId") int carId, @PathVariable("noteId") int noteId) {
         noteService.deleteById(noteId);
         return String.format("redirect:/cars/%s/notes/", carId);

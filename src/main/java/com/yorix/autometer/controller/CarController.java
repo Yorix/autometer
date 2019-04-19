@@ -32,6 +32,14 @@ public class CarController {
         return String.format("redirect:/cars/%s/", car.getId());
     }
 
+    @GetMapping
+    public ModelAndView getAll() {
+        ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("cars", carService.readAll());
+        modelAndView.addObject("textProperties", properties);
+        return modelAndView;
+    }
+
     @GetMapping("{id}/")
     public ModelAndView get(@PathVariable("id") int id) {
         Car car = carService.read(id);
@@ -43,15 +51,7 @@ public class CarController {
         return modelAndView;
     }
 
-    @GetMapping
-    public ModelAndView getAll() {
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("cars", carService.readAll());
-        modelAndView.addObject("textProperties", properties);
-        return modelAndView;
-    }
-
-    @GetMapping("newCar/")
+    @GetMapping("new-car/")
     public ModelAndView newCarPage() {
         ModelAndView modelAndView = new ModelAndView("new-car");
         modelAndView.addObject("car", new Car());

@@ -1,6 +1,6 @@
 function sendFile(maxFileSize) {
-    var form = document.getElementById("sendFile");
-    var fileInput = document.getElementById('file_input');
+    var form = document.getElementById("form-send-file");
+    var fileInput = document.getElementById('input-file');
 
     if (fileInput.files.length > 0) {
         var fileSize = fileInput.files[0].size;
