@@ -37,10 +37,13 @@ function clickSubmit(id) {
     submitBtn.style.display = "none";
 
 
+    var value = valueDiv.innerText
+        .replace(",", ".")
+        .replace(/\s+/g, "");
     var formData = new FormData();
     formData.append("id", id);
     formData.append("description", descDiv.innerText);
-    formData.append("value", valueDiv.innerText);
+    formData.append("value", value);
     formData.append("date", dateDiv.innerText);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", window.location.href);

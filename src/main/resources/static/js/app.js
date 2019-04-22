@@ -27,17 +27,19 @@ function cuttingDecimalPlaces(e) {
         e.value = e.value.substring(0, e.value.indexOf(".") + 3);
 }
 
+var money = document.getElementsByClassName("money");
+if (money !== null) {
+    for (var i = 0; i < money.length; i++) {
+        var text = money[i].innerText;
 
-/* Set CSS variables */
-var root = document.querySelector(":root");
-var rootStyles = getComputedStyle(root);
+        if (Number(text) < 0) {
+            money[i].classList.add("negMoney");
+        } else if (Number(text) > 0) {
+            money[i].classList.add("posMoney");
+        } else {
+            money[i].classList.add("zerMoney");
+        }
 
-var balance = document.getElementById("balance-info").dataset.balance;
-var posColor = rootStyles.getPropertyValue("--pos-color");
-var negColor = rootStyles.getPropertyValue("--neg-color");
-var zerColor = rootStyles.getPropertyValue("--zer-color");
-if (balance < 0)
-    root.style.setProperty("--var-color", negColor);
-else if (balance > 0)
-    root.style.setProperty("--var-color", posColor);
-else root.style.setProperty("--var-color", zerColor);
+        money[i].innerText = Number(text).toLocaleString("ru");
+    }
+}

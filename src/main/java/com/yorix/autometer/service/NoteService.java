@@ -36,26 +36,4 @@ public class NoteService {
     public void deleteById(int id) {
         noteRepository.deleteById(id);
     }
-
-
-    public double getBalance() {
-        List<Note> notes = readAll();
-        return getSpending(notes) + getIncome(notes);
-    }
-
-    private double getSpending(List<Note> notes) {
-        double sum = 0;
-        for (Note note : notes)
-            if (note.getValue() < 0)
-                sum += note.getValue();
-        return (double) (int) (sum * 100) / 100;
-    }
-
-    private double getIncome(List<Note> notes) {
-        double sum = 0;
-        for (Note note : notes)
-            if (note.getValue() > 0)
-                sum += note.getValue();
-        return (double) (int) (sum * 100) / 100;
-    }
 }

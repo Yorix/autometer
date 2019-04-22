@@ -21,18 +21,18 @@ public class CarDTO {
     }
 
     private double getSpending(Car car) {
-        double sum = car.getNotes().stream()
+        return car.getNotes()
+                .stream()
                 .mapToDouble(Note::getValue)
                 .filter(value -> value < 0)
                 .sum();
-        return (double) (int) (sum * 100) / 100;
     }
 
     private double getIncome(Car car) {
-        double sum = car.getNotes().stream()
+        return car.getNotes()
+                .stream()
                 .mapToDouble(Note::getValue)
                 .filter(value -> value > 0)
                 .sum();
-        return (double) (int) (sum * 100) / 100;
     }
 }

@@ -1,10 +1,3 @@
-:root {
-    --pos-color: #88ff88;
-    --neg-color: #ff8888;
-    --zer-color: #ffffff;
-    --var-color: #ffffff;
-}
-
 body {
     background: #545454;
     color: #ffffff;
@@ -12,6 +5,18 @@ body {
 
 td {
     padding: 10px;
+}
+
+.posMoney {
+    color: #8f8;
+}
+
+.negMoney {
+    color: #f88;
+}
+
+.zerMoney {
+    color: #ddd;
 }
 
 .content {

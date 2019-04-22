@@ -33,17 +33,17 @@
             </div>
             <div class="col-4">
                 <table>
-                    <tr style="color: var(--neg-color);">
+                    <tr>
                         <td>Расходы:</td>
-                        <td th:text="*{spending}"></td>
+                        <td class="money" th:text="*{spending}"></td>
                     </tr>
-                    <tr style="color: var(--pos-color);">
+                    <tr>
                         <td>Выручка:</td>
-                        <td th:text="*{income}"></td>
+                        <td class="money" th:text="*{income}"></td>
                     </tr>
-                    <tr style="color: var(--var-color);">
+                    <tr>
                         <td>Прибыль:</td>
-                        <td id="balance-info" th:data-balance="*{spending+income}" th:text="*{spending+income}"></td>
+                        <td class="money" id="balance-info" th:data-balance="*{spending+income}" th:text="*{spending+income}"></td>
                     </tr>
                 </table>
             </div>

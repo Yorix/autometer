@@ -1,5 +1,6 @@
 package com.yorix.autometer.controller;
 
+import com.yorix.autometer.model.Note;
 import com.yorix.autometer.model.Visit;
 import com.yorix.autometer.service.NoteService;
 import com.yorix.autometer.service.ParamService;
@@ -41,7 +42,10 @@ public class IndexController {
     @GetMapping("header-menu/")
     public ModelAndView budgetFrame() {
         double budget = paramService.read("budget");
-        double balance = noteService.getBalance();
+        double balance = noteService.readAll()
+                .stream()
+                .mapToDouble(Note::getValue)
+                .sum();
         ModelAndView modelAndView = new ModelAndView("frame-header-menu");
         modelAndView.addObject("budget", budget);
         modelAndView.addObject("balance", balance);

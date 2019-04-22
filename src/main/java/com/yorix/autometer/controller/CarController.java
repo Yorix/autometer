@@ -5,7 +5,6 @@ import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.CarDTO;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.service.CarService;
-import com.yorix.autometer.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,15 +17,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/cars/")
 public class CarController {
     private final CarService carService;
-    private final NoteService noteService;
     private final CardTextProperties properties;
 
     @Autowired
-    public CarController(CarService carService,
-                         NoteService noteService,
-                         CardTextProperties properties) {
+    public CarController(CarService carService, CardTextProperties properties) {
         this.carService = carService;
-        this.noteService = noteService;
         this.properties = properties;
     }
 
@@ -39,7 +34,8 @@ public class CarController {
     @GetMapping
     public ModelAndView getAll() {
         ModelAndView modelAndView = new ModelAndView("index");
-        List<CarDTO> cars = carService.readAll().stream()
+        List<CarDTO> cars = carService.readAll()
+                .stream()
                 .map(CarDTO::new)
                 .collect(Collectors.toList());
         modelAndView.addObject("cars", cars);

@@ -22,18 +22,17 @@
                 </div>
                 <div class="col-4">
                     <table>
-                        <tr style="color: var(--neg-color);">
+                        <tr>
                             <td>Расходы:</td>
-                            <td th:text="*{spending}"></td>
+                            <td class="money" th:text="*{spending}"></td>
                         </tr>
-                        <tr style="color: var(--pos-color);">
+                        <tr>
                             <td>Выручка:</td>
-                            <td th:text="*{income}"></td>
+                            <td class="money" th:text="*{income}"></td>
                         </tr>
-                        <tr style="color: var(--var-color);">
+                        <tr>
                             <td>Прибыль:</td>
-                            <td id="balance-info" th:data-balance="*{spending+income}"
-                                th:text="*{spending+income}"></td>
+                            <td class="money" id="balance-info" th:data-balance="*{spending+income}" th:text="*{spending+income}"></td>
                         </tr>
                     </table>
                 </div>
@@ -50,7 +49,7 @@
                         <div th:id="|div-desc*{id}|" th:text="*{description}"></div>
                     </div>
                     <div class="col-2">
-                        <div th:id="|div-value*{id}|" th:text="*{value}"></div>
+                        <div class="money" th:id="|div-value*{id}|" th:text="*{value}"></div>
                     </div>
                     <div class="col-1">
                         <button th:id="|btn-change*{id}|" type="button" th:onclick="|clickChange(${note.id});|"
