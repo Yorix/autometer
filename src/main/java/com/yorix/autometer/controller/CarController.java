@@ -2,6 +2,7 @@ package com.yorix.autometer.controller;
 
 import com.yorix.autometer.config.CardTextProperties;
 import com.yorix.autometer.model.Car;
+import com.yorix.autometer.model.CarDTO;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.service.CarService;
 import com.yorix.autometer.service.NoteService;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/cars/")
@@ -35,18 +39,19 @@ public class CarController {
     @GetMapping
     public ModelAndView getAll() {
         ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("cars", carService.readAll());
+        List<CarDTO> cars = carService.readAll().stream()
+                .map(CarDTO::new)
+                .collect(Collectors.toList());
+        modelAndView.addObject("cars", cars);
         modelAndView.addObject("textProperties", properties);
         return modelAndView;
     }
 
     @GetMapping("{id}/")
     public ModelAndView get(@PathVariable("id") int id) {
-        Car car = carService.read(id);
+        CarDTO car = new CarDTO(carService.read(id));
         ModelAndView modelAndView = new ModelAndView("car");
         modelAndView.addObject("car", car);
-        modelAndView.addObject("spending", noteService.getSpendingByCar(car));
-        modelAndView.addObject("income", noteService.getIncomeByCar(car));
         modelAndView.addObject("note", new Note());
         return modelAndView;
     }

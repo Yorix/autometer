@@ -38,16 +38,6 @@ public class NoteService {
     }
 
 
-    public double getSpendingByCar(Car car) {
-        List<Note> notes = readAllByCar(car);
-        return getSpending(notes);
-    }
-
-    public double getIncomeByCar(Car car) {
-        List<Note> notes = readAllByCar(car);
-        return getIncome(notes);
-    }
-
     public double getBalance() {
         List<Note> notes = readAll();
         return getSpending(notes) + getIncome(notes);

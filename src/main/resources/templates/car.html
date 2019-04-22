@@ -12,9 +12,9 @@
 <br/>
 
 <div class="container">
-    <div class="card text-white bg-dark">
+    <div class="card text-white bg-dark" th:object="${car}">
         <div class="card-header">
-            <div id="car-id" class="row" th:object="${car}" th:data-id="*{id}">
+            <div id="car-id" class="row" th:data-id="*{id}">
                 <div id="div-make" th:text="*{make}" style="margin-left: 20px; font-size: 30px;"></div>
                 <div id="div-model" th:text="*{model}" style="margin-left: 20px; font-size: 30px;"></div>
                 <div style="margin-left: 20px;">
@@ -28,22 +28,22 @@
         <div class="card-body row">
             <div class="col-8">
                 <a href="img/">
-                    <img th:src="|/${car.imgFilename}|" style="max-width: 100%; max-height: 370px;">
+                    <img th:src="|/*{imgFilename}|" style="max-width: 100%; max-height: 370px;">
                 </a>
             </div>
             <div class="col-4">
                 <table>
                     <tr style="color: var(--neg-color);">
                         <td>Расходы:</td>
-                        <td th:text="${spending}"></td>
+                        <td th:text="*{spending}"></td>
                     </tr>
                     <tr style="color: var(--pos-color);">
                         <td>Выручка:</td>
-                        <td th:text="${income}"></td>
+                        <td th:text="*{income}"></td>
                     </tr>
                     <tr style="color: var(--var-color);">
                         <td>Прибыль:</td>
-                        <td id="balance-info" th:data-balance="${spending+income}" th:text="${spending+income}"></td>
+                        <td id="balance-info" th:data-balance="*{spending+income}" th:text="*{spending+income}"></td>
                     </tr>
                 </table>
             </div>

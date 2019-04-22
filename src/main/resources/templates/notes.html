@@ -12,10 +12,10 @@
 <br/>
 
 <div class="container">
-    <div class="card bg-dark">
+    <div class="card bg-dark" th:object="${car}">
         <div class="card-header">
             <div class="row">
-                <div class="col-8" th:object="${car}">
+                <div class="col-8">
                     <img th:src="|/*{imgFilename}|"
                          style="max-width: 100%; max-height: 130px;">
                     <div class="content align-end" th:text="|*{make} *{model}|"></div>
@@ -24,16 +24,16 @@
                     <table>
                         <tr style="color: var(--neg-color);">
                             <td>Расходы:</td>
-                            <td th:text="${spending}"></td>
+                            <td th:text="*{spending}"></td>
                         </tr>
                         <tr style="color: var(--pos-color);">
                             <td>Выручка:</td>
-                            <td th:text="${income}"></td>
+                            <td th:text="*{income}"></td>
                         </tr>
                         <tr style="color: var(--var-color);">
                             <td>Прибыль:</td>
-                            <td id="balance-info" th:data-balance="${spending+income}"
-                                th:text="${spending+income}"></td>
+                            <td id="balance-info" th:data-balance="*{spending+income}"
+                                th:text="*{spending+income}"></td>
                         </tr>
                     </table>
                 </div>
