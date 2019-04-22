@@ -12,11 +12,11 @@
 <br/>
 
 <div class="container">
-    <div class="card text-white bg-dark">
+    <div class="card bg-dark">
         <div class="card-header">
             <div class="row">
                 <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Назад</button>
-                <div th:text="${car.make}+' '+${car.model}" style="margin-left: 20px; font-size: 30px;"></div>
+                <div class="header-text align-start" th:text="|${car.make} ${car.model}|"></div>
             </div>
         </div>
         <div class="card-body">
@@ -29,8 +29,7 @@
                         <div style="margin-left: 20px;">
                             <button type="button"
                                     class="btn btn-outline-success"
-                                    th:data-maxFileSize="${maxFileSize}"
-                                    th:onclick="|sendFile(getAttribute('data-maxFileSize'));|">>>
+                                    th:onclick="|sendFile('${maxFileSize}');|">>>
                             </button>
                         </div>
                     </div>
@@ -41,7 +40,7 @@
 
             <div class="card-columns">
                 <div class="container" th:each="img:${imgs}">
-                    <div class="card text-white bg-dark" style="position: relative;">
+                    <div class="card bg-dark" style="position: relative;">
                         <img style="position: relative; max-width: 100%;" th:src="'/'+${img.filename}"/>
                         <button
                                 type="button"

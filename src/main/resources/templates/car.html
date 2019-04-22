@@ -12,11 +12,11 @@
 <br/>
 
 <div class="container">
-    <div class="card text-white bg-dark" th:object="${car}">
+    <div class="card bg-dark" th:object="${car}">
         <div class="card-header">
             <div id="car-id" class="row" th:data-id="*{id}">
-                <div id="div-make" th:text="*{make}" style="margin-left: 20px; font-size: 30px;"></div>
-                <div id="div-model" th:text="*{model}" style="margin-left: 20px; font-size: 30px;"></div>
+                <div id="div-make" class="header-text align-start" th:text="*{make}"></div>
+                <div id="div-model" class="header-text align-start" th:text="*{model}"></div>
                 <div style="margin-left: 20px;">
                     <button type="button" id="btn-edit-carname" class="btn btn-outline-warning"><<</button>
                     <button type="button" id="btn-submit-carname" class="btn btn-outline-success"
