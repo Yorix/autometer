@@ -1,6 +1,6 @@
 package com.yorix.autometer.service;
 
-import com.yorix.autometer.config.StorageProperties;
+import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.Img;
 import com.yorix.autometer.model.Note;
@@ -13,10 +13,10 @@ import java.util.List;
 @Service
 public class CarService {
     private final CarRepository carRepository;
-    private final StorageProperties properties;
+    private final AppProperties properties;
 
     @Autowired
-    public CarService(CarRepository carRepository, StorageProperties properties) {
+    public CarService(CarRepository carRepository, AppProperties properties) {
         this.carRepository = carRepository;
         this.properties = properties;
     }

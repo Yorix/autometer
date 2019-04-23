@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties("text.card")
+@ConfigurationProperties("app.text.card")
 @Data
 public class CardTextProperties {
     private String header;

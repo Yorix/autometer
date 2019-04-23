@@ -1,5 +1,6 @@
 package com.yorix.autometer.controller;
 
+import com.yorix.autometer.config.Start;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.model.Visit;
 import com.yorix.autometer.service.NoteService;
@@ -9,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Controller
@@ -21,14 +21,17 @@ public class IndexController {
     private final VisitRepository visitRepository;
     private final ParamService paramService;
     private final NoteService noteService;
+    private final Start start;
 
     @Autowired
     public IndexController(VisitRepository visitRepository,
                            ParamService paramService,
-                           NoteService noteService) {
+                           NoteService noteService,
+                           Start start) {
         this.visitRepository = visitRepository;
         this.paramService = paramService;
         this.noteService = noteService;
+        this.start = start;
     }
 
     @GetMapping
@@ -53,13 +56,14 @@ public class IndexController {
     }
 
     @GetMapping("updates/")
-    public String checkUpdates() {
-        try {
-            String filepath = new File("update.cmd").getAbsolutePath();
-            Runtime.getRuntime().exec("cmd /c \"" + filepath + "\"");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "redirect:/cars/";
+    @ResponseBody
+    public boolean checkUpdates() {
+        return start.isUpdated();
+    }
+
+    @GetMapping("install/")
+    public String installUpdate() {
+        start.installUpdate();
+        return "redirect:/";
     }
 }

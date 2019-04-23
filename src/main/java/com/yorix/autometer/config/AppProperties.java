@@ -5,10 +5,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties("storage")
+@ConfigurationProperties("app")
 @Data
-public class StorageProperties {
-    private String location = "c:/ProgramData/Yorix/CarPark/";
+public class AppProperties {
+    private String rootLocation = System.getProperty("user.dir");
+    private String storageLocation = "../images";
     private String defaultImageLocation;
     private String defaultImageFilename;
 }
