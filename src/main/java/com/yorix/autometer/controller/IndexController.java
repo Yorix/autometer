@@ -57,8 +57,8 @@ public class IndexController {
 
     @GetMapping("updates/")
     @ResponseBody
-    public boolean checkUpdates() {
-        return start.isUpdated();
+    public String checkUpdates() {
+        return start.getUpdateAns();
     }
 
     @GetMapping("install/")

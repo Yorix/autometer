@@ -29,9 +29,11 @@ function cuttingDecimalPlaces(e) {
 
 
 var updatedSpan = document.getElementById("span-updated");
+var updateErrorSpan = document.getElementById("span-update-error");
 var updateBtn = document.getElementById("btn-update");
-if (updatedSpan !== null && updateBtn !== null) {
+if (updatedSpan !== null && updateErrorSpan !== null && updateBtn !== null) {
     updatedSpan.style.setProperty("display", "none");
+    updateErrorSpan.style.setProperty("display", "none");
     updateBtn.style.setProperty("display", "none");
 
     var xhr = new XMLHttpRequest();
@@ -39,10 +41,12 @@ if (updatedSpan !== null && updateBtn !== null) {
     xhr.send();
     xhr.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            if (xhr.response === "true")
+            if (xhr.response.startsWith("Already up to date"))
                 updatedSpan.style.setProperty("display", "block");
-            else
+            else if (xhr.response.startsWith("Updating"))
                 updateBtn.style.setProperty("display", "block");
+            else
+                updateErrorSpan.style.setProperty("display", "block");
         }
     };
 }
