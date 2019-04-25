@@ -26,8 +26,6 @@ public class Start {
     public void init() throws IOException, InterruptedException {
         imageStorageService.init();
 
-        System.out.println(rootLocation);
-
         String command = String.format("cmd /c cd /d \"%s\" && git pull>.gitAns", rootLocation);
         Runtime.getRuntime().exec(command).waitFor();
         checkUpdate(new File(rootLocation + "/.gitAns"));

@@ -43,7 +43,7 @@ if (updatedSpan !== null && updateErrorSpan !== null && updateBtn !== null) {
         if (this.readyState === 4 && this.status === 200) {
             if (xhr.response.startsWith("Already up to date"))
                 updatedSpan.style.setProperty("display", "block");
-            else if (xhr.response.startsWith("Update"))
+            else if (xhr.response.startsWith("Updating"))
                 updateBtn.style.setProperty("display", "block");
             else
                 updateErrorSpan.style.setProperty("display", "block");
