@@ -13,7 +13,7 @@ import java.io.InputStream;
 @Component
 public class Start {
     private final ImageStorageService imageStorageService;
-    private boolean updated;
+    private String updateAns;
     private String rootLocation;
 
     @Autowired
@@ -53,11 +53,10 @@ public class Start {
 
     private void checkUpdate(File file) throws IOException {
         InputStream is = new FileInputStream(file);
-        String ans = new String(is.readAllBytes());
-        updated = ans.startsWith("Already up to date");
+        updateAns = new String(is.readAllBytes());
     }
 
-    public boolean isUpdated() {
-        return updated;
+    public String getUpdateAns() {
+        return updateAns;
     }
 }
