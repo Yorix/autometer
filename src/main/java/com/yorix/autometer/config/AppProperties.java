@@ -12,4 +12,5 @@ public class AppProperties {
     private String storageLocation = "../images";
     private String defaultImageLocation;
     private String defaultImageFilename;
+    private String currencyUrl;
 }

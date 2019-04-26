@@ -6,11 +6,16 @@
 
 <div class="card bg-dark">
     <div class="row">
-        <div class="col-8">
+        <div class="col-7">
             <span id="span-updated">Установлена последняя версия.</span>
             <span id="span-update-error">Отсутствует подключение к интернету или ошибка обновления.</span>
-            <button id="btn-update" type="button" onclick="goto(/install/);" class="btn btn-outline-light btn-sm">
+            <button id="btn-update" type="button" onclick="goto('/install/');" class="btn btn-outline-light btn-sm">
                 Обновить программу
+            </button>
+        </div>
+        <div class="col-1">
+            <button type="button" class="btn btn-outline-light btn-sm" onclick="goto('/calculator/');">
+                Калькулятор
             </button>
         </div>
         <div class="col-2">

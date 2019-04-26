@@ -19,7 +19,7 @@ document.addEventListener("keydown", function (ev) {
 
 
 function goto(url) {
-    window.location.href = url;
+    window.parent.location.href = url;
 }
 
 function cuttingDecimalPlaces(e) {
