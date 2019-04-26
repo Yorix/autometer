@@ -51,19 +51,19 @@ if (updatedSpan !== null && updateErrorSpan !== null && updateBtn !== null) {
     };
 }
 
-var money = document.getElementsByClassName("money");
-if (money !== null) {
-    for (var i = 0; i < money.length; i++) {
-        var text = money[i].innerText;
+var moneyElements = document.getElementsByClassName("money");
+for (var i = 0; i < moneyElements.length; i++) {
+    toMoneyFormat(moneyElements[i]);
+}
 
-        if (Number(text) < 0) {
-            money[i].classList.add("negMoney");
-        } else if (Number(text) > 0) {
-            money[i].classList.add("posMoney");
-        } else {
-            money[i].classList.add("zerMoney");
-        }
-
-        money[i].innerText = Number(text).toLocaleString("ru");
+function toMoneyFormat(e) {
+    var text = e.innerText;
+    if (Number(text) < 0) {
+        e.classList.add("negMoney");
+    } else if (Number(text) > 0) {
+        e.classList.add("posMoney");
+    } else {
+        e.classList.add("zerMoney");
     }
+    e.innerText = (Math.round((Number(text)) * 100) / 100).toLocaleString("ru");
 }

@@ -17,34 +17,47 @@
             <div class="row">
                 <div class="col">
                     <label>Дата выпуска
-                        <input type="date" class="form-control">
+                        <input id="input-date-of-issue" type="date" class="form-control">
                     </label>
                     <label>Объём
-                        <input type="number" step="0.001" min="0" max="20"
+                        <input id="input-volume" type="number" step="0.001" min="0" max="20"
                                class="form-control" placeholder="0.00">
                     </label>
                     <label>Сумма начисления
-                        <input type="number" step="0.01" min="0" max="9999999"
+                        <input id="input-additional-sum" type="number" step="0.01" min="0" max="9999999"
                                class="form-control" placeholder="0.00"
-                               oninput="cuttingDecimalPlaces()">
+                               oninput="cuttingDecimalPlaces(this)">
                     </label>
                 </div>
                 <div class="col">
                     <label>Доллар
                         <input id="input-usd" type="number" step="0.01" min="0" max="999"
-                               class="form-control" placeholder="0.00" th:value="${usd}"
-                               oninput="cuttingDecimalPlaces()">
+                               class="form-control" placeholder="0.00" th:value="${usd}">
                     </label>
                     <label>Евро
                         <input id="input-eur" type="number" step="0.01" min="0" max="999"
-                               class="form-control" placeholder="0.00" th:value="${eur}"
-                               oninput="cuttingDecimalPlaces()">
+                               class="form-control" placeholder="0.00" th:value="${eur}">
                     </label>
                 </div>
             </div>
         </div>
         <div class="card-body">
-
+            <div class="row">
+                <div class="col-2">Пошлина</div>
+                <div id="div-duty" class="col-2 money"></div>
+            </div>
+            <div class="row">
+                <div class="col-2">Акциз</div>
+                <div id="div-excise" class="col-2 money"></div>
+            </div>
+            <div class="row">
+                <div class="col-2">НДС</div>
+                <div id="div-vat" class="col-2 money"></div>
+            </div>
+            <div class="row">
+                <div class="col-2">Всего</div>
+                <div id="div-total" class="col-2 money"></div>
+            </div>
         </div>
         <div class="card-footer">
 
