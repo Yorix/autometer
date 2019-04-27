@@ -1,4 +1,4 @@
-var dateOfIssueInput = document.getElementById("input-date-of-issue");
+var yearOfIssueInput = document.getElementById("input-year-of-issue");
 var volumeInput = document.getElementById("input-volume");
 var additionalSumInput = document.getElementById("input-additional-sum");
 var usdInput = document.getElementById("input-usd");
@@ -15,8 +15,22 @@ for (var i = 0; i < allInputs.length; i++) {
 }
 
 function calculate() {
-    dutyDiv.innerText = additionalSumInput.value * usdInput.value / 10;
+    if (yearOfIssueInput.value === "")
+        yearOfIssueInput.value = 2019;
+    if (yearOfIssueInput.value > new Date().getFullYear())
+        yearOfIssueInput.value = 2019;
+    var age = new Date().getFullYear() - yearOfIssueInput.value - 1;
+    if (age < 1) age = 1;
 
+    var duty = additionalSumInput.value * usdInput.value / 10;
+    var excise = volumeInput.value * age * 50 * eurInput.value;
+    var vat = (Number(additionalSumInput.value) * Number(usdInput.value) + duty + excise) * .2;
+    var total = duty + excise + vat;
+
+    dutyDiv.innerText = duty.toString();
+    exciseDiv.innerText = excise.toString();
+    vatDiv.innerText = vat.toString();
+    totalDiv.innerText = total.toString();
 
     toMoneyFormat(dutyDiv);
     toMoneyFormat(exciseDiv);

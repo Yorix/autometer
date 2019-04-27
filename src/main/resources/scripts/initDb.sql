@@ -32,6 +32,6 @@ CREATE TABLE img
 CREATE TABLE param
 (
   name  VARCHAR(50) NOT NULL PRIMARY KEY,
-  value DECIMAL DEFAULT 0
+  value DECIMAL(11, 2) DEFAULT 0
 );
 INSERT INTO param VALUE ('budget', 0);

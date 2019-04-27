@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<iframe src="/header-menu/" width="100%" height="50px" scrolling="no" style="border: 0;"></iframe>
+<iframe class="header-menu" src="/header-menu/" scrolling="no"></iframe>
 <br/>
 
 <div class="container">
@@ -16,12 +16,12 @@
         <div class="card-header">
             <div class="row">
                 <div class="col">
-                    <label>Дата выпуска
-                        <input id="input-date-of-issue" type="date" class="form-control">
+                    <label>Год выпуска
+                        <input id="input-year-of-issue" type="number" min="1970" max="2019" value="2019" class="form-control">
                     </label>
                     <label>Объём
                         <input id="input-volume" type="number" step="0.001" min="0" max="20"
-                               class="form-control" placeholder="0.00">
+                               class="form-control" placeholder="0.000">
                     </label>
                     <label>Сумма начисления
                         <input id="input-additional-sum" type="number" step="0.01" min="0" max="9999999"
@@ -60,7 +60,9 @@
             </div>
         </div>
         <div class="card-footer">
-
+            <button type="button" class="btn btn-outline-light btn-sm" onclick="window.history.back();">
+                << Назад
+            </button>
         </div>
     </div>
 </div>

@@ -17,7 +17,6 @@ function submitBudget() {
     btnSubmitBudget.style.display = "none";
 
     var formData = new FormData();
-    formData.append("name", "budget");
     formData.append("value", inputBudget.value);
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", "/params/budget/");

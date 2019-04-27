@@ -6,10 +6,13 @@ document.addEventListener("keydown", function (ev) {
         for (var i = 0; i < inputs.length; i++)
             if (inputs[i] === document.activeElement)
                 return;
-
         for (i = 0; i < divs.length; i++)
             if (divs[i].getAttribute("contentEditable") === "true")
                 return;
+        if (window.location.href.indexOf("calculator") + 1) {
+            window.history.back();
+            return;
+        }
         if (window.parent == null)
             goto("../");
         else
