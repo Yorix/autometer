@@ -29,8 +29,7 @@ public class Start {
         String command = String.format("cmd /c cd /d \"%s\" && git pull>.gitAns", rootLocation);
         Runtime.getRuntime().exec(command).waitFor();
         checkUpdate(new File(rootLocation + "/.gitAns"));
-        command = String.format("cmd /c %s/show.cmd", rootLocation);
-        Runtime.getRuntime().exec(command);
+        Runtime.getRuntime().exec("cmd /c explorer http://localhost:8080/");
     }
 
     public void installUpdate() {

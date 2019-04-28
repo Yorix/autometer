@@ -23,7 +23,9 @@ function calculate() {
     if (age < 1) age = 1;
 
     var duty = additionalSumInput.value * usdInput.value / 10;
-    var excise = volumeInput.value * age * 50 * eurInput.value;
+    var factor;
+    volumeInput.value > 3 ? factor = 75 : factor = 50;
+    var excise = volumeInput.value * age * factor * eurInput.value;
     var vat = (Number(additionalSumInput.value) * Number(usdInput.value) + duty + excise) * .2;
     var total = duty + excise + vat;
 
