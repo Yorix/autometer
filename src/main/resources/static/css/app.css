@@ -1,4 +1,8 @@
+@import "bootstrap/bootstrap.min.css";
+
 body {
+    padding: 0;
+    margin: auto;
     background: #555;
     color: #ccc;
 }
@@ -44,12 +48,11 @@ iframe.header-menu {
 .header-text {
     font-size: 30px;
     color: #fff;
-    text-shadow:
-            1px 1px 0 #000,
-            -1px -1px 0 #000,
-            1px -1px 0 #000,
-            -1px 1px 0 #000,
-            0 0 4px #000;
+    text-shadow: 1px 1px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    0 0 4px #000;
 }
 
 .align-start {
