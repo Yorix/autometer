@@ -1,7 +1,7 @@
 package com.yorix.autometer.controller;
 
 import com.yorix.autometer.model.Car;
-import com.yorix.autometer.model.CarDTO;
+import com.yorix.autometer.model.CarViewDTO;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.service.CarService;
 import com.yorix.autometer.service.NoteService;
@@ -34,7 +34,7 @@ public class NoteController {
     public ModelAndView getByCar(@PathVariable("carId") int carId) {
         Car car = carService.read(carId);
         ModelAndView modelAndView = new ModelAndView("notes");
-        modelAndView.addObject("car", new CarDTO(car));
+        modelAndView.addObject("car", new CarViewDTO(car));
         modelAndView.addObject("notes", noteService.readAllByCar(car));
         return modelAndView;
     }

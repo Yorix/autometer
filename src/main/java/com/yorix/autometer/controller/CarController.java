@@ -2,7 +2,7 @@ package com.yorix.autometer.controller;
 
 import com.yorix.autometer.config.CardTextProperties;
 import com.yorix.autometer.model.Car;
-import com.yorix.autometer.model.CarDTO;
+import com.yorix.autometer.model.CarViewDTO;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +34,9 @@ public class CarController {
     @GetMapping
     public ModelAndView getAll() {
         ModelAndView modelAndView = new ModelAndView("index");
-        List<CarDTO> cars = carService.readAll()
+        List<CarViewDTO> cars = carService.readAll()
                 .stream()
-                .map(CarDTO::new)
+                .map(CarViewDTO::new)
                 .collect(Collectors.toList());
         modelAndView.addObject("cars", cars);
         modelAndView.addObject("textProperties", properties);
@@ -45,7 +45,7 @@ public class CarController {
 
     @GetMapping("{id}/")
     public ModelAndView get(@PathVariable("id") int id) {
-        CarDTO car = new CarDTO(carService.read(id));
+        CarViewDTO car = new CarViewDTO(carService.read(id));
         ModelAndView modelAndView = new ModelAndView("car");
         modelAndView.addObject("car", car);
         modelAndView.addObject("note", new Note());

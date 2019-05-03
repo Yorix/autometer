@@ -28,7 +28,7 @@ public class FileSystemImageStorageService implements ImageStorageService {
     @Autowired
     public FileSystemImageStorageService(AppProperties properties, ResourceLoader resourceLoader) {
         this.properties = properties;
-        this.storageLocation = Paths.get(properties.getStorageLocation());
+        this.storageLocation = Paths.get(properties.getImageStorageLocation());
         this.resourceLoader = resourceLoader;
     }
 

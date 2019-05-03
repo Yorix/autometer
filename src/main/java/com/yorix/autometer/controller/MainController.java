@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/")
-public class IndexController {
+public class MainController {
     private final CurrencyParser currencyParser;
     private final VisitRepository visitRepository;
     private final ParamService paramService;
@@ -26,11 +26,11 @@ public class IndexController {
     private final Start start;
 
     @Autowired
-    public IndexController(CurrencyParser currencyParser,
-                           VisitRepository visitRepository,
-                           ParamService paramService,
-                           NoteService noteService,
-                           Start start) {
+    public MainController(CurrencyParser currencyParser,
+                          VisitRepository visitRepository,
+                          ParamService paramService,
+                          NoteService noteService,
+                          Start start) {
         this.currencyParser = currencyParser;
         this.visitRepository = visitRepository;
         this.paramService = paramService;

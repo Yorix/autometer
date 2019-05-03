@@ -1,5 +1,6 @@
 package com.yorix.autometer.config;
 
+import com.yorix.autometer.service.DataStorageService;
 import com.yorix.autometer.service.ImageStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,22 +10,32 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @Component
 public class Start {
     private final ImageStorageService imageStorageService;
+    private final DataStorageService dataStorageService;
     private String updateAns;
     private String rootLocation;
+    private String dbLocation;
 
     @Autowired
-    public Start(AppProperties properties, ImageStorageService imageStorageService) {
+    public Start(AppProperties properties,
+                 DataStorageService dataStorageService,
+                 ImageStorageService imageStorageService) {
         this.imageStorageService = imageStorageService;
+        this.dataStorageService = dataStorageService;
         this.rootLocation = properties.getRootLocation();
+        this.dbLocation = properties.getDbBackupLocation();
     }
 
     @PostConstruct
     public void init() throws IOException, InterruptedException {
         imageStorageService.init();
+        Files.createDirectories(Path.of(dbLocation));
+        dataStorageService.save();
 
         String command = String.format("cmd /c cd /d \"%s\" && git pull>.gitAns", rootLocation);
         Runtime.getRuntime().exec(command).waitFor();
