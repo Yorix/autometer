@@ -80,4 +80,10 @@ public class MainController {
         start.installUpdate();
         return "redirect:/";
     }
+
+    @GetMapping("load-data/")
+    public String loadData() {
+        start.loadData();
+        return "redirect:/";
+    }
 }

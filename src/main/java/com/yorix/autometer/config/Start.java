@@ -43,6 +43,14 @@ public class Start {
         Runtime.getRuntime().exec("cmd /c explorer http://localhost:8080/");
     }
 
+    public void loadData() {
+        try {
+            dataStorageService.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void installUpdate() {
         String command = "cmd /c " +
                 "cd /d \"" + rootLocation + "\" && " +
