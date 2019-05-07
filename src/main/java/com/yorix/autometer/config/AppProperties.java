@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @Data
 public class AppProperties {
     private String rootLocation = System.getProperty("user.dir");
-    private String dbBackupLocation = "../backup/";
-    private String imageStorageLocation = "../images/";
+    private String dbBackupLocation = rootLocation + "/../backup";
+    private String imageStorageLocation = rootLocation + "/../images/";
     private String defaultImageLocation;
     private String defaultImageFilename;
     private String currencyUrl;

@@ -9,9 +9,8 @@ import com.yorix.autometer.service.ParamService;
 import com.yorix.autometer.storage.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
@@ -81,9 +80,9 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("load-data/")
-    public String loadData() {
-        start.loadData();
+    @PostMapping("load-data/")
+    public String loadData(@RequestParam("file") MultipartFile file) {
+        start.readData(file.getOriginalFilename());
         return "redirect:/";
     }
 }

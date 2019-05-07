@@ -1,12 +1,3 @@
 USE autometer;
 
-DROP TABLE IF EXISTS param;
-CREATE TABLE IF NOT EXISTS param
-(
-  name  VARCHAR(50) NOT NULL PRIMARY KEY,
-  value DECIMAL(11, 2) DEFAULT 0
-);
-INSERT INTO param VALUE ('budget', 0);
-
-ALTER TABLE note
-  MODIFY date VARCHAR(20) NOT NULL;
+SET NAMES 'utf8';

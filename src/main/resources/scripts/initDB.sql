@@ -1,6 +1,7 @@
 DROP SCHEMA IF EXISTS autometer;
 CREATE SCHEMA autometer;
 USE autometer;
+SET NAMES 'utf8';
 
 CREATE TABLE visit
 (
