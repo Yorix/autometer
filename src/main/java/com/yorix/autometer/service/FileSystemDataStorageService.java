@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -71,13 +72,18 @@ public class FileSystemDataStorageService implements DataStorageService {
 
     @Override
     public void read() {
-        String initDB = getString("/scripts/initDB.sql");
         String carsStr = getString(dbLoc + "cars.json");
         String notesStr = getString(dbLoc + "notes.json");
         String paramsStr = getString(dbLoc + "params.json");
         String imgsStr = getString(dbLoc + "imgs.json");
 
-        jdbcTemplate.execute(initDB);
+        String initDB = "";
+        try (InputStream inputStream = getClass().getResourceAsStream("/scripts/initDB.sql")) {
+            initDB = new String(inputStream.readAllBytes()).replaceAll("\\s+", " ");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        jdbcTemplate.execute(initDB); //TODO
 
         JSONArray jsonArray = new JSONArray(carsStr);
         for (int i = 0, length = jsonArray.length(); i < length; i++) {
@@ -120,15 +126,16 @@ public class FileSystemDataStorageService implements DataStorageService {
         jsonArray = new JSONArray(imgsStr);
         for (int i = 0, length = jsonArray.length(); i < length; i++) {
             Img img = new Img();
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            JSONObject jsonObject = jsonArray.getJSONObject(i); //TODO
             ImgJsonDTO imgJsonDTO = (ImgJsonDTO) jsonArray.get(i);
             System.out.println(imgJsonDTO.getFilename());
         }
     }
 
     private String getString(String path) {
+        File file = new File(path);
         String text = "";
-        try (InputStream inputStream = getClass().getResourceAsStream(path)) {
+        try (InputStream inputStream = new FileInputStream(file)) {
             text = new String(inputStream.readAllBytes());
         } catch (IOException e) {
             e.printStackTrace();
