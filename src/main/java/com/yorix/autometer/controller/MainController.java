@@ -85,4 +85,10 @@ public class MainController {
         start.readData(file.getOriginalFilename());
         return "redirect:/";
     }
+
+    @GetMapping("exit/")
+    public void exit() {
+        System.exit(0);
+    }
+
 }
