@@ -6,6 +6,7 @@ import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,10 +20,20 @@ public class CurrencyParser {
         this.properties = properties;
     }
 
-    public double getRate(String cc) {
+    public double getRate(String... paramValues) {
         double rate = 0;
+        String params = "";
+        if (!StringUtils.isEmpty(properties.getCurrencyUrlParams())) {
+            params = properties.getCurrencyUrlParams();
+            for (int i = 0, length = paramValues.length; i < length; i++) {
+                params = params.replaceAll("\\{param" + i + "}", paramValues[i]);
+            }
+        }
+
+        String path = properties.getCurrencyUrl().concat(params);
+
         try {
-            URL url = new URL(properties.getCurrencyUrl() + "?valcode=" + cc + "&json");
+            URL url = new URL(path);
             String response = new String(url.openStream().readAllBytes());
             JSONObject jsonObject = new JSONArray(response).getJSONObject(0);
             rate = jsonObject.getDouble("rate");

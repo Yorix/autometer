@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,16 +26,14 @@ public class Start {
     @Autowired
     public Start(AppProperties properties) {
         this.properties = properties;
-        this.rootLocation = Paths.get(URI.create("file://" .concat(properties.getRootLocation()))).toString();
-        this.dbBackupLocation = Paths.get(URI.create("file://" .concat(properties.getDbBackupLocation()))).toString();
+        this.rootLocation = Paths.get(properties.getRootLocation()).toString();
+        this.dbBackupLocation = Paths.get(properties.getDbBackupLocation()).toString();
 
     }
 
     @PostConstruct
     public void init() throws IOException, InterruptedException {
-        Path storageLocation = Paths.get(URI.create(
-                "file://" .concat(properties.getImageStorageLocation())
-        ));
+        Path storageLocation = Paths.get(properties.getImageStorageLocation());
         Path outputFilepath = storageLocation.resolve(resource.getFilename());
 
         try {
@@ -49,9 +46,7 @@ public class Start {
             throw new StorageException("Could not initialize storage", e);
         }
 
-        Path dbBackupPath = Paths.get(URI.create(
-                "file://" .concat(properties.getDbBackupLocation())
-        ));
+        Path dbBackupPath = Paths.get(properties.getDbBackupLocation());
         Files.createDirectories(dbBackupPath);
 
         saveData();

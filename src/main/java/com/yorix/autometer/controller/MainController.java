@@ -1,5 +1,6 @@
 package com.yorix.autometer.controller;
 
+import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.config.Start;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.model.Visit;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/")
@@ -23,18 +25,21 @@ public class MainController {
     private final ParamService paramService;
     private final NoteService noteService;
     private final Start start;
+    private AppProperties properties;
 
     @Autowired
     public MainController(CurrencyParser currencyParser,
                           VisitRepository visitRepository,
                           ParamService paramService,
                           NoteService noteService,
-                          Start start) {
+                          Start start,
+                          AppProperties properties) {
         this.currencyParser = currencyParser;
         this.visitRepository = visitRepository;
         this.paramService = paramService;
         this.noteService = noteService;
         this.start = start;
+        this.properties = properties;
     }
 
     @GetMapping
@@ -61,10 +66,10 @@ public class MainController {
     @GetMapping("calculator/")
     public ModelAndView calculator() {
         ModelAndView modelAndView = new ModelAndView("calculator");
-        double usd = currencyParser.getRate("USD");
-        double eur = currencyParser.getRate("EUR");
-        modelAndView.addObject("usd", usd);
-        modelAndView.addObject("eur", eur);
+        for (String currencyCode : properties.getCurrencyCodes()) {
+            double rate = currencyParser.getRate(currencyCode, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+            modelAndView.addObject(currencyCode, rate);
+        }
         return modelAndView;
     }
 
@@ -90,5 +95,4 @@ public class MainController {
     public void exit() {
         System.exit(0);
     }
-
 }
