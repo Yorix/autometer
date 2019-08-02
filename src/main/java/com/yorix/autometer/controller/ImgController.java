@@ -34,9 +34,8 @@ public class ImgController {
         return String.format("redirect:/cars/%s/img/", carId);
     }
 
-    @GetMapping("{carId}/img/{filename}/")
-    public Img getByFilename(@PathVariable("carId") int carId, @PathVariable("filename") String filename) {
-        Car car = carService.read(carId);
+    @GetMapping("*/img/{filename}/")
+    public Img getByFilename(@PathVariable("filename") String filename) {
         return imgService.read(filename);
     }
 
@@ -54,7 +53,8 @@ public class ImgController {
 
     @DeleteMapping("{carId}/img/")
     public String delete(@PathVariable("carId") int carId, String filename) {
-        imgService.delete(filename);
+        Car car = carService.read(carId);
+        imgService.delete(filename, car);
         return String.format("redirect:/cars/%s/img/", carId);
     }
 }

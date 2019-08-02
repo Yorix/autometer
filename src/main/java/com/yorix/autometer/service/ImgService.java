@@ -1,5 +1,6 @@
 package com.yorix.autometer.service;
 
+import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.errors.StorageException;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.Img;
@@ -8,18 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Path;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
 public class ImgService {
     private final ImgRepository imgRepository;
-    private final ImageStorageService imageStorageService;
+    private final AppProperties properties;
 
     @Autowired
-    public ImgService(ImgRepository imgRepository, ImageStorageService imageStorageService) {
+    public ImgService(
+            ImgRepository imgRepository,
+            AppProperties properties
+    ) {
         this.imgRepository = imgRepository;
-        this.imageStorageService = imageStorageService;
+        this.properties = properties;
     }
 
     public void create(MultipartFile file, Car car) {
@@ -32,7 +37,14 @@ public class ImgService {
         img = new Img();
         img.setFilename(filename);
         img.setCar(car);
-        imageStorageService.store(file);
+        String path = properties.getImageStorageLocation()
+                .concat(File.separator)
+                .concat(filename);
+        try {
+            file.transferTo(new File(path));
+        } catch (IOException e) {
+            throw new StorageException("Failed to store file " + filename, e);
+        }
         imgRepository.save(img);
     }
 
@@ -44,13 +56,15 @@ public class ImgService {
         return imgRepository.readAllByCar(car);
     }
 
-    public void delete(String filename) {
-        Path path = imageStorageService.load(filename);
-        imageStorageService.delete(path);
-        imgRepository.deleteById(filename);
-    }
+    public void delete(String filename, Car car) {
+        if (filename.equals(car.getImgFilename())) {
+            car.setImgFilename(properties.getDefaultImageFilename());
+        }
 
-    public void deleteAllByCar(Car car) {
-        imgRepository.deleteAllByCar(car);
+        File file = new File(properties.getImageStorageLocation()
+                .concat(File.separator)
+                .concat(filename));
+        file.delete();
+        imgRepository.deleteById(filename);
     }
 }

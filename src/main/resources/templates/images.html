@@ -40,7 +40,7 @@
             <div class="card-columns">
                 <div class="container" th:each="img:${imgs}">
                     <div class="card bg-dark" style="position: relative;">
-                        <img style="position: relative; max-width: 100%;" th:src="'/'+${img.filename}"/>
+                        <img style="position: relative; max-width: 100%;" th:src="|/img/*{img.filename}|"/>
                         <button
                                 type="button"
                                 class="btn btn-outline-success"

@@ -1,46 +1,71 @@
 package com.yorix.autometer.config;
 
-import com.yorix.autometer.service.ImageStorageService;
+import com.yorix.autometer.errors.StorageException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
 public class Start {
-    private final ImageStorageService imageStorageService;
     private String updateAns;
     private String rootLocation;
     private String dbBackupLocation;
+    private AppProperties properties;
+    @Value("${app.default-image-full-filename}")
+    private Resource resource;
 
     @Autowired
-    public Start(AppProperties properties, ImageStorageService imageStorageService) {
-        this.imageStorageService = imageStorageService;
-        this.rootLocation = properties.getRootLocation();
-        this.dbBackupLocation = properties.getDbBackupLocation();
+    public Start(AppProperties properties) {
+        this.properties = properties;
+        this.rootLocation = Paths.get(URI.create("file://" .concat(properties.getRootLocation()))).toString();
+        this.dbBackupLocation = Paths.get(URI.create("file://" .concat(properties.getDbBackupLocation()))).toString();
+
     }
 
     @PostConstruct
     public void init() throws IOException, InterruptedException {
-        imageStorageService.init();
-        Files.createDirectories(Path.of(dbBackupLocation));
+        Path storageLocation = Paths.get(URI.create(
+                "file://" .concat(properties.getImageStorageLocation())
+        ));
+        Path outputFilepath = storageLocation.resolve(resource.getFilename());
+
+        try {
+            Files.createDirectories(storageLocation);
+            try (InputStream is = new BufferedInputStream(resource.getInputStream());
+                 OutputStream os = new BufferedOutputStream(Files.newOutputStream(outputFilepath))) {
+                os.write(is.readAllBytes());
+            }
+        } catch (IOException e) {
+            throw new StorageException("Could not initialize storage", e);
+        }
+
+        Path dbBackupPath = Paths.get(URI.create(
+                "file://" .concat(properties.getDbBackupLocation())
+        ));
+        Files.createDirectories(dbBackupPath);
+
         saveData();
 
         String command = String.format("cmd /c cd /d \"%s\" && git pull>.gitAns", rootLocation);
-        Runtime.getRuntime().exec(command).waitFor();
+        Runtime.getRuntime()
+                .exec(command)
+                .waitFor();
+
         checkUpdate(new File(rootLocation + "/.gitAns"));
         Runtime.getRuntime().exec("cmd /c explorer http://localhost:8080/");
     }
 
-    public void saveData() {
+    private void saveData() {
         String command = String.format(
                 "cmd /c mysqldump -uuser -puser autometer > %s/autometer_%s.sql",
                 dbBackupLocation,
@@ -51,10 +76,9 @@ public class Start {
             e.printStackTrace();
         }
 
-        File backupDir = new File(dbBackupLocation);
+        File backupDir = new File("file://" .concat(dbBackupLocation));
         File[] files = backupDir.listFiles();
-        assert files != null;
-        if (files.length > 100) {
+        if ((files != null ? files.length : 0) > 100) {
             files[0].delete();
         }
     }
