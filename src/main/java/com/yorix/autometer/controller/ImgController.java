@@ -27,13 +27,6 @@ public class ImgController {
         this.multipartProperties = multipartProperties;
     }
 
-    @PostMapping("{carId}/img/")
-    public String create(@RequestParam("file") MultipartFile file, @PathVariable("carId") int carId) {
-        Car car = carService.read(carId);
-        imgService.create(file, car);
-        return String.format("redirect:/cars/%s/img/", carId);
-    }
-
     @GetMapping("*/img/{filename}/")
     public Img getByFilename(@PathVariable("filename") String filename) {
         return imgService.read(filename);
@@ -45,10 +38,19 @@ public class ImgController {
         List<Img> imgs = imgService.readAllByCar(car);
         long maxFileSize = multipartProperties.getMaxFileSize().toBytes();
         ModelAndView modelAndView = new ModelAndView("images");
+        modelAndView.addObject("budget", imgService.getBudget());
+        modelAndView.addObject("balance", imgService.getBalance());
         modelAndView.addObject("car", car);
         modelAndView.addObject("imgs", imgs);
         modelAndView.addObject("maxFileSize", maxFileSize);
         return modelAndView;
+    }
+
+    @PostMapping("{carId}/img/")
+    public String create(@RequestParam("file") MultipartFile file, @PathVariable("carId") int carId) {
+        Car car = carService.read(carId);
+        imgService.create(file, car);
+        return String.format("redirect:/cars/%s/img/", carId);
     }
 
     @DeleteMapping("{carId}/img/")

@@ -7,16 +7,13 @@
 </head>
 <body>
 
-<iframe class="header-menu" src="/header-menu/" scrolling="no"></iframe>
-<br/>
+<div th:insert="~{parts/header-menu :: menu}"></div>
 
 <div class="container">
     <div class="card bg-dark">
         <div class="card-header">
-            <div class="row">
-                <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Назад</button>
-                <div class="header-text align-start" th:text="|${car.make} ${car.model}|"></div>
-            </div>
+            <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Назад</button>
+            <span class="header-text ml-3" th:text="|${car.make} ${car.model}|"></span>
         </div>
         <div class="card-body">
             <div class="card-header">

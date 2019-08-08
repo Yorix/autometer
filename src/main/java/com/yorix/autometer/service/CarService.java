@@ -1,30 +1,30 @@
 package com.yorix.autometer.service;
 
-import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.Img;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.storage.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 @Service
-public class CarService {
+public class CarService extends AppService {
     private final CarRepository carRepository;
-    private final AppProperties properties;
 
     @Autowired
-    public CarService(CarRepository carRepository, AppProperties properties) {
+    public CarService(CarRepository carRepository) {
         this.carRepository = carRepository;
-        this.properties = properties;
     }
 
-    public Car create(Car car) {
+    public void create(Car car) {
         if (car.getImgFilename() == null)
-            car.setImgFilename(properties.getDefaultImageFilename());
-        return carRepository.save(car);
+            car.setImgFilename(getProperties().getDefaultImageFilename());
+        car.setMake(car.getMake().replace(Character.toString(160), " ").trim());
+        car.setModel(car.getModel().replace(Character.toString(160), " ").trim());
+        carRepository.save(car);
     }
 
     public Car read(int id) {
@@ -47,10 +47,10 @@ public class CarService {
         List<Note> newNotes = updated.getNotes();
         List<Img> newImgs = updated.getImgs();
 
-        if (newMake != null)
-            car.setMake(newMake);
-        if (newModel != null)
-            car.setModel(newModel);
+        if (!StringUtils.isEmpty(newMake))
+            car.setMake(newMake.replace(Character.toString(160), " ").trim());
+        if (!StringUtils.isEmpty(newModel))
+            car.setModel(newModel.replace(Character.toString(160), " ").trim());
         if (newImgFilename != null)
             car.setImgFilename(newImgFilename);
         if (newNotes != null)

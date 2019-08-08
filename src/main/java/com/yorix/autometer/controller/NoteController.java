@@ -22,29 +22,24 @@ public class NoteController {
         this.carService = carService;
     }
 
+    @GetMapping
+    public ModelAndView getByCar(@PathVariable("carId") int carId) {
+        Car car = carService.read(carId);
+        ModelAndView modelAndView = new ModelAndView("notes");
+        modelAndView.addObject("budget", noteService.getBudget());
+        modelAndView.addObject("balance", noteService.getBalance());
+        modelAndView.addObject("car", new CarViewDTO(car));
+        modelAndView.addObject("notes", noteService.readAllByCar(car));
+        modelAndView.addObject("note", new Note());
+        return modelAndView;
+    }
+
     @PostMapping
     public String create(@PathVariable("carId") int carId, Note note) {
         Car car = carService.read(carId);
         note.setCar(car);
         noteService.create(note);
         return String.format("redirect:/cars/%s/", carId);
-    }
-
-    @GetMapping
-    public ModelAndView getByCar(@PathVariable("carId") int carId) {
-        Car car = carService.read(carId);
-        ModelAndView modelAndView = new ModelAndView("notes");
-        modelAndView.addObject("car", new CarViewDTO(car));
-        modelAndView.addObject("notes", noteService.readAllByCar(car));
-        return modelAndView;
-    }
-
-    @GetMapping("new-note/")
-    public ModelAndView newNoteFrame(@PathVariable("carId") int carId) {
-        ModelAndView modelAndView = new ModelAndView("frame-new-note");
-        modelAndView.addObject("carId", carId);
-        modelAndView.addObject("note", new Note());
-        return modelAndView;
     }
 
     @DeleteMapping("{noteId}/")

@@ -4,14 +4,16 @@ var modelDiv = document.getElementById("div-model");
 var editCarnameBtn = document.getElementById("btn-edit-carname");
 var submitCarnameBtn = document.getElementById("btn-submit-carname");
 
-editCarnameBtn.addEventListener('click', function () {
+submitCarnameBtn.style.display = "none";
+
+editCarnameBtn.addEventListener("click", function () {
     makeDiv.setAttribute('contentEditable', 'true');
     modelDiv.setAttribute('contentEditable', 'true');
     submitCarnameBtn.style.display = 'block';
     editCarnameBtn.style.display = 'none';
 });
 
-submitCarnameBtn.addEventListener('click', function () {
+submitCarnameBtn.addEventListener("click", function () {
     makeDiv.setAttribute('contentEditable', 'false');
     modelDiv.setAttribute('contentEditable', 'false');
     submitCarnameBtn.style.display = 'none';
@@ -25,7 +27,7 @@ submitCarnameBtn.addEventListener('click', function () {
     xmlHttpRequest.send(formData);
 
     xmlHttpRequest.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200)
+        if (this.readyState === 4 && this.status === 204)
             window.location.reload();
     }
 });

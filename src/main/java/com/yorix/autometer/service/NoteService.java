@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class NoteService {
+public class NoteService extends AppService {
     private final NoteRepository noteRepository;
 
     @Autowired

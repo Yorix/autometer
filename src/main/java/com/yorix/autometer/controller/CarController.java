@@ -6,6 +6,7 @@ import com.yorix.autometer.model.CarViewDTO;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,12 +26,6 @@ public class CarController {
         this.properties = properties;
     }
 
-    @PostMapping
-    public String create(Car car) {
-        carService.create(car);
-        return String.format("redirect:/cars/%s/", car.getId());
-    }
-
     @GetMapping
     public ModelAndView getAll() {
         ModelAndView modelAndView = new ModelAndView("index");
@@ -38,6 +33,8 @@ public class CarController {
                 .stream()
                 .map(CarViewDTO::new)
                 .collect(Collectors.toList());
+        modelAndView.addObject("budget", carService.getBudget());
+        modelAndView.addObject("balance", carService.getBalance());
         modelAndView.addObject("cars", cars);
         modelAndView.addObject("textProperties", properties);
         return modelAndView;
@@ -47,6 +44,8 @@ public class CarController {
     public ModelAndView get(@PathVariable("id") int id) {
         CarViewDTO car = new CarViewDTO(carService.read(id));
         ModelAndView modelAndView = new ModelAndView("car");
+        modelAndView.addObject("budget", carService.getBudget());
+        modelAndView.addObject("balance", carService.getBalance());
         modelAndView.addObject("car", car);
         modelAndView.addObject("note", new Note());
         return modelAndView;
@@ -55,14 +54,22 @@ public class CarController {
     @GetMapping("new-car/")
     public ModelAndView newCarPage() {
         ModelAndView modelAndView = new ModelAndView("new-car");
+        modelAndView.addObject("budget", carService.getBudget());
+        modelAndView.addObject("balance", carService.getBalance());
         modelAndView.addObject("car", new Car());
         return modelAndView;
     }
 
+    @PostMapping
+    public String create(Car car) {
+        carService.create(car);
+        return String.format("redirect:/cars/%s/", car.getId());
+    }
+
     @PutMapping("{id}/")
-    public String update(@PathVariable("id") int id, Car car) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable("id") int id, Car car) {
         carService.update(id, car);
-        return String.format("redirect:/cars/%s/", id);
     }
 
     @DeleteMapping("{id}/")

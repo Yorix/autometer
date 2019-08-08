@@ -7,13 +7,11 @@
 </head>
 <body>
 
-<iframe class="header-menu" src="/header-menu/" scrolling="no"></iframe>
-<br/>
+<div th:insert="~{parts/header-menu :: menu}"></div>
 
-<div class="container">
+<div class="m-5">
     <button type="button" class="btn btn-outline-success" onclick="goto('new-car/')">&#10010;</button>
 </div>
-<br/>
 
 <div class="container-fluid row">
     <div class="container col-4" th:each="car:${cars}">

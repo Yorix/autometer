@@ -7,43 +7,40 @@
 </head>
 <body>
 
-<iframe class="header-menu" src="/header-menu/" scrolling="no"></iframe>
-<br/>
+<div th:insert="~{parts/header-menu :: menu}"></div>
 
-<div class="container">
-    <div class="card bg-dark">
-        <form id="form-new-car" action="/cars/" method="post" th:object="${car}">
-            <div class="card-header">
-                <h5 id="header"></h5>
-            </div>
-            <div class="card-body">
-                <div class="form-group row">
-                    <div class="col-6">
-                        <input id="input-make" type="text" class="form-control"
-                               placeholder="Марка" th:field="*{make}"/>
-                    </div>
-                    <div class="col-6">
-                        <input id="input-model" type="text" class="form-control"
-                               placeholder="Модель" th:field="*{model}"/>
-                    </div>
+<div class="container card bg-dark">
+    <form id="form-new-car" action="/cars/" method="post" th:object="${car}">
+        <div class="card-header">
+            <h5 id="header"></h5>
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <div class="col-6">
+                    <input id="input-make" type="text" class="form-control"
+                           placeholder="Марка" th:field="*{make}"/>
+                </div>
+                <div class="col-6">
+                    <input id="input-model" type="text" class="form-control"
+                           placeholder="Модель" th:field="*{model}"/>
                 </div>
             </div>
-            <div class="card-footer">
-                <div class="row">
-                    <div class="col-10">
-                        <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
-                            << Отмена
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button id="btn-submit" type="button" class="btn btn-outline-success">
-                            Добавить >>
-                        </button>
-                    </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-10">
+                    <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
+                        << Отмена
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button id="btn-submit" type="button" class="btn btn-outline-success">
+                        Добавить >>
+                    </button>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
 

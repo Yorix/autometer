@@ -7,8 +7,7 @@
 </head>
 <body>
 
-<iframe class="header-menu" src="/header-menu/" scrolling="no"></iframe>
-<br/>
+<div th:insert="~{parts/header-menu :: menu}"></div>
 
 <div class="container">
     <div class="card bg-dark" th:object="${car}">
@@ -16,7 +15,7 @@
             <div class="row">
                 <div class="col-8">
                     <img th:src="|/img/*{imgFilename}|" style="max-width: 100%; max-height: 130px;">
-                    <div class="content header-text align-end" th:text="|*{make} *{model}|"></div>
+                    <div class="content header-text text-right pr-3" th:text="|*{make} *{model}|"></div>
                 </div>
                 <div class="col-4">
                     <table>
@@ -37,8 +36,10 @@
                 </div>
             </div>
         </div>
-        <iframe class="new-note" src="new-note/" scrolling="no"></iframe>
         <div class="card-body">
+
+            <div th:insert="~{/parts/new-note :: create}"></div>
+
             <div class="card bg-dark" th:each="note:${notes}">
                 <div class="container row" th:object="${note}">
                     <div class="col-2">

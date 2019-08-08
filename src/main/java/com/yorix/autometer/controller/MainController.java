@@ -2,11 +2,8 @@ package com.yorix.autometer.controller;
 
 import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.config.Start;
-import com.yorix.autometer.model.Note;
 import com.yorix.autometer.model.Visit;
 import com.yorix.autometer.service.CurrencyParser;
-import com.yorix.autometer.service.NoteService;
-import com.yorix.autometer.service.ParamService;
 import com.yorix.autometer.storage.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,22 +19,18 @@ import java.time.format.DateTimeFormatter;
 public class MainController {
     private final CurrencyParser currencyParser;
     private final VisitRepository visitRepository;
-    private final ParamService paramService;
-    private final NoteService noteService;
     private final Start start;
     private AppProperties properties;
 
     @Autowired
-    public MainController(CurrencyParser currencyParser,
-                          VisitRepository visitRepository,
-                          ParamService paramService,
-                          NoteService noteService,
-                          Start start,
-                          AppProperties properties) {
+    public MainController(
+            CurrencyParser currencyParser,
+            VisitRepository visitRepository,
+            Start start,
+            AppProperties properties
+    ) {
         this.currencyParser = currencyParser;
         this.visitRepository = visitRepository;
-        this.paramService = paramService;
-        this.noteService = noteService;
         this.start = start;
         this.properties = properties;
     }
@@ -50,19 +43,6 @@ public class MainController {
         return "redirect:/cars/";
     }
 
-    @GetMapping("header-menu/")
-    public ModelAndView budgetFrame() {
-        double budget = paramService.read("budget");
-        double balance = noteService.readAll()
-                .stream()
-                .mapToDouble(Note::getValue)
-                .sum();
-        ModelAndView modelAndView = new ModelAndView("frame-header-menu");
-        modelAndView.addObject("budget", budget);
-        modelAndView.addObject("balance", balance);
-        return modelAndView;
-    }
-
     @GetMapping("calculator/")
     public ModelAndView calculator() {
         ModelAndView modelAndView = new ModelAndView("calculator");
@@ -70,6 +50,8 @@ public class MainController {
             double rate = currencyParser.getRate(currencyCode, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
             modelAndView.addObject(currencyCode, rate);
         }
+        modelAndView.addObject("budget", currencyParser.getBudget());
+        modelAndView.addObject("balance", currencyParser.getBalance());
         return modelAndView;
     }
 

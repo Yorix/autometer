@@ -14,17 +14,12 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-public class ImgService {
+public class ImgService extends AppService {
     private final ImgRepository imgRepository;
-    private final AppProperties properties;
 
     @Autowired
-    public ImgService(
-            ImgRepository imgRepository,
-            AppProperties properties
-    ) {
+    public ImgService(ImgRepository imgRepository) {
         this.imgRepository = imgRepository;
-        this.properties = properties;
     }
 
     public void create(MultipartFile file, Car car) {
@@ -37,7 +32,7 @@ public class ImgService {
         img = new Img();
         img.setFilename(filename);
         img.setCar(car);
-        String path = properties.getImageStorageLocation()
+        String path = getProperties().getImageStorageLocation()
                 .concat(File.separator)
                 .concat(filename);
         try {
@@ -58,10 +53,10 @@ public class ImgService {
 
     public void delete(String filename, Car car) {
         if (filename.equals(car.getImgFilename())) {
-            car.setImgFilename(properties.getDefaultImageFilename());
+            car.setImgFilename(getProperties().getDefaultImageFilename());
         }
 
-        File file = new File(properties.getImageStorageLocation()
+        File file = new File(getProperties().getImageStorageLocation()
                 .concat(File.separator)
                 .concat(filename));
         file.delete();
