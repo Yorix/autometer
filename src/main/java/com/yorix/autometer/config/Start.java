@@ -16,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 public class Start {
-    private String updateAns;
     private String rootLocation;
     private String dbBackupLocation;
     private AppProperties properties;
@@ -56,7 +55,8 @@ public class Start {
                 .exec(command)
                 .waitFor();
 
-        checkUpdate(new File(rootLocation + "/.gitAns"));
+        boolean isUpdate = checkUpdate(new File(rootLocation + "/.gitAns"));
+        if (isUpdate) installUpdate();
         Runtime.getRuntime().exec("cmd /c explorer http://localhost:8080/");
     }
 
@@ -71,7 +71,7 @@ public class Start {
             e.printStackTrace();
         }
 
-        File backupDir = new File("file://" .concat(dbBackupLocation));
+        File backupDir = new File("file://".concat(dbBackupLocation));
         File[] files = backupDir.listFiles();
         if ((files != null ? files.length : 0) > 100) {
             files[0].delete();
@@ -90,7 +90,13 @@ public class Start {
         }
     }
 
-    public void installUpdate() {
+    private boolean checkUpdate(File file) throws IOException {
+        InputStream is = new FileInputStream(file);
+        String updateAns = new String(is.readAllBytes());
+        return updateAns.startsWith("Updating");
+    }
+
+    private void installUpdate() {
         String command = "cmd /c " +
                 "cd /d \"" + rootLocation + "\" && " +
                 "SetLocal EnableExtensions && " +
@@ -100,18 +106,9 @@ public class Start {
                 "call mvn package -am -o -Dmaven.test.skip -T 1C && " +
                 "run.cmd";
         try {
-            Runtime.getRuntime().exec(command);
-        } catch (IOException e) {
+            Runtime.getRuntime().exec(command).waitFor();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    private void checkUpdate(File file) throws IOException {
-        InputStream is = new FileInputStream(file);
-        updateAns = new String(is.readAllBytes());
-    }
-
-    public String getUpdateAns() {
-        return updateAns;
     }
 }

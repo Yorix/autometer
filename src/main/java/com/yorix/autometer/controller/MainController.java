@@ -55,18 +55,6 @@ public class MainController {
         return modelAndView;
     }
 
-    @GetMapping("updates/")
-    @ResponseBody
-    public String checkUpdates() {
-        return start.getUpdateAns();
-    }
-
-    @GetMapping("install/")
-    public String installUpdate() {
-        start.installUpdate();
-        return "redirect:/";
-    }
-
     @PostMapping("load-data/")
     public String loadData(@RequestParam("file") MultipartFile file) {
         start.readData(file.getOriginalFilename());

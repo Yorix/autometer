@@ -28,25 +28,6 @@ function cuttingDecimalPlaces(e) {
 }
 
 
-var updatedSpan = document.getElementById("span-updated");
-var updateErrorSpan = document.getElementById("span-update-error");
-var updateBtn = document.getElementById("btn-update");
-if (updatedSpan !== null && updateErrorSpan !== null && updateBtn !== null) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/updates/");
-    xhr.send();
-    xhr.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            if (xhr.response.startsWith("Already up to date"))
-                updatedSpan.style.setProperty("display", "block");
-            else if (xhr.response.startsWith("Updating"))
-                updateBtn.style.setProperty("display", "block");
-            else
-                updateErrorSpan.style.setProperty("display", "block");
-        }
-    };
-}
-
 var moneyElements = document.getElementsByClassName("money");
 for (var i = 0; i < moneyElements.length; i++) {
     toMoneyFormat(moneyElements[i]);
