@@ -27,8 +27,13 @@
                      style="max-width: 100%; max-height: 350px;">
             </div>
             <div class="card-footer">
-                <div class="card-text" th:text="${textProperties.footer}"></div>
-                <div class="money" th:text="${car.spending+car.income}"></div>
+                <span class="card-text" th:text="${textProperties.footer}"></span>
+                <div class="row">
+                    <div class="col text-left money" th:text="${car.spending+car.income}" title="Баланс по машине"></div>
+                    <div class="col text-right" title="+30% от расходов">
+                        <span class="money text-success" th:text="${car.spending*-1+car.spending*-0.3}"></span>
+                    </div>
+                </div>
             </div>
         </div>
         <br/>

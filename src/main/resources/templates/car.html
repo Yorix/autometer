@@ -45,8 +45,11 @@
                     </tr>
                     <tr>
                         <td>Прибыль:</td>
-                        <td class="money" id="balance-info" th:data-balance="*{spending+income}"
-                            th:text="*{spending+income}"></td>
+                        <td class="money" th:text="*{spending+income}"></td>
+                    </tr>
+                    <tr>
+                        <td>+30% от расходов:</td>
+                        <td class="money text-success" th:text="*{spending*-1+spending*-0.3}"></td>
                     </tr>
                 </table>
             </div>
