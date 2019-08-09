@@ -49,9 +49,6 @@ function exitProgram() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/exit/");
     xhr.send();
-    xhr.onreadystatechange = function () {
-        window.close();
-    };
 }
 
 
