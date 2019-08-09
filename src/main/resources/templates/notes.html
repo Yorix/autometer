@@ -38,7 +38,7 @@
         </div>
         <div class="card-body">
 
-            <div th:insert="~{/parts/new-note :: create}"></div>
+            <div th:insert="~{parts/new-note :: create}"></div>
 
             <div class="card bg-dark" th:each="note:${notes}">
                 <div class="container row" th:object="${note}">
