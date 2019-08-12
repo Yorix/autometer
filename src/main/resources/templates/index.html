@@ -27,11 +27,12 @@
                      style="max-width: 100%; max-height: 350px;">
             </div>
             <div class="card-footer">
-                <span class="card-text" th:text="${textProperties.footer}"></span>
+                <span th:text="${textProperties.footer}"></span>
                 <div class="row">
-                    <div class="col text-left money" th:text="${car.spending+car.income}" title="Баланс по машине"></div>
-                    <div class="col text-right" title="+30% от расходов">
-                        <span class="money text-success" th:text="${car.spending*-1+car.spending*-0.3}"></span>
+                    <div class="col text-left money" th:text="${car.spending+car.income}"
+                         title="Баланс по машине"></div>
+                    <div class="col text-right money grey-white" title="+30% от расходов"
+                         th:text="${car.spending*-1+car.spending*-0.3}">
                     </div>
                 </div>
             </div>
@@ -47,7 +48,8 @@
                 Загрузка базы из файла
             </div>
             <div class="card-body text-danger">
-                Внимание! Загрузка базы уничтожит всю текущую информацию и восстановит состояние базы, содержащееся в загружаемом файле!
+                Внимание! Загрузка базы уничтожит всю текущую информацию и восстановит состояние базы, содержащееся в
+                загружаемом файле!
                 <div class="row">
                     <div class="col">
                         <input type="file" name="file">

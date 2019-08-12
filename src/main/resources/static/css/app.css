@@ -8,7 +8,8 @@ body {
 }
 
 td {
-    padding: 10px;
+    padding: 6px;
+    font-size: 20px;
 }
 
 .posMoney {
@@ -39,4 +40,12 @@ td {
     1px -1px 0 #000,
     -1px 1px 0 #000,
     0 0 4px #000;
+}
+
+.grey-white {
+    color: gray;
+}
+
+.grey-white:hover {
+    color: white;
 }

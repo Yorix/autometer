@@ -16,6 +16,6 @@ public class AppProperties {
     private String defaultImageFilename = "00_default.png";
     private String defaultImageFullFilename = "classpath:/static/media/" + defaultImageFilename;
     private String currencyUrl = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange";
-    private String currencyUrlParams = "?valcode={param0}&date={param1}&json";
+    private String currencyUrlParams = "?valcode=%s&date=%s&json";
     private String[] currencyCodes = {"usd", "eur"};
 }

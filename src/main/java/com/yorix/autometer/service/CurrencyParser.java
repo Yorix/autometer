@@ -12,18 +12,16 @@ import java.net.URL;
 @Service
 public class CurrencyParser extends AppService {
 
-    public double getRate(String... paramValues) {
-        double rate = 0;
-        String params = "";
-        if (!StringUtils.isEmpty(getProperties().getCurrencyUrlParams())) {
-            params = getProperties().getCurrencyUrlParams();
-            for (int i = 0, length = paramValues.length; i < length; i++) {
-                params = params.replaceAll("\\{param" + i + "}", paramValues[i]);
-            }
-        }
+    public double getRate(String currencyCode, String date) {
+        String params = String.format(
+                getProperties().getCurrencyUrlParams(),
+                currencyCode,
+                date
+        );
 
         String path = getProperties().getCurrencyUrl().concat(params);
 
+        double rate = 0;
         try {
             URL url = new URL(path);
             String response = new String(url.openStream().readAllBytes());
