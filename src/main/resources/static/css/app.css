@@ -49,3 +49,7 @@ td {
 .grey-white:hover {
     color: white;
 }
+
+.selectable:hover div {
+    background-color: #242a30;
+}
