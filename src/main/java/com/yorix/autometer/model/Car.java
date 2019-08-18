@@ -12,7 +12,7 @@ import java.util.List;
 @ToString(exclude = {"notes", "imgs"})
 public class Car {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "make", nullable = false)

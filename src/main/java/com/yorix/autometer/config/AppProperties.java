@@ -10,9 +10,8 @@ import java.nio.file.Paths;
 @ConfigurationProperties("app")
 @Data
 public class AppProperties {
-    private String rootLocation = System.getProperty("user.dir");
-    private String dbBackupLocation = rootLocation + Paths.get("/../backup");
-    private String imageStorageLocation = rootLocation + Paths.get("/../images");
+    private String dbBackupLocation = Paths.get("backup").toString();
+    private String imageStorageLocation = Paths.get("uploads").toString();
     private String defaultImageFilename = "00_default.png";
     private String defaultImageFullFilename = "classpath:/static/media/" + defaultImageFilename;
     private String currencyUrl = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange";

@@ -9,8 +9,7 @@ import javax.persistence.*;
 @Data
 public class Visit {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "description")

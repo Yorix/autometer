@@ -3,6 +3,7 @@ package com.yorix.autometer.config;
 import com.yorix.autometer.errors.StorageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -16,22 +17,22 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 public class Start {
-    private String rootLocation;
     private String dbBackupLocation;
     private AppProperties properties;
+    private DataSourceProperties dataSourceProperties;
     @Value("${app.default-image-full-filename}")
     private Resource resource;
 
     @Autowired
-    public Start(AppProperties properties) {
+    public Start(AppProperties properties, DataSourceProperties dataSourceProperties) {
         this.properties = properties;
-        this.rootLocation = Paths.get(properties.getRootLocation()).toString();
+        this.dataSourceProperties = dataSourceProperties;
         this.dbBackupLocation = Paths.get(properties.getDbBackupLocation()).toString();
 
     }
 
     @PostConstruct
-    public void init() throws IOException, InterruptedException {
+    public void init() throws IOException {
         Path storageLocation = Paths.get(properties.getImageStorageLocation());
         Path outputFilepath = storageLocation.resolve(resource.getFilename());
 
@@ -49,20 +50,13 @@ public class Start {
         Files.createDirectories(dbBackupPath);
 
         saveData();
-
-        String command = String.format("cmd /c cd /d \"%s\" && git pull>.gitAns", rootLocation);
-        Runtime.getRuntime()
-                .exec(command)
-                .waitFor();
-
-        boolean isUpdate = checkUpdate(new File(rootLocation + "/.gitAns"));
-        if (isUpdate) installUpdate();
-        Runtime.getRuntime().exec("cmd /c explorer http://localhost:8080/");
     }
 
     private void saveData() {
         String command = String.format(
-                "cmd /c mysqldump -uuser -puser autometer > %s/autometer_%s.sql",
+                "mysqldump -u%s -p%s autometer > %s/autometer_%s.sql",
+                dataSourceProperties.getUsername(),
+                dataSourceProperties.getPassword(),
                 dbBackupLocation,
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy-hh.mm.ss")));
         try {
@@ -71,7 +65,7 @@ public class Start {
             e.printStackTrace();
         }
 
-        File backupDir = new File("file://".concat(dbBackupLocation));
+        File backupDir = new File(dbBackupLocation);
         File[] files = backupDir.listFiles();
         if ((files != null ? files.length : 0) > 100) {
             files[0].delete();
@@ -80,34 +74,14 @@ public class Start {
 
     public void readData(String filename) {
         String command = String.format(
-                "cmd /c mysql -uuser -puser autometer < %s/%s",
+                "mysql -u%s -p%s autometer < %s/%s",
+                dataSourceProperties.getUsername(),
+                dataSourceProperties.getPassword(),
                 dbBackupLocation,
                 filename);
         try {
             Runtime.getRuntime().exec(command);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private boolean checkUpdate(File file) throws IOException {
-        InputStream is = new FileInputStream(file);
-        String updateAns = new String(is.readAllBytes());
-        return updateAns.startsWith("Updating");
-    }
-
-    private void installUpdate() {
-        String command = "cmd /c " +
-                "cd /d \"" + rootLocation + "\" && " +
-                "SetLocal EnableExtensions && " +
-                "SET ProcessName=javaw.exe && " +
-                "TaskList /FI \"ImageName EQ %ProcessName%\" | Find /I \"%ProcessName%\" && " +
-                "IF NOT %ERRORLEVEL% NEQ 0 (taskkill /IM javaw.exe /f) && " +
-                "call mvn package -am -o -Dmaven.test.skip -T 1C && " +
-                "run.cmd";
-        try {
-            Runtime.getRuntime().exec(command).waitFor();
-        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

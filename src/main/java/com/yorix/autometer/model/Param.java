@@ -2,17 +2,15 @@ package com.yorix.autometer.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "param")
 @Data
 public class Param {
     @Id
-    @Column(name = "name", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(length = 191)
     private String name;
 
     @Column(name = "value")
