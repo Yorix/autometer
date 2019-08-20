@@ -25,7 +25,7 @@ CREATE TABLE note
 );
 CREATE TABLE img
 (
-    filename VARCHAR(255) NOT NULL PRIMARY KEY,
+    filename VARCHAR(191) NOT NULL PRIMARY KEY,
     car_id   INT          NOT NULL,
     FOREIGN KEY (car_id) REFERENCES car (id)
 );

@@ -1,6 +1,9 @@
 package com.yorix.autometer.config;
 
 import com.yorix.autometer.errors.StorageException;
+import com.yorix.autometer.model.Param;
+import com.yorix.autometer.service.ParamService;
+import com.yorix.autometer.storage.ParamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -14,21 +17,23 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Component
 public class Start {
-    private String dbBackupLocation;
-    private AppProperties properties;
-    private DataSourceProperties dataSourceProperties;
+    private final String dbBackupLocation;
+    private final AppProperties properties;
+    private final DataSourceProperties dataSourceProperties;
+    private final ParamRepository paramRepository;
     @Value("${app.default-image-full-filename}")
     private Resource resource;
 
     @Autowired
-    public Start(AppProperties properties, DataSourceProperties dataSourceProperties) {
+    public Start(AppProperties properties, DataSourceProperties dataSourceProperties, ParamRepository paramRepository) {
         this.properties = properties;
         this.dataSourceProperties = dataSourceProperties;
         this.dbBackupLocation = Paths.get(properties.getDbBackupLocation()).toString();
-
+        this.paramRepository = paramRepository;
     }
 
     @PostConstruct
@@ -48,6 +53,9 @@ public class Start {
 
         Path dbBackupPath = Paths.get(properties.getDbBackupLocation());
         Files.createDirectories(dbBackupPath);
+
+        paramRepository.findById("budget")
+                .orElseGet(() -> paramRepository.save(new Param("budget", 0)));
 
         saveData();
     }

@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Data
 public class Img {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(length = 191)
     private String filename;
 

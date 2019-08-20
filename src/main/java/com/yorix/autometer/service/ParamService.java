@@ -20,7 +20,7 @@ public class ParamService extends AppService {
     }
 
     public double read(String name) {
-        return paramRepository.getOne(name).getValue();
+        return paramRepository.findById(name).orElseThrow(NoSuchParamsNameException::new).getValue();
     }
 
     public void update(String name, Param param) {

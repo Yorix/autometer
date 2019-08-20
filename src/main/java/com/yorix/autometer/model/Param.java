@@ -1,16 +1,19 @@
 package com.yorix.autometer.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "param")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Param {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(length = 191)
+    @Column(length = 50)
     private String name;
 
     @Column(name = "value")
