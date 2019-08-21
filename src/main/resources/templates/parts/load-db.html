@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="container" th:fragment="load">
+    <form action="/load-data/" method="POST" enctype="multipart/form-data">
+        <div class="card bg-dark">
+            <div class="card-header">
+                Загрузка базы из файла
+            </div>
+            <div class="card-body text-danger">
+                Внимание! Загрузка базы уничтожит всю текущую информацию и восстановит состояние базы, содержащееся в
+                загружаемом файле!
+                <div class="row">
+                    <div class="col">
+                        <input type="file" name="file">
+                    </div>
+                    <div class="col align-end">
+                        <button type="submit" class="btn btn-danger">>></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

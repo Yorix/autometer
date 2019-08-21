@@ -28,7 +28,7 @@ public class CarController {
 
     @GetMapping
     public ModelAndView getAll() {
-        ModelAndView modelAndView = new ModelAndView("index");
+        ModelAndView modelAndView = new ModelAndView("cars-list");
         List<CarViewDTO> cars = carService.readAll()
                 .stream()
                 .map(CarViewDTO::new)

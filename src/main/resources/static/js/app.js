@@ -45,12 +45,6 @@ function toMoneyFormat(e) {
     e.innerText = (Math.round((Number(text)) * 100) / 100).toLocaleString("ru");
 }
 
-function exitProgram() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/exit/");
-    xhr.send();
-}
-
 
 /* Edit budget */
 var btnAddToBudget = document.getElementById("btn-add-to-budget");

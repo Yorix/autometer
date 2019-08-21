@@ -2,7 +2,7 @@ package com.yorix.autometer.config;
 
 import com.yorix.autometer.errors.StorageException;
 import com.yorix.autometer.model.Param;
-import com.yorix.autometer.service.ParamService;
+import com.yorix.autometer.service.UserService;
 import com.yorix.autometer.storage.ParamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 @Component
 public class Start {
@@ -25,15 +24,22 @@ public class Start {
     private final AppProperties properties;
     private final DataSourceProperties dataSourceProperties;
     private final ParamRepository paramRepository;
+    private final UserService userService;
     @Value("${app.default-image-full-filename}")
     private Resource resource;
 
     @Autowired
-    public Start(AppProperties properties, DataSourceProperties dataSourceProperties, ParamRepository paramRepository) {
+    public Start(
+            AppProperties properties,
+            DataSourceProperties dataSourceProperties,
+            ParamRepository paramRepository,
+            UserService userService
+    ) {
         this.properties = properties;
         this.dataSourceProperties = dataSourceProperties;
         this.dbBackupLocation = Paths.get(properties.getDbBackupLocation()).toString();
         this.paramRepository = paramRepository;
+        this.userService = userService;
     }
 
     @PostConstruct
@@ -57,6 +63,9 @@ public class Start {
         paramRepository.findById("budget")
                 .orElseGet(() -> paramRepository.save(new Param("budget", 0)));
 
+        if (userService.readAll().size() == 0) {
+            //TODO !!!!!!!!!!!!!!!!!
+        }
         saveData();
     }
 

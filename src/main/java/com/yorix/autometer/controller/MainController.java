@@ -2,9 +2,7 @@ package com.yorix.autometer.controller;
 
 import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.config.Start;
-import com.yorix.autometer.model.Visit;
 import com.yorix.autometer.service.CurrencyParser;
-import com.yorix.autometer.storage.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,29 +16,18 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/")
 public class MainController {
     private final CurrencyParser currencyParser;
-    private final VisitRepository visitRepository;
     private final Start start;
     private AppProperties properties;
 
     @Autowired
     public MainController(
             CurrencyParser currencyParser,
-            VisitRepository visitRepository,
             Start start,
             AppProperties properties
     ) {
         this.currencyParser = currencyParser;
-        this.visitRepository = visitRepository;
         this.start = start;
         this.properties = properties;
-    }
-
-    @GetMapping
-    public String index() {
-        Visit visit = new Visit();
-        visit.setDescription(String.format("Visited at %s", LocalDateTime.now()));
-        visitRepository.save(visit);
-        return "redirect:/cars/";
     }
 
     @GetMapping("calculator/")
@@ -59,10 +46,5 @@ public class MainController {
     public String loadData(@RequestParam("file") MultipartFile file) {
         start.readData(file.getOriginalFilename());
         return "redirect:/";
-    }
-
-    @GetMapping("exit/")
-    public void exit() {
-        System.exit(0);
     }
 }
