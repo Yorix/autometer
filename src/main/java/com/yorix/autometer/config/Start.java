@@ -2,6 +2,8 @@ package com.yorix.autometer.config;
 
 import com.yorix.autometer.errors.StorageException;
 import com.yorix.autometer.model.Param;
+import com.yorix.autometer.model.Role;
+import com.yorix.autometer.model.User;
 import com.yorix.autometer.service.UserService;
 import com.yorix.autometer.storage.ParamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,9 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 public class Start {
+    private final String shell;
     private final String dbBackupLocation;
-    private final AppProperties properties;
+    private final String imgStorageLocation;
     private final DataSourceProperties dataSourceProperties;
     private final ParamRepository paramRepository;
     private final UserService userService;
@@ -35,16 +38,17 @@ public class Start {
             ParamRepository paramRepository,
             UserService userService
     ) {
-        this.properties = properties;
+        shell = properties.getShell();
+        dbBackupLocation = properties.getDbBackupLocation();
+        imgStorageLocation = properties.getImageStorageLocation();
         this.dataSourceProperties = dataSourceProperties;
-        this.dbBackupLocation = Paths.get(properties.getDbBackupLocation()).toString();
         this.paramRepository = paramRepository;
         this.userService = userService;
     }
 
     @PostConstruct
     public void init() throws IOException {
-        Path storageLocation = Paths.get(properties.getImageStorageLocation());
+        Path storageLocation = Paths.get(imgStorageLocation);
         Path outputFilepath = storageLocation.resolve(resource.getFilename());
 
         try {
@@ -57,21 +61,29 @@ public class Start {
             throw new StorageException("Could not initialize storage", e);
         }
 
-        Path dbBackupPath = Paths.get(properties.getDbBackupLocation());
-        Files.createDirectories(dbBackupPath);
+        Files.createDirectories(Paths.get(dbBackupLocation));
 
         paramRepository.findById("budget")
                 .orElseGet(() -> paramRepository.save(new Param("budget", 0)));
 
-        if (userService.readAll().size() == 0) {
-            //TODO !!!!!!!!!!!!!!!!!
-        }
+        createFirstUser();
         saveData();
+    }
+
+    private void createFirstUser() {
+        if (userService.readAll().size() == 0) {
+            User user = new User();
+            user.setUsername("admin");
+            user.setPassword("adminpassword");
+            user.setRole(Role.ADMIN);
+            userService.update(user);
+        }
     }
 
     private void saveData() {
         String command = String.format(
-                "mysqldump -u%s -p%s autometer > %s/autometer_%s.sql",
+                "%s mysqldump -u%s -p%s autometer > %s/autometer_%s.sql",
+                shell,
                 dataSourceProperties.getUsername(),
                 dataSourceProperties.getPassword(),
                 dbBackupLocation,
@@ -91,7 +103,8 @@ public class Start {
 
     public void readData(String filename) {
         String command = String.format(
-                "mysql -u%s -p%s autometer < %s/%s",
+                "%s mysql -u%s -p%s autometer < %s/%s",
+                shell,
                 dataSourceProperties.getUsername(),
                 dataSourceProperties.getPassword(),
                 dbBackupLocation,

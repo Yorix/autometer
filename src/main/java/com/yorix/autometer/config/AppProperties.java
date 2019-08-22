@@ -4,12 +4,11 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.Paths;
-
 @Component
 @ConfigurationProperties("app")
 @Data
 public class AppProperties {
+    private String shell = "bash -c";
     private String dbBackupLocation;
     private String imageStorageLocation;
     private String defaultImageFilename = "00_default.png";

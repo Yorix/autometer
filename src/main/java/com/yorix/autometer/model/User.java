@@ -4,9 +4,7 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Collections;
@@ -19,6 +17,7 @@ public class User implements UserDetails {
     private String username;
     @NotBlank(message = "Password cannot be empty")
     private String password;
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Override

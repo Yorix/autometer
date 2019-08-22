@@ -28,15 +28,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/static/**", "/css/**").permitAll()
                     .antMatchers(HttpMethod.POST).hasAnyRole("POWER", "ADMIN")
-                    .antMatchers(HttpMethod.PUT).hasAnyRole("POWER", "ADMIN")
-                    .antMatchers(HttpMethod.DELETE).hasAnyRole("POWER", "ADMIN")
+//                    .antMatchers(HttpMethod.PUT).hasAnyRole("POWER", "ADMIN")
+//                    .antMatchers(HttpMethod.DELETE).hasAnyRole("POWER", "ADMIN")
                     .antMatchers("/load-data/").hasRole("ADMIN")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
-                    .loginPage("/login/").permitAll()
+                    .loginPage("/login").permitAll()
                     .and()
-                .logout().permitAll();
+                .logout().permitAll()
+                    .and()
+                .csrf().disable();
     }
 
     @Override

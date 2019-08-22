@@ -22,6 +22,10 @@
                     th:classappend="${#httpServletRequest.requestURI}=='/calculator/' ? 'active' : null">
                     <a class="nav-link" href="/calculator/">Калькулятор</a>
                 </li>
+                <li class="nav-item"
+                    th:classappend="${#httpServletRequest.requestURI}=='/login?logout' ? 'active' : null">
+                    <a class="nav-link" href="/logout">Выход</a>
+                </li>
             </ul>
         </div>
 
