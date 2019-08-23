@@ -21,7 +21,7 @@ public class Note {
     private double value;
 
     @Column(name = "date")
-    private String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "car_id", nullable = false)

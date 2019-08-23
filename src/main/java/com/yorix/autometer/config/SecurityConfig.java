@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/static/**", "/css/**").permitAll()
-                    .antMatchers(HttpMethod.POST).hasAnyRole("POWER", "ADMIN")
+//                    .antMatchers("/cars/").hasRole("ADMIN")
 //                    .antMatchers(HttpMethod.PUT).hasAnyRole("POWER", "ADMIN")
 //                    .antMatchers(HttpMethod.DELETE).hasAnyRole("POWER", "ADMIN")
                     .antMatchers("/load-data/").hasRole("ADMIN")
@@ -36,9 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/login").permitAll()
                     .and()
-                .logout().permitAll()
-                    .and()
-                .csrf().disable();
+                .logout().permitAll();
     }
 
     @Override

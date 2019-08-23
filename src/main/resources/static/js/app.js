@@ -57,21 +57,9 @@ function editBudget() {
     btnSubmitBudget.style.display = "block";
 }
 
-function submitBudget(budget) {
-    btnAddToBudget.style.display = "block";
-    inputBudget.style.display = "none";
-    btnSubmitBudget.style.display = "none";
-
-    var formData = new FormData();
-    formData.append("value", Number(inputBudget.value) + budget);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("PUT", "/params/budget/");
-    xhr.send(formData);
-    xhr.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200)
-            window.location.reload();
-    }
+function submitBudget() {
+    if (inputBudget.value === '')
+        inputBudget.value = 0;
 }
 
 

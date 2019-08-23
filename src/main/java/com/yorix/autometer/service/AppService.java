@@ -3,6 +3,7 @@ package com.yorix.autometer.service;
 import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.storage.NoteRepository;
+import com.yorix.autometer.storage.ParamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public abstract class AppService {
     @Autowired
     private NoteRepository noteRepository;
     @Autowired
-    private ParamService paramService;
+    private ParamRepository paramRepository;
     @Autowired
     private AppProperties properties;
 
@@ -23,7 +24,7 @@ public abstract class AppService {
     }
 
     public double getBudget() {
-        return paramService.read("budget");
+        return paramRepository.getOne("budget").getValue();
     }
 
     public AppProperties getProperties() {

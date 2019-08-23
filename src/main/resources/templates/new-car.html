@@ -11,6 +11,8 @@
 
 <div class="container card bg-dark">
     <form id="form-new-car" action="/cars/" method="post" th:object="${car}">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+
         <div class="card-header">
             <h5 id="header"></h5>
         </div>
@@ -34,9 +36,8 @@
                     </button>
                 </div>
                 <div class="col-2">
-                    <button id="btn-submit" type="button" class="btn btn-outline-success">
-                        Добавить >>
-                    </button>
+                    <input id="btn-submit" type="button" class="btn btn-outline-success"
+                           value="Добавить >>">
                 </div>
             </div>
         </div>

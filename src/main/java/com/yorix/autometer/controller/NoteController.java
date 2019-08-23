@@ -35,11 +35,11 @@ public class NoteController {
     }
 
     @PostMapping
-    public String create(@PathVariable("carId") int carId, Note note) {
+    public String create(@PathVariable("carId") int carId, @RequestParam Note note) {
         Car car = carService.read(carId);
         note.setCar(car);
         noteService.create(note);
-        return String.format("redirect:/cars/%s/", carId);
+        return "redirect:/cars/" + carId;
     }
 
     @DeleteMapping("{noteId}/")

@@ -3,7 +3,8 @@
 <body>
 
 <div class="container" th:fragment="load">
-    <form action="/load-data/" method="POST" enctype="multipart/form-data">
+    <form method="post" action="/load-data/" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
         <div class="card bg-dark">
             <div class="card-header">
                 Загрузка базы из файла
