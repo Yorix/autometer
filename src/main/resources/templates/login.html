@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns: xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Вход</title>
@@ -9,9 +9,11 @@
 
 <div class="container my-5">
     <div class="card card-body bg-dark">
+        <div th:if="${loginError}" class="alert-danger p-1">Ошибка в имени или пароле.</div>
         <form action="/login" method="post" class="form-inline">
             <input type="text" name="username" class="form-control m-2" placeholder="Имя">
             <input type="password" name="password" class="form-control m-2" placeholder="Пароль">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
             <input type="submit" class="btn btn-outline-success m-2" value="Войти">
         </form>
     </div>

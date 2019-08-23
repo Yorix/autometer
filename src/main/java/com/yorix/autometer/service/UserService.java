@@ -1,6 +1,5 @@
 package com.yorix.autometer.service;
 
-import com.yorix.autometer.model.Role;
 import com.yorix.autometer.model.User;
 import com.yorix.autometer.storage.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService extends AppService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -30,12 +29,6 @@ public class UserService implements UserDetailsService {
 
 
     public void create(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.USER);
-        userRepository.save(user);
-    }
-
-    public void update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }

@@ -3,30 +3,34 @@
 <body>
 
 <div class="card bg-dark my-2" th:fragment="create">
-    <div class="card-body form-group row" th:object="${note}">
-        <div class="col-3 input-group">
-            <input id="input-note-date" type="date" class="form-control"
-                   placeholder="дд.мм.гггг" th:field="*{date}"/>
-        </div>
-        <div class="col-4">
-            <input id="input-note-desc" type="text" class="form-control" placeholder="Запись"
-                   th:field="*{description}"/>
-        </div>
-        <div class="col-2">
-            <select id="select-negative" class="form-control">
-                <option>Расход</option>
-                <option>Приход</option>
-            </select>
-        </div>
-        <div class="col-3 input-group">
-            <input id="input-note-value" oninput="cuttingDecimalPlaces(this)"
-                   type="number" step="0.01" min="0" max="9999999"
-                   class="form-control" placeholder="0.00" th:field="*{value}"/>
-            <div class="input-group-append">
-                <button type="button" class="btn btn-outline-success" th:onclick="|noteSubmit('${car.id}')|">>></button>
+    <form method="post" th:action="|/cars/${car.id}/notes/|" th:object="${note}">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+        <input type="hidden" name="location" th:value="${#httpServletRequest.requestURL}">
+        <div class="card-body form-group row">
+            <div class="col-3 input-group">
+                <input id="input-note-date" type="date" class="form-control"
+                       placeholder="дд.мм.гггг" th:field="*{date}"/>
+            </div>
+            <div class="col-4">
+                <input id="input-note-desc" type="text" class="form-control" placeholder="Запись"
+                       th:field="*{description}"/>
+            </div>
+            <div class="col-2">
+                <select id="select-negative" class="form-control">
+                    <option>Расход</option>
+                    <option>Приход</option>
+                </select>
+            </div>
+            <div class="col-3 input-group">
+                <input id="input-note-value" oninput="cuttingDecimalPlaces(this)"
+                       type="number" step="0.01" max="9999999"
+                       class="form-control" placeholder="0.00" th:field="*{value}"/>
+                <div class="input-group-append">
+                    <input type="submit" class="btn btn-outline-success" onclick="noteSubmit()" value=">>">
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
 </body>

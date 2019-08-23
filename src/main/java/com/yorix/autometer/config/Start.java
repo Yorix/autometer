@@ -19,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 
 @Component
 public class Start {
@@ -72,11 +73,17 @@ public class Start {
 
     private void createFirstUser() {
         if (userService.readAll().size() == 0) {
+            User admin = new User();
+            admin.setUsername("admin");
+            admin.setPassword("1");
+            admin.setRoles(Collections.singleton(Role.ADMIN));
+            userService.create(admin);
+
             User user = new User();
-            user.setUsername("admin");
-            user.setPassword("adminpassword");
-            user.setRole(Role.ADMIN);
-            userService.update(user);
+            user.setUsername("user");
+            user.setPassword("1");
+            user.setRoles(Collections.singleton(Role.USER));
+            userService.create(user);
         }
     }
 

@@ -18,4 +18,3 @@ nohup java -jar autometer-0.0.1-SNAPSHOT.jar > log.txt &
 EOF
 
 echo "Bye"
-

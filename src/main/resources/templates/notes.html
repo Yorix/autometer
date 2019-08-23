@@ -45,36 +45,47 @@
 
             <div class="card px-3 bg-dark selectable" th:each="note:${notes}">
                 <div class="row" th:object="${note}">
-                    <div class="col-2">
-                        <div th:id="|div-date*{id}|" th:text="*{date}"></div>
-                    </div>
-                    <div class="col-6">
-                        <div th:id="|div-desc*{id}|" th:text="*{description}"></div>
-                    </div>
-                    <div class="col-2">
-                        <div class="money" th:id="|div-value*{id}|" th:text="*{value}"></div>
+                    <div class="col-11">
+                        <form method="post" th:action="|/cars/${car.id}/notes/${note.id}/|" th:object="${note}">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                            <input type="hidden" name="_method" value="put">
+                            <input type="hidden" th:id="|input-date*{id}|" th:field="*{date}">
+                            <input type="hidden" th:id="|input-desc*{id}|" th:field="*{description}">
+                            <input type="hidden" th:id="|input-value*{id}|" th:field="*{value}">
+
+                            <div class="row">
+                                <div class="col-3">
+                                    <div th:id="|div-date*{id}|" th:text="*{date}"></div>
+                                </div>
+                                <div class="col-6">
+                                    <div th:id="|div-desc*{id}|" th:text="*{description}"></div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="money" th:id="|div-value*{id}|" th:text="*{value}"></div>
+                                </div>
+                                <div class="col-1">
+                                    <input th:id="|btn-change*{id}|" type="button"
+                                           th:onclick="|clickChange(${note.id})|"
+                                           class="btn btn-outline-warning btn-sm" value="<<">
+                                    <input th:id="|btn-submit*{id}|" type="submit"
+                                           th:onclick="|clickSubmit(${note.id})|"
+                                           class="btn btn-outline-success btn-sm" style="display: none" value=">>">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="col-1">
-                        <button th:id="|btn-change*{id}|" type="button" th:onclick="|clickChange(${note.id});|"
-                                class="btn btn-outline-warning btn-sm" style="display: block">
-                            <<
-                        </button>
-                        <button th:id="|btn-submit*{id}|" type="button" th:onclick="|clickSubmit(${note.id});|"
-                                class="btn btn-outline-success btn-sm" style="display: none">
-                            >>
-                        </button>
-                    </div>
-                    <div class="col-1">
-                        <button type="button" th:onclick="|clickDelete(${note.id});|"
-                                class="btn btn-outline-danger btn-sm" style="display: block">
-                            &#10008;
-                        </button>
+                        <form method="post" th:action="|/cars/${car.id}/notes/${note.id}/|">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                            <input type="hidden" name="_method" value="delete">
+                            <input type="submit" class="btn btn-outline-danger btn-sm" value="&#10008;">
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer">
-            <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Назад</button>
+            <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад">
         </div>
     </div>
 </div>

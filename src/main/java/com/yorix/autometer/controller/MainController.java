@@ -30,6 +30,13 @@ public class MainController {
         this.properties = properties;
     }
 
+    @GetMapping("login-error")
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView("login");
+        modelAndView.addObject("loginError", true);
+        return modelAndView;
+    }
+
     @GetMapping("calculator/")
     public ModelAndView calculator() {
         ModelAndView modelAndView = new ModelAndView("calculator");
@@ -37,6 +44,14 @@ public class MainController {
             double rate = currencyParser.getRate(currencyCode, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
             modelAndView.addObject(currencyCode, rate);
         }
+        modelAndView.addObject("budget", currencyParser.getBudget());
+        modelAndView.addObject("balance", currencyParser.getBalance());
+        return modelAndView;
+    }
+
+    @GetMapping("db")
+    public ModelAndView loadDb() {
+        ModelAndView modelAndView = new ModelAndView("load-db");
         modelAndView.addObject("budget", currencyParser.getBudget());
         modelAndView.addObject("balance", currencyParser.getBalance());
         return modelAndView;

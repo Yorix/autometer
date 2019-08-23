@@ -6,7 +6,6 @@ import com.yorix.autometer.model.CarViewDTO;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,7 +27,7 @@ public class CarController {
 
     @GetMapping
     public ModelAndView getAll() {
-        ModelAndView modelAndView = new ModelAndView("cars-list");
+        ModelAndView modelAndView = new ModelAndView("car-list");
         List<CarViewDTO> cars = carService.readAll()
                 .stream()
                 .map(CarViewDTO::new)
@@ -67,9 +66,13 @@ public class CarController {
     }
 
     @PutMapping("{id}/")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable("id") int id, Car car) {
+    public String update(
+            @PathVariable("id") int id,
+            @RequestParam("location") String location,
+            Car car
+    ) {
         carService.update(id, car);
+        return "redirect:" + location;
     }
 
     @DeleteMapping("{id}/")

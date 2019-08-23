@@ -12,50 +12,52 @@
 <div class="container">
     <div class="card bg-dark">
         <div class="card-header">
-            <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Назад</button>
-            <span class="header-text ml-3" th:text="|${car.make} ${car.model}|"></span>
+            <div class="row">
+                <div class="col-2">
+                    <input type="button" class="btn btn-outline-light " onclick="goto('../')" value="<< Назад">
+                </div>
+                <div class="col-10">
+                    <div class="text-right pr-3">
+                        <img th:src="|/img/${car.imgFilename}|" style="max-width: 100%; max-height: 170px;" src="#"
+                             alt="Фото по умолчанию">
+                    </div>
+                    <span class="content header-text" th:text="|${car.make} ${car.model}|"></span>
+                </div>
+            </div>
         </div>
         <div class="card-body">
-            <div class="card-header">
-                <form id="form-send-file" action="./" method="POST" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="align-start">
-                            <input id="input-file" name="file" type="file" class="form-control-file"/>
-                        </div>
-                        <div class="align-start">
-                            <button type="button"
-                                    class="btn btn-outline-success"
-                                    th:onclick="|sendFile('${maxFileSize}');|">>>
-                            </button>
-                        </div>
+            <form id="form-send-file" action="./" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                <div class="row">
+                    <div class="col-10">
+                        <input id="input-file" name="file" type="file" class="form-control-file"/>
                     </div>
-                </form>
-            </div>
-
-            <br/>
+                    <div class="col-2">
+                        <input type="submit" class="btn btn-outline-success"
+                               th:onclick="|sendFile('${maxFileSize}')|" value=">>">
+                    </div>
+                </div>
+            </form>
 
             <div class="card-columns">
                 <div class="container" th:each="img:${imgs}">
                     <div class="card bg-dark" style="position: relative;">
                         <img style="position: relative; max-width: 100%;" th:src="|/img/*{img.filename}|"/>
-                        <button
-                                type="button"
-                                class="btn btn-outline-success"
-                                style="position: absolute; top: 5px; left: 5px;"
-                                th:data-car="${img.car.id}"
-                                th:data-filename="${img.filename}"
-                                th:onclick="|setDefault(getAttribute('data-car'), getAttribute('data-filename'));|"
-                        >&#10003;
-                        </button>
-                        <button
-                                type="button"
-                                class="btn btn-outline-danger"
-                                style="position: absolute; bottom: 5px; right: 5px;"
-                                th:data-car="${img.car.id}"
-                                th:data-filename="${img.filename}"
-                                th:onclick="|deleteImg(getAttribute('data-car'), getAttribute('data-filename'));|"
-                        >&#10008;
-                        </button>
+                        <form method="post" th:action="|/cars/${car.id}/|" th:object="${car}">
+                            <input type="hidden" name="_method" value="put">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                            <input type="hidden" name="location" th:value="${#httpServletRequest.requestURL}">
+                            <input type="hidden" name="imgFilename" th:value="${img.filename}">
+                            <input type="submit" class="btn btn-outline-success"
+                                   style="position: absolute; top: 5px; left: 5px;" value="&#10003;">
+                        </form>
+                        <form method="post" th:action="|/cars/${car.id}/img/|">
+                            <input type="hidden" name="_method" value="delete">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                            <input type="hidden" name="filename" th:value="${img.filename}">
+                            <input type="submit" class="btn btn-outline-danger"
+                                   style="position: absolute; bottom: 5px; right: 5px;" value="&#10008;">
+                        </form>
                     </div>
                 </div>
             </div>

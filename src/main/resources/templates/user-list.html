@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список автомобилей</title>
+    <link rel="stylesheet" href="/css/app.css"/>
+</head>
+<body>
+
+<div th:insert="~{parts/header-menu :: menu}"></div>
+
+<div class="mb-4 mx-5">
+    <button type="button" class="btn btn-outline-success" onclick="goto('new-car/')">&#10010;</button>
+</div>
+
+<div class="container-fluid row">
+    <div class="container col-4" th:each="user:${users}">
+        <div class="card bg-dark selectable" th:onclick="|goto('#')|">
+            <div class="card-header">
+                <div th:text="${user.username}"></div>
+            </div>
+            <div class="card-body" style="height: 400px; text-align: center;">
+                <div th:each="role:${user.roles}">
+                    <div th:text="${role.name()}"></div>
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+        <br/>
+    </div>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

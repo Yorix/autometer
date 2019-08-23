@@ -39,25 +39,25 @@ public class CarService extends AppService {
         carRepository.deleteById(id);
     }
 
-    public void update(int id, Car updated) {
-        Car car = read(id);
-        String newMake = updated.getMake();
-        String newModel = updated.getModel();
-        String newImgFilename = updated.getImgFilename();
-        List<Note> newNotes = updated.getNotes();
-        List<Img> newImgs = updated.getImgs();
+    public void update(int id, Car newCar) {
+        Car carFromDb = read(id);
+        String newCarMake = newCar.getMake();
+        String newCarModel = newCar.getModel();
+        String newCarImgFilename = newCar.getImgFilename();
+        List<Note> newCarNotes = newCar.getNotes();
+        List<Img> newCarImgs = newCar.getImgs();
 
-        if (!StringUtils.isEmpty(newMake))
-            car.setMake(newMake.replace(Character.toString(160), " ").trim());
-        if (!StringUtils.isEmpty(newModel))
-            car.setModel(newModel.replace(Character.toString(160), " ").trim());
-        if (newImgFilename != null)
-            car.setImgFilename(newImgFilename);
-        if (newNotes != null)
-            car.setNotes(newNotes);
-        if (newImgs != null)
-            car.setImgs(newImgs);
+        if (!StringUtils.isEmpty(newCarMake))
+            carFromDb.setMake(newCarMake.replace(Character.toString(160), " ").trim());
+        if (!StringUtils.isEmpty(newCarModel))
+            carFromDb.setModel(newCarModel.replace(Character.toString(160), " ").trim());
+        if (newCarImgFilename != null)
+            carFromDb.setImgFilename(newCarImgFilename);
+        if (newCarNotes != null)
+            carFromDb.setNotes(newCarNotes);
+        if (newCarImgs != null)
+            carFromDb.setImgs(newCarImgs);
 
-        carRepository.save(car);
+        carRepository.save(carFromDb);
     }
 }

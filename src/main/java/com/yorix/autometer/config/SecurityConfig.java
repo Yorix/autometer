@@ -26,19 +26,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/static/**", "/css/**").permitAll()
-                    .antMatchers(HttpMethod.POST).hasAnyRole("POWER", "ADMIN")
-//                    .antMatchers(HttpMethod.PUT).hasAnyRole("POWER", "ADMIN")
-//                    .antMatchers(HttpMethod.DELETE).hasAnyRole("POWER", "ADMIN")
-                    .antMatchers("/load-data/").hasRole("ADMIN")
-                    .anyRequest().authenticated()
-                    .and()
+                .antMatchers("/static/**", "/css/**").permitAll()
+//                .antMatchers("/cars/").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.PUT).hasAnyRole("POWER", "ADMIN")
+//                .antMatchers(HttpMethod.DELETE).hasAnyRole("POWER", "ADMIN")
+//                .antMatchers("/load-data/").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            .and()
                 .formLogin()
-                    .loginPage("/login").permitAll()
-                    .and()
-                .logout().permitAll()
-                    .and()
-                .csrf().disable();
+                .loginPage("/login").permitAll()
+                .failureUrl("/login-error")
+            .and()
+                .logout().permitAll();
     }
 
     @Override

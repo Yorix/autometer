@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Загрузка бд из файла</title>
+    <link rel="stylesheet" href="/css/app.css"/>
+</head>
 <body>
 
-<div class="container" th:fragment="load">
-    <form action="/load-data/" method="POST" enctype="multipart/form-data">
+<div th:insert="~{parts/header-menu :: menu}"></div>
+
+<div class="container">
+    <form method="post" action="/load-data/" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
         <div class="card bg-dark">
             <div class="card-header">
                 Загрузка базы из файла
@@ -24,5 +32,6 @@
     </form>
 </div>
 
+<script src="/js/app.js"></script>
 </body>
 </html>

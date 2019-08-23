@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "note")
@@ -21,7 +20,7 @@ public class Note {
     private double value;
 
     @Column(name = "date")
-    private String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    private String date;
 
     @ManyToOne
     @JoinColumn(name = "car_id", nullable = false)
