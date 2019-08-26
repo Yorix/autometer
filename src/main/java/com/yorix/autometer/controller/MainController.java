@@ -30,13 +30,6 @@ public class MainController {
         this.properties = properties;
     }
 
-    @GetMapping("login-error")
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView("login");
-        modelAndView.addObject("loginError", true);
-        return modelAndView;
-    }
-
     @GetMapping("calculator/")
     public ModelAndView calculator() {
         ModelAndView modelAndView = new ModelAndView("calculator");
@@ -49,7 +42,7 @@ public class MainController {
         return modelAndView;
     }
 
-    @GetMapping("db")
+    @GetMapping("db/")
     public ModelAndView loadDb() {
         ModelAndView modelAndView = new ModelAndView("load-db");
         modelAndView.addObject("budget", currencyParser.getBudget());

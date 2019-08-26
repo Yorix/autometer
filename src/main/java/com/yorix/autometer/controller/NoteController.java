@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/cars/{carId}/notes/")
 public class NoteController {
@@ -38,7 +40,7 @@ public class NoteController {
     public String create(
             @PathVariable("carId") int carId,
             @RequestParam(name = "location") String location,
-            Note note
+            @Valid Note note
     ) {
         Car car = carService.read(carId);
         note.setCar(car);

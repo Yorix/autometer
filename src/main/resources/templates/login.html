@@ -9,7 +9,8 @@
 
 <div class="container my-5">
     <div class="card card-body bg-dark">
-        <div th:if="${loginError}" class="alert-danger p-1">Ошибка в имени или пароле.</div>
+        <div th:if="${param.error}" class="alert-danger p-1">Ошибка в имени или пароле.</div>
+        <div th:if="${param.logout}" class="alert-info p-1">Вы вышли.</div>
         <form action="/login" method="post" class="form-inline">
             <input type="text" name="username" class="form-control m-2" placeholder="Имя">
             <input type="password" name="password" class="form-control m-2" placeholder="Пароль">

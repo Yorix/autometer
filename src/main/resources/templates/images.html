@@ -28,12 +28,10 @@
         <div class="card-body">
             <form id="form-send-file" action="./" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                <div class="row">
-                    <div class="col-10">
-                        <input id="input-file" name="file" type="file" class="form-control-file"/>
-                    </div>
-                    <div class="col-2">
-                        <input type="submit" class="btn btn-outline-success"
+                <div class="container input-group mb-5">
+                    <input id="input-file" name="file" type="file" class="custom-file"/>
+                    <div class="input-group-append">
+                        <input type="button" class="btn btn-outline-success"
                                th:onclick="|sendFile('${maxFileSize}')|" value=">>">
                     </div>
                 </div>

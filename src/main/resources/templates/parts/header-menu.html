@@ -28,8 +28,8 @@
                     <a class="nav-link" href="/user/">Управление пользователями</a>
                 </li>
                 <li class="nav-item"
-                    th:classappend="${#httpServletRequest.requestURI}=='/db/' ? 'active' : null">
-                    <a class="nav-link" href="/db">Управление данными</a>
+                    th:classappend="${#httpServletRequest.requestURI}=='/db' ? 'active' : null">
+                    <a class="nav-link" href="/db/">Управление данными</a>
                 </li>
             </ul>
         </div>

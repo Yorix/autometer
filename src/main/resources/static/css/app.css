@@ -13,15 +13,15 @@ td {
 }
 
 .posMoney {
-    color: #8f8;
+    color: #8f8 !important;
 }
 
 .negMoney {
-    color: #f88;
+    color: #f88 !important;
 }
 
 .zerMoney {
-    color: #ddd;
+    color: #ddd !important;
 }
 
 .content {
@@ -43,13 +43,29 @@ td {
 }
 
 .grey-white {
-    color: gray;
+    color: gray !important;
 }
 
 .grey-white:hover {
-    color: white;
+    color: white !important;
+}
+
+.read-only-input {
+    border: 0 solid transparent;
+    border-radius: 3px;
+    background: #343a40 !important;
+    outline: none;
+    height: 32px;
+    width: 100%;
+    color: #f8f9fa;
+    /*font-size: 11px;*/
+    /*font-family: Tahoma;*/
 }
 
 .selectable:hover div {
     background-color: #242a30;
+}
+
+.selectable:hover .read-only-input {
+    background: #242a30 !important;
 }
