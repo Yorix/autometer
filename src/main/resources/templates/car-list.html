@@ -15,7 +15,7 @@
 
 <div class="container-fluid row">
     <div class="container col-4" th:each="car:${cars}">
-        <div class="card bg-dark selectable" th:onclick="|goto('/cars/${car.id}/');|">
+        <div class="card bg-dark selectable" th:onclick="|goto('/cars/${car.id}/')|">
             <div class="card-header">
                 <div th:text="|${car.make} ${car.model}|"></div>
                 <div th:text="${textProperties.header}"></div>
