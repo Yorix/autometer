@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список автомобилей</title>
+    <link rel="stylesheet" href="/css/app.css"/>
+</head>
+<body>
+
+<div th:insert="~{parts/header-menu :: menu}"></div>
+
+<div class="container">
+    <div class="card bg-dark">
+        <div class="card-header">
+            <div class="header-text">Регистрация нового пользователя</div>
+            <form method="post" action="/user/">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                <div class="card-body form-group row">
+                    <div class="col-5">
+                        <input name="username" type="text" placeholder="Имя пользователя" class="form-control"
+                               th:classappend="(${userExistsError}or${usernameError})?'is-invalid':''">
+                        <div class="invalid-feedback" th:if="${userExistsError}" th:text="${userExistsError}"></div>
+                        <div class="invalid-feedback" th:if="${usernameError}" th:text="${usernameError}"></div>
+                    </div>
+                    <div class="col-3">
+                        <input name="password" type="password" placeholder="Пароль" class="form-control"
+                               th:classappend="(${passConfirmError}or${passwordError})?'is-invalid':''">
+                        <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
+                    </div>
+                    <div class="col-3">
+                        <input name="passwordConfirm" type="password" placeholder="Повторите пароль"
+                               class="form-control" th:classappend="${passConfirmError}?'is-invalid':''">
+                        <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
+                    </div>
+                    <div class="col-1">
+                        <input type="submit" class="btn btn-outline-success" onclick="" value=">>">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-body">
+            <div class="card px-3 bg-dark selectable" th:each="user:${users}">
+                <div class="row">
+                    <div class="col-11">
+                        <form method="post" th:action="|/user/${user.username}/|" th:object="${user}">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                            <input type="hidden" name="_method" value="put">
+                            <input type="hidden" name="password" th:id="|input-password*{username}|">
+                            <input type="hidden" name="role" th:id="|input-role*{username}|">
+
+                            <div class="row">
+                                <div class="col-5">
+                                    <div th:id="|div-username*{username}|" th:text="*{username}"></div>
+                                </div>
+                                <div class="col-5">
+                                    <div th:id="|div-role*{username}|" th:text="*{roles}"></div>
+                                </div>
+                                <div class="col-2">
+                                    <input th:id="|btn-change*{username}|" type="button"
+                                           th:onclick=""
+                                           class="btn btn-outline-warning btn-sm" value="<<">
+                                    <input th:id="|btn-submit*{username}|" type="submit"
+                                           th:onclick=""
+                                           class="btn btn-outline-success btn-sm" style="display: none" value=">>">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-1">
+                        <form method="post" th:action="|/user/${user.username}/|">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                            <input type="hidden" name="_method" value="delete">
+                            <input type="submit" class="btn btn-outline-danger btn-sm" value="&#10008;">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад">
+        </div>
+    </div>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

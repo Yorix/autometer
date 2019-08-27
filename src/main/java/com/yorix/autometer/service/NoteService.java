@@ -5,7 +5,9 @@ import com.yorix.autometer.model.Note;
 import com.yorix.autometer.storage.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,8 +19,22 @@ public class NoteService extends AppService {
         this.noteRepository = noteRepository;
     }
 
-    public Note create(Note note) {
-        return noteRepository.save(note);
+    public void create(Note note) {
+        noteRepository.save(note);
+    }
+
+    public void update(int id, Note newNote) {
+        Note noteFromDb = noteRepository.getOne(id);
+        LocalDate newNoteDate = newNote.getDate();
+        String newNoteDescription = newNote.getDescription();
+        double newNoteValue = newNote.getValue();
+
+        if (!StringUtils.isEmpty(newNoteDescription))
+            noteFromDb.setDescription(newNoteDescription);
+        noteFromDb.setValue(newNoteValue);
+        noteFromDb.setDate(newNoteDate);
+
+        noteRepository.save(noteFromDb);
     }
 
     public Note read(Car car, int id) {

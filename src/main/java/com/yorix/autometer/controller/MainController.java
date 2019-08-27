@@ -42,6 +42,14 @@ public class MainController {
         return modelAndView;
     }
 
+    @GetMapping("db/")
+    public ModelAndView loadDb() {
+        ModelAndView modelAndView = new ModelAndView("load-db");
+        modelAndView.addObject("budget", currencyParser.getBudget());
+        modelAndView.addObject("balance", currencyParser.getBalance());
+        return modelAndView;
+    }
+
     @PostMapping("load-data/")
     public String loadData(@RequestParam("file") MultipartFile file) {
         start.readData(file.getOriginalFilename());

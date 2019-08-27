@@ -1,6 +1,7 @@
-var carId = document.getElementById('car-id').dataset.id;
 var makeDiv = document.getElementById("div-make");
 var modelDiv = document.getElementById("div-model");
+var makeInput = document.getElementById("input-make");
+var modelInput = document.getElementById("input-model");
 var editCarnameBtn = document.getElementById("btn-edit-carname");
 var submitCarnameBtn = document.getElementById("btn-submit-carname");
 
@@ -18,16 +19,6 @@ submitCarnameBtn.addEventListener("click", function () {
     modelDiv.setAttribute('contentEditable', 'false');
     submitCarnameBtn.style.display = 'none';
     editCarnameBtn.style.display = 'block';
-
-    var formData = new FormData();
-    formData.append('make', makeDiv.innerText);
-    formData.append('model', modelDiv.innerText);
-    var xmlHttpRequest = new XMLHttpRequest();
-    xmlHttpRequest.open('PUT', '/cars/' + carId + '/');
-    xmlHttpRequest.send(formData);
-
-    xmlHttpRequest.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 204)
-            window.location.reload();
-    }
+    makeInput.value = makeDiv.innerText;
+    modelInput.value = modelDiv.innerText;
 });

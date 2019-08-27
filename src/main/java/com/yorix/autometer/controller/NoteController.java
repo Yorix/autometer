@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/cars/{carId}/notes/")
 public class NoteController {
@@ -35,11 +37,25 @@ public class NoteController {
     }
 
     @PostMapping
-    public String create(@PathVariable("carId") int carId, @RequestParam Note note) {
+    public String create(
+            @PathVariable("carId") int carId,
+            @RequestParam(name = "location") String location,
+            @Valid Note note
+    ) {
         Car car = carService.read(carId);
         note.setCar(car);
         noteService.create(note);
-        return "redirect:/cars/" + carId;
+        return "redirect:" + location;
+    }
+
+    @PutMapping("{noteId}/")
+    public String update(
+            @PathVariable("carId") int carId,
+            @PathVariable("noteId") int noteId,
+            Note note
+    ) {
+        noteService.update(noteId, note);
+        return String.format("redirect:/cars/%s/notes/", carId);
     }
 
     @DeleteMapping("{noteId}/")
