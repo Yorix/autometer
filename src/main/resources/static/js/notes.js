@@ -1,56 +1,30 @@
+var noteDateInput = document.getElementById("input-note-date");
+var negativeSelect = document.getElementById("select-negative");
+var noteValueInput = document.getElementById("input-note-value");
+
+noteDateInput.valueAsDate = new Date();
+noteValueInput.value = "";
+
 function clickChange(id) {
-    var dateDiv = document.getElementById("div-date" + id);
-    var descDiv = document.getElementById("div-desc" + id);
-    var valueDiv = document.getElementById("div-value" + id);
+    var dateInput = document.getElementById("input-date" + id);
+    var descInput = document.getElementById("input-desc" + id);
+    var valueInput = document.getElementById("input-value" + id);
+
     var changeBtn = document.getElementById("btn-change" + id);
     var submitBtn = document.getElementById("btn-submit" + id);
 
-    dateDiv.setAttribute("contentEditable", "true");
-    descDiv.setAttribute("contentEditable", "true");
-    valueDiv.setAttribute("contentEditable", "true");
+    dateInput.removeAttribute("readOnly");
+    descInput.removeAttribute("readOnly");
+    valueInput.removeAttribute("readOnly");
+
     changeBtn.style.display = "none";
     submitBtn.style.display = "block";
 }
 
-function clickDelete(id) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("DELETE", id + "/");
-    xhr.send();
-    xhr.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200)
-            window.location.reload();
-    }
-}
+function noteSubmit() {
+    if (noteValueInput.value === '')
+        noteValueInput.value = 0;
 
-function clickSubmit(id) {
-    var dateDiv = document.getElementById("div-date" + id);
-    var descDiv = document.getElementById("div-desc" + id);
-    var valueDiv = document.getElementById("div-value" + id);
-    var changeBtn = document.getElementById("btn-change" + id);
-    var submitBtn = document.getElementById("btn-submit" + id);
-
-
-    dateDiv.setAttribute("contentEditable", "false");
-    descDiv.setAttribute("contentEditable", "false");
-    valueDiv.setAttribute("contentEditable", "false");
-    changeBtn.style.display = "block";
-    submitBtn.style.display = "none";
-
-
-    var value = valueDiv.innerText
-        .replace(",", ".")
-        .replace(/\s+/g, "");
-    var formData = new FormData();
-    formData.append("id", id);
-    formData.append("description", descDiv.innerText);
-    formData.append("value", value);
-    formData.append("date", dateDiv.innerText);
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", window.location.href);
-    xhr.send(formData);
-
-    xhr.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200)
-            window.location.reload();
-    };
+    if (negativeSelect.selectedIndex === 0)
+        noteValueInput.value = noteValueInput.value * -1;
 }

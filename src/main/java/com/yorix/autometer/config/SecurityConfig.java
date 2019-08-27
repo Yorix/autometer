@@ -1,5 +1,6 @@
 package com.yorix.autometer.config;
 
+import com.yorix.autometer.model.Role;
 import com.yorix.autometer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -26,16 +27,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/static/**", "/css/**").permitAll()
-//                    .antMatchers("/cars/").hasRole("ADMIN")
-//                    .antMatchers(HttpMethod.PUT).hasAnyRole("POWER", "ADMIN")
-//                    .antMatchers(HttpMethod.DELETE).hasAnyRole("POWER", "ADMIN")
-                    .antMatchers("/load-data/").hasRole("ADMIN")
-                    .anyRequest().authenticated()
-                    .and()
+                .antMatchers("/css/**", "/js/**", "**/favicon.ico").permitAll()
+                .antMatchers(HttpMethod.POST).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
+                .antMatchers(HttpMethod.PUT).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
+                .antMatchers(HttpMethod.DELETE).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
+                .antMatchers("/user/**").hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
+                .antMatchers("/db/").hasAuthority(Role.ADMIN.name())
+                .anyRequest().authenticated()
+                .and()
                 .formLogin()
-                    .loginPage("/login").permitAll()
-                    .and()
+                .loginPage("/login").permitAll()
+                .and()
                 .logout().permitAll();
     }
 

@@ -20,6 +20,8 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class Start {
@@ -76,14 +78,17 @@ public class Start {
             User admin = new User();
             admin.setUsername("admin");
             admin.setPassword("1");
-            admin.setRoles(Collections.singleton(Role.ADMIN));
-            userService.create(admin);
+            Set<Role> roles = new HashSet<>();
+            roles.add(Role.ADMIN);
+            roles.add(Role.POWER);
+            admin.setRoles(roles);
+            userService.save(admin);
 
             User user = new User();
             user.setUsername("user");
             user.setPassword("1");
             user.setRoles(Collections.singleton(Role.USER));
-            userService.create(user);
+            userService.save(user);
         }
     }
 

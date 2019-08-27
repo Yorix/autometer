@@ -54,7 +54,7 @@ public class ImgController {
     }
 
     @DeleteMapping("{carId}/img/")
-    public String delete(@PathVariable("carId") int carId, String filename) {
+    public String delete(@PathVariable("carId") int carId, @RequestParam("filename") String filename) {
         Car car = carService.read(carId);
         imgService.delete(filename, car);
         return String.format("redirect:/cars/%s/img/", carId);

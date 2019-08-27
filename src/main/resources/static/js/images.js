@@ -12,32 +12,3 @@ function sendFile(maxFileSize) {
     }
     form.submit();
 }
-
-function setDefault(carId, filename) {
-
-    var formData = new FormData();
-    formData.append("imgFilename", filename);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("PUT", "/cars/" + carId + "/");
-    xhr.send(formData);
-
-    xhr.onreadystatechange = function () {
-        if (this.readyState === 4)
-            window.location = "../";
-    };
-}
-
-function deleteImg(carId, filename) {
-
-    var formData = new FormData();
-    formData.append("filename", filename);
-    var xhr = new XMLHttpRequest();
-    xhr.open("DELETE", "/cars/" + carId + "/img/");
-    xhr.send(formData);
-
-    xhr.onreadystatechange = function () {
-        if (this.readyState === 4)
-            window.location.reload();
-    }
-}
