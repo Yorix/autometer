@@ -33,7 +33,7 @@
                         <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
                     </div>
                     <div class="col-1">
-                        <input type="submit" class="btn btn-outline-success" onclick="" value=">>">
+                        <input type="submit" class="btn btn-outline-success" value=">>">
                     </div>
                 </div>
             </form>
@@ -41,40 +41,26 @@
 
         <div class="card-body">
             <div class="card px-3 bg-dark selectable" th:each="user:${users}">
-                <div class="row">
-                    <div class="col-11">
-                        <form method="post" th:action="|/user/${user.username}/|" th:object="${user}">
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                            <input type="hidden" name="_method" value="put">
-                            <input type="hidden" name="password" th:id="|input-password*{username}|">
-                            <input type="hidden" name="role" th:id="|input-role*{username}|">
+                <a href="#" th:href="|/user/${user.username}/|">
+                    <form method="post" th:action="|/user/${user.username}/|" th:object="${user}">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                        <input type="hidden" name="_method" value="put">
+                        <input type="hidden" name="password" th:id="|input-password*{username}|">
+                        <input type="hidden" name="role" th:id="|input-role*{username}|">
 
-                            <div class="row">
-                                <div class="col-5">
-                                    <div th:id="|div-username*{username}|" th:text="*{username}"></div>
-                                </div>
-                                <div class="col-5">
-                                    <div th:id="|div-role*{username}|" th:text="*{roles}"></div>
-                                </div>
-                                <div class="col-2">
-                                    <input th:id="|btn-change*{username}|" type="button"
-                                           th:onclick=""
-                                           class="btn btn-outline-warning btn-sm" value="<<">
-                                    <input th:id="|btn-submit*{username}|" type="submit"
-                                           th:onclick=""
-                                           class="btn btn-outline-success btn-sm" style="display: none" value=">>">
-                                </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <div th:id="|div-username*{username}|" th:text="*{username}"></div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="col-1">
-                        <form method="post" th:action="|/user/${user.username}/|">
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                            <input type="hidden" name="_method" value="delete">
-                            <input type="submit" class="btn btn-outline-danger btn-sm" value="&#10008;">
-                        </form>
-                    </div>
-                </div>
+                            <div class="col-5">
+                                <div th:id="|div-role*{username}|" th:text="*{roles}"></div>
+                            </div>
+                            <div class="col-2">
+
+                            </div>
+                        </div>
+                    </form>
+                </a>
             </div>
         </div>
         <div class="card-footer">

@@ -5,10 +5,7 @@ import com.yorix.autometer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -27,6 +24,15 @@ public class UserController {
     public ModelAndView userList() {
         ModelAndView modelAndView = new ModelAndView("user-list");
         modelAndView.addObject("users", userService.readAll());
+        modelAndView.addObject("budget", userService.getBudget());
+        modelAndView.addObject("balance", userService.getBalance());
+        return modelAndView;
+    }
+
+    @GetMapping("{username}/")
+    public ModelAndView get(@PathVariable("username") User user) {
+        ModelAndView modelAndView = new ModelAndView("user");
+        modelAndView.addObject("user", user);
         modelAndView.addObject("budget", userService.getBudget());
         modelAndView.addObject("balance", userService.getBalance());
         return modelAndView;

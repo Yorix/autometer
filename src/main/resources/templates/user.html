@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница авто</title>
+    <link rel="stylesheet" href="/css/app.css"/>
+</head>
+<body>
+
+<div th:insert="~{parts/header-menu :: menu}"></div>
+
+<div class="container">
+    <div class="card bg-dark">
+        <form method="post" th:action="|/user/${user.username}/|" th:object="${user}">
+            <input type="hidden" name="_csrf" th:name="${_csrf.token}">
+            <input id="input-make" type="hidden" th:field="*{username}">
+            <input id="input-model" type="hidden" th:field="*{password}">
+
+            <div class="card-header">
+
+            </div>
+
+            <div class="card-body">
+                <input type="hidden" name="_method" value="put">
+
+                <div class="header-text ml-3" th:text="*{username}"></div>
+                <div class="ml-3" th:text="*{password}"></div>
+            </div>
+
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col">
+                        <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад">
+                    </div>
+                    <div class="col text-right">
+                        <input type="submit" class="btn btn-outline-success" value="Подтвердить >>">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
