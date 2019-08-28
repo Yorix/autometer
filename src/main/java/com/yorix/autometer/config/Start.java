@@ -99,7 +99,7 @@ public class Start {
                 dataSourceProperties.getUsername(),
                 dataSourceProperties.getPassword(),
                 dbBackupLocation,
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy-hh.mm.ss")));
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd-hh.mm.ss")));
         try {
             Runtime.getRuntime().exec(command);
         } catch (IOException e) {

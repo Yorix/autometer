@@ -11,17 +11,33 @@
 
 <div class="container">
     <div class="card bg-dark">
+
+        <div class="card-header row mx-1">
+            <div th:text="${user.username}" class="col header-text"></div>
+            <div class="col text-right">
+                <form method="post" th:action="|/user/${user.username}/|">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <input type="submit" class="btn btn-outline-danger" value="&#10008;">
+                </form>
+            </div>
+        </div>
+
         <form method="post" th:action="|/user/${user.username}/|">
             <input type="hidden" name="_method" value="put">
             <input type="hidden" name="_csrf" th:name="${_csrf.token}">
 
-            <div class="card-header">
-
-            </div>
-
-            <div class="card-body">
-                <div type="text" th:text="${user.username}" class="header-text ml-3"></div>
-                <input type="password" name="password">
+            <div class="card-body px-5 row">
+                <div class="col">
+                    <input type="password" name="password" class="form-control" placeholder="Пароль"
+                           th:classappend="(${passwordError}or${passConfirmError})?'is-invalid':''">
+                    <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
+                </div>
+                <div class="col">
+                    <input type="password" name="passwordConfirm" class="form-control" placeholder="Повторите пароль"
+                           th:classappend="${passConfirmError}?'is-invalid'">
+                    <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
+                </div>
             </div>
 
             <div class="card-footer">

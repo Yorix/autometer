@@ -60,14 +60,31 @@ public class UserController {
     }
 
     @PutMapping("{username}/")
-    public String update(
+    public ModelAndView update(
+            @Valid User user,
+            BindingResult bindingResult,
             @PathVariable("username") String username,
-            @RequestParam("password") String password
+            @RequestParam("passwordConfirm") String passwordConfirm
     ) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        userService.save(user);
-        return String.format("redirect:/user/%s/", username);
+        ModelAndView modelAndView = new ModelAndView("user");
+        if (bindingResult.hasErrors()) {
+            modelAndView.addAllObjects(ControllerUtils.getErrors(bindingResult));
+        }
+        if (!passwordConfirm.equals(user.getPassword())) {
+            modelAndView.addObject("passConfirmError", "Пароли не совпадают.");
+        }
+        if (modelAndView.getModel().size() == 0) {
+            userService.save(user);
+        }
+        modelAndView.addObject("user", userService.getUser(username));
+        modelAndView.addObject("budget", userService.getBudget());
+        modelAndView.addObject("balance", userService.getBalance());
+        return modelAndView;
+    }
+
+    @DeleteMapping("{username}/")
+    public String delete(@PathVariable("username") String username) {
+        userService.delete(username);
+        return "redirect:../";
     }
 }

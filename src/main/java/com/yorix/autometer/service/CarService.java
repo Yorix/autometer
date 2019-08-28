@@ -35,7 +35,7 @@ public class CarService extends AppService {
         return carRepository.findAll();
     }
 
-    public void deleteById(int id) {
+    public void delete(int id) {
         carRepository.deleteById(id);
     }
 

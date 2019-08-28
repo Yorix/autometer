@@ -29,6 +29,14 @@ public class UserService extends AppService implements UserDetailsService {
         return userRepository.findById(username).orElseThrow();
     }
 
+    public User getUser(String username) {
+        return userRepository.findById(username).orElse(null);
+    }
+
+    public List<User> readAll() {
+        return userRepository.findAll();
+    }
+
     public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (user.getRoles() == null || user.getRoles().isEmpty())
@@ -36,11 +44,7 @@ public class UserService extends AppService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public User getUser(String username) {
-        return userRepository.findById(username).orElse(null);
-    }
-
-    public List<User> readAll() {
-        return userRepository.findAll();
+    public void delete(String username) {
+        userRepository.deleteById(username);
     }
 }
