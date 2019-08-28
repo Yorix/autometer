@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 
 <div class="py-5" th:fragment="menu">
@@ -15,7 +15,7 @@
                 <li class="nav-item" th:classappend="${#httpServletRequest.requestURI}=='/cars/' ? 'active' : null">
                     <a class="nav-link" href="/cars/">Список авто</a>
                 </li>
-                <li class="nav-item"
+                <li class="nav-item" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
                     th:classappend="${#httpServletRequest.requestURI}=='/cars/new-car/' ? 'active' : null">
                     <a class="nav-link" href="/cars/new-car/">Добавить авто</a>
                 </li>
@@ -23,11 +23,11 @@
                     th:classappend="${#httpServletRequest.requestURI}=='/calculator/' ? 'active' : null">
                     <a class="nav-link" href="/calculator/">Калькулятор</a>
                 </li>
-                <li class="nav-item"
+                <li class="nav-item" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
                     th:classappend="${#httpServletRequest.requestURI}=='/user/' ? 'active' : null">
                     <a class="nav-link" href="/user/">Управление пользователями</a>
                 </li>
-                <li class="nav-item"
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN')"
                     th:classappend="${#httpServletRequest.requestURI}=='/db' ? 'active' : null">
                     <a class="nav-link" href="/db/">Управление данными</a>
                 </li>
@@ -52,7 +52,8 @@
 
                     <span>Баланс: </span>
                     <span class="money" th:text="${budget+balance}"></span>
-                    <input id="btn-add-to-budget" type="button" onclick="editBudget();"
+                    <input sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
+                           id="btn-add-to-budget" type="button" onclick="editBudget();"
                            class="btn btn-outline-success btn-sm" value="&#10010;">
                     <div class="input-group">
                         <input id="input-budget" type="number" name="paramValue" step="0.01" min="0" max="9999999"

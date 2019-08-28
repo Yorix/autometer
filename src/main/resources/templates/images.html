@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Загрузка и просмотр изображений</title>
@@ -26,7 +27,8 @@
             </div>
         </div>
         <div class="card-body">
-            <form id="form-send-file" action="./" method="POST" enctype="multipart/form-data">
+            <form id="form-send-file" action="./" method="post" enctype="multipart/form-data"
+                  sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                 <div class="container input-group mb-5">
                     <input id="input-file" name="file" type="file" class="custom-file"/>
@@ -41,7 +43,8 @@
                 <div class="container" th:each="img:${imgs}">
                     <div class="card bg-dark" style="position: relative;">
                         <img style="position: relative; max-width: 100%;" th:src="|/img/*{img.filename}|"/>
-                        <form method="post" th:action="|/cars/${car.id}/|" th:object="${car}">
+                        <form method="post" th:action="|/cars/${car.id}/|" th:object="${car}"
+                              sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                             <input type="hidden" name="_method" value="put">
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                             <input type="hidden" name="location" th:value="${#httpServletRequest.requestURL}">
@@ -49,7 +52,8 @@
                             <input type="submit" class="btn btn-outline-success"
                                    style="position: absolute; top: 5px; left: 5px;" value="&#10003;">
                         </form>
-                        <form method="post" th:action="|/cars/${car.id}/img/|">
+                        <form method="post" th:action="|/cars/${car.id}/img/|"
+                              sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                             <input type="hidden" name="_method" value="delete">
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                             <input type="hidden" name="filename" th:value="${img.filename}">

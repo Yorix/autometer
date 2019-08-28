@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Страница авто</title>
@@ -21,7 +22,7 @@
                 <div class="row">
                     <div id="div-make" class="header-text ml-3" th:text="${car.make}"></div>
                     <div id="div-model" class="header-text ml-3" th:text="${car.model}"></div>
-                    <div class="ml-3">
+                    <div class="ml-3" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                         <input type="button" id="btn-edit-carname" class="btn btn-outline-warning" value="<<">
                         <input type="submit" id="btn-submit-carname" class="btn btn-outline-success" value=">>">
                     </div>

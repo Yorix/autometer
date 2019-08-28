@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Все записи по авто</title>
@@ -63,7 +64,7 @@
                                            step="0.01" min="-9999999" max="9999999" class="read-only-input money"
                                            placeholder="0.00" name="value" th:value="*{value}" readonly>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-1" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                                     <input th:id="|btn-change*{id}|" type="button"
                                            th:onclick="|clickChange(${note.id})|"
                                            class="btn btn-outline-warning btn-sm" value="<<">
@@ -73,7 +74,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-1">
+                    <div class="col-1" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                         <form method="post" th:action="|/cars/${car.id}/notes/${note.id}/|">
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                             <input type="hidden" name="_method" value="delete">

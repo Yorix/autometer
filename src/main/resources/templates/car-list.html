@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Список автомобилей</title>
@@ -10,7 +11,8 @@
 <div th:insert="~{parts/header-menu :: menu}"></div>
 
 <div class="mb-4 mx-5">
-    <button type="button" class="btn btn-outline-success" onclick="goto('new-car/')">&#10010;</button>
+    <input sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
+           type="button" class="btn btn-outline-success" onclick="goto('new-car/')" value="&#10010;">
 </div>
 
 <div class="container-fluid row">
@@ -20,7 +22,7 @@
                 <div th:text="|${car.make} ${car.model}|"></div>
                 <div th:text="${textProperties.header}"></div>
             </div>
-            <div class="card-body" style="height: 400px; text-align: center;">
+            <div class="card-body text-center" style="height: 400px">
                 <div th:text="${textProperties.body}"></div>
                 <img th:src="|/img/${car.imgFilename}|"
                      th:if="${car.imgFilename}"

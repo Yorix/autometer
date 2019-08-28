@@ -11,20 +11,17 @@
 
 <div class="container">
     <div class="card bg-dark">
-        <form method="post" th:action="|/user/${user.username}/|" th:object="${user}">
+        <form method="post" th:action="|/user/${user.username}/|">
+            <input type="hidden" name="_method" value="put">
             <input type="hidden" name="_csrf" th:name="${_csrf.token}">
-            <input id="input-make" type="hidden" th:field="*{username}">
-            <input id="input-model" type="hidden" th:field="*{password}">
 
             <div class="card-header">
 
             </div>
 
             <div class="card-body">
-                <input type="hidden" name="_method" value="put">
-
-                <div class="header-text ml-3" th:text="*{username}"></div>
-                <div class="ml-3" th:text="*{password}"></div>
+                <div type="text" th:text="${user.username}" class="header-text ml-3"></div>
+                <input type="password" name="password">
             </div>
 
             <div class="card-footer">

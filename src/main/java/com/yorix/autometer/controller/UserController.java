@@ -41,9 +41,6 @@ public class UserController {
     @PostMapping
     public ModelAndView create(@Valid User user, BindingResult bindingResult, @RequestParam("passwordConfirm") String passwordConfirm) {
         ModelAndView modelAndView = new ModelAndView("user-list");
-        modelAndView.addObject("users", userService.readAll());
-        modelAndView.addObject("budget", userService.getBudget());
-        modelAndView.addObject("balance", userService.getBalance());
         if (bindingResult.hasErrors()) {
             modelAndView.addAllObjects(ControllerUtils.getErrors(bindingResult));
         }
@@ -53,9 +50,24 @@ public class UserController {
         if (!passwordConfirm.equals(user.getPassword())) {
             modelAndView.addObject("passConfirmError", "Пароли не совпадают.");
         }
-        if (modelAndView.getModel().size() < 4) {
+        if (modelAndView.getModel().size() == 0) {
             userService.save(user);
         }
+        modelAndView.addObject("users", userService.readAll());
+        modelAndView.addObject("budget", userService.getBudget());
+        modelAndView.addObject("balance", userService.getBalance());
         return modelAndView;
+    }
+
+    @PutMapping("{username}/")
+    public String update(
+            @PathVariable("username") String username,
+            @RequestParam("password") String password
+    ) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        userService.save(user);
+        return String.format("redirect:/user/%s/", username);
     }
 }
