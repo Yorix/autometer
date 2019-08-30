@@ -16,4 +16,6 @@ public class AppProperties {
     private String currencyUrl = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange";
     private String currencyUrlParams = "?valcode=%s&date=%s&json";
     private String[] currencyCodes = {"usd", "eur"};
+    private String adminUsername;
+    private String adminPassword;
 }

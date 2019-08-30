@@ -16,17 +16,12 @@
             <form method="post" action="/user/">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                 <div class="card-body form-group row">
-                    <div class="col-3">
+                    <div class="col-5">
                         <input name="username" type="text" placeholder="Имя пользователя" class="form-control"
                                th:classappend="(${userExistsError}or${usernameError})?'is-invalid':''">
                         <div class="invalid-feedback" th:if="${userExistsError}" th:text="${userExistsError}"></div>
                         <div class="invalid-feedback" th:if="${usernameError}" th:text="${usernameError}"></div>
                     </div>
-
-                    <div class="col-2">
-                        <input type="checkbox" value="User">
-                    </div>
-
                     <div class="col-3">
                         <input name="password" type="password" placeholder="Пароль" class="form-control"
                                th:classappend="(${passConfirmError}or${passwordError})?'is-invalid':''">

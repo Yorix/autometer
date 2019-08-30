@@ -31,6 +31,8 @@ public class Start {
     private final DataSourceProperties dataSourceProperties;
     private final ParamRepository paramRepository;
     private final UserService userService;
+    private final String adminUsername;
+    private final String adminPassword;
     @Value("${app.default-image-full-filename}")
     private Resource resource;
 
@@ -44,6 +46,8 @@ public class Start {
         shell = properties.getShell();
         dbBackupLocation = properties.getDbBackupLocation();
         imgStorageLocation = properties.getImageStorageLocation();
+        adminUsername = properties.getAdminUsername();
+        adminPassword = properties.getAdminPassword();
         this.dataSourceProperties = dataSourceProperties;
         this.paramRepository = paramRepository;
         this.userService = userService;
@@ -76,19 +80,10 @@ public class Start {
     private void createFirstUser() {
         if (userService.readAll().size() == 0) {
             User admin = new User();
-            admin.setUsername("admin");
-            admin.setPassword("1");
-            Set<Role> roles = new HashSet<>();
-            roles.add(Role.ADMIN);
-            roles.add(Role.POWER);
-            admin.setRoles(roles);
-            userService.save(admin);
-
-            User user = new User();
-            user.setUsername("user");
-            user.setPassword("1");
-            user.setRoles(Collections.singleton(Role.USER));
-            userService.save(user);
+            admin.setUsername(adminUsername);
+            admin.setPassword(adminPassword);
+            admin.setRoles(Collections.singleton(Role.ADMIN));
+            userService.create(admin);
         }
     }
 

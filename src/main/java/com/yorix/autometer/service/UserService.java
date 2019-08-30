@@ -9,9 +9,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService extends AppService implements UserDetailsService {
@@ -37,14 +38,31 @@ public class UserService extends AppService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public void save(User user) {
+    public void create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (user.getRoles() == null || user.getRoles().isEmpty())
             user.setRoles(Collections.singleton(Role.USER));
         userRepository.save(user);
     }
 
-    public void delete(String username) {
-        userRepository.deleteById(username);
+    public void update(User user, Map<String, String> form) {
+        String password = form.get("password");
+        Set<Role> roles = form.keySet().stream()
+                .filter(s -> Arrays.stream(Role.values()).map(Enum::name).collect(Collectors.toList()).contains(s))
+                .map(Role::valueOf)
+                .collect(Collectors.toSet());
+
+        if (!StringUtils.isEmpty(password)) {
+            user.setPassword(passwordEncoder.encode(password));
+        }
+        if (!roles.isEmpty()) {
+            user.getRoles().clear();
+            user.setRoles(roles);
+        }
+        userRepository.save(user);
+    }
+
+    public void delete(User user) {
+        userRepository.delete(user);
     }
 }

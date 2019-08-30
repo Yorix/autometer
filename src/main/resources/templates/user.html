@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Страница авто</title>
@@ -27,17 +28,28 @@
             <input type="hidden" name="_method" value="put">
             <input type="hidden" name="_csrf" th:name="${_csrf.token}">
 
-            <div class="card-body px-5 row">
-                <div class="col">
-                    <input type="password" name="password" class="form-control" placeholder="Пароль"
-                           th:classappend="(${passwordError}or${passConfirmError})?'is-invalid':''">
-                    <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
+            <div class="card-body px-5">
+                <div class="row mb-3">
+                    <div class="col">
+                        <input type="password" name="password" class="form-control" placeholder="Пароль"
+                               th:classappend="(${passwordError}or${passConfirmError})?'is-invalid':''">
+                        <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
+                    </div>
+                    <div class="col">
+                        <input type="password" name="passwordConfirm" class="form-control"
+                               placeholder="Повторите пароль"
+                               th:classappend="${passConfirmError}?'is-invalid'">
+                        <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
+                    </div>
                 </div>
-                <div class="col">
-                    <input type="password" name="passwordConfirm" class="form-control" placeholder="Повторите пароль"
-                           th:classappend="${passConfirmError}?'is-invalid'">
-                    <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
+                <div th:each="role:${roles}" sec:authorize="hasAuthority('ADMIN')">
+                    <label>
+                        <input type="checkbox" th:name="${role.name()}"
+                               th:checked="${#lists.contains(user.roles, role)}">
+                        <span th:text="${role}"></span>
+                    </label>
                 </div>
+                <div class="alert-danger" th:if="${accessError}" th:text="${accessError}"></div>
             </div>
 
             <div class="card-footer">
