@@ -6,11 +6,11 @@ echo "Copy files..."
 
 scp -i ~/.ssh/gcloud_autometer \
 	target/autometer-1.0.jar \
-	autometer@146.148.15.78:/home/autometer/
+	autometer@35.246.106.155:/home/autometer/
 
 echo "Restart server..."
 
-ssh -i ~/.ssh/gcloud_autometer autometer@146.148.15.78 << EOF
+ssh -i ~/.ssh/gcloud_autometer autometer@35.246.106.155 << EOF
 
 pgrep java | xargs kill -9
 nohup java -jar autometer-1.0.jar > log.txt &

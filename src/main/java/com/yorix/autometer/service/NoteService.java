@@ -13,14 +13,17 @@ import java.util.List;
 @Service
 public class NoteService extends AppService {
     private final NoteRepository noteRepository;
+    private final DbService dbService;
 
     @Autowired
-    public NoteService(NoteRepository noteRepository) {
+    public NoteService(NoteRepository noteRepository, DbService dbService) {
         this.noteRepository = noteRepository;
+        this.dbService = dbService;
     }
 
     public void create(Note note) {
         noteRepository.save(note);
+        dbService.saveData();
     }
 
     public void update(int id, Note newNote) {
@@ -35,6 +38,7 @@ public class NoteService extends AppService {
         noteFromDb.setDate(newNoteDate);
 
         noteRepository.save(noteFromDb);
+        dbService.saveData();
     }
 
     public Note read(Car car, int id) {
@@ -51,5 +55,6 @@ public class NoteService extends AppService {
 
     public void deleteById(int id) {
         noteRepository.deleteById(id);
+        dbService.saveData();
     }
 }

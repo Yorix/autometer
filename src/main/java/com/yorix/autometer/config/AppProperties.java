@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("app")
 @Data
 public class AppProperties {
-    private String shell = "bash -c";
+    private String shell;
+    private String shellArg;
     private String dbBackupLocation;
     private String imageStorageLocation;
     private String defaultImageFilename = "00_default.png";

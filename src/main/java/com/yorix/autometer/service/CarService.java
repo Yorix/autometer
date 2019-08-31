@@ -13,18 +13,12 @@ import java.util.List;
 @Service
 public class CarService extends AppService {
     private final CarRepository carRepository;
+    private final DbService dbService;
 
     @Autowired
-    public CarService(CarRepository carRepository) {
+    public CarService(CarRepository carRepository, DbService dbService) {
         this.carRepository = carRepository;
-    }
-
-    public void create(Car car) {
-        if (car.getImgFilename() == null)
-            car.setImgFilename(getProperties().getDefaultImageFilename());
-        car.setMake(car.getMake().replace(Character.toString(160), " ").trim());
-        car.setModel(car.getModel().replace(Character.toString(160), " ").trim());
-        carRepository.save(car);
+        this.dbService = dbService;
     }
 
     public Car read(int id) {
@@ -35,8 +29,18 @@ public class CarService extends AppService {
         return carRepository.findAll();
     }
 
+    public void create(Car car) {
+        if (car.getImgFilename() == null)
+            car.setImgFilename(getProperties().getDefaultImageFilename());
+        car.setMake(car.getMake().replace(Character.toString(160), " ").trim());
+        car.setModel(car.getModel().replace(Character.toString(160), " ").trim());
+        carRepository.save(car);
+        dbService.saveData();
+    }
+
     public void delete(int id) {
         carRepository.deleteById(id);
+        dbService.saveData();
     }
 
     public void update(int id, Car newCar) {
@@ -59,5 +63,6 @@ public class CarService extends AppService {
             carFromDb.setImgs(newCarImgs);
 
         carRepository.save(carFromDb);
+        dbService.saveData();
     }
 }

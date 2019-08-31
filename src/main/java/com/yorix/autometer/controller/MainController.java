@@ -1,11 +1,14 @@
 package com.yorix.autometer.controller;
 
 import com.yorix.autometer.config.AppProperties;
-import com.yorix.autometer.config.Start;
 import com.yorix.autometer.service.CurrencyParser;
+import com.yorix.autometer.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,17 +19,15 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/")
 public class MainController {
     private final CurrencyParser currencyParser;
-    private final Start start;
     private AppProperties properties;
 
     @Autowired
     public MainController(
             CurrencyParser currencyParser,
-            Start start,
+            DbService dbService,
             AppProperties properties
     ) {
         this.currencyParser = currencyParser;
-        this.start = start;
         this.properties = properties;
     }
 
@@ -48,11 +49,5 @@ public class MainController {
         modelAndView.addObject("budget", currencyParser.getBudget());
         modelAndView.addObject("balance", currencyParser.getBalance());
         return modelAndView;
-    }
-
-    @PostMapping("load-data/")
-    public String loadData(@RequestParam("file") MultipartFile file) {
-        start.readData(file.getOriginalFilename());
-        return "redirect:/";
     }
 }
