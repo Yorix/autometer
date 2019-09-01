@@ -14,13 +14,14 @@ import java.util.Set;
 @Data
 public class User implements UserDetails {
     @Id
-    @Column(length = 50)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @NotBlank(message = "Имя пользователя не может быть пустым.")
     private String username;
     @NotEmpty(message = "Пароль не может быть пустым.")
     private String password;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_name"))
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 

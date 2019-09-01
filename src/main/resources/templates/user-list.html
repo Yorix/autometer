@@ -41,7 +41,7 @@
 
         <div class="card-body">
             <div class="card px-3 bg-dark selectable" th:each="user:${users}">
-                <a href="#" th:href="|/user/${user.username}/|" class="text-light">
+                <a href="#" th:href="|/user/${user.id}/|" class="text-light">
                     <div class="row">
                         <div class="col-4" th:text="${user.username}"></div>
                         <div class="col-8">
