@@ -33,8 +33,9 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("{username}/")
-    public ModelAndView get(@PathVariable("username") User user) {
+    @GetMapping("{id}/")
+    public ModelAndView get(@PathVariable("id") int id) {
+        User user = userService.getUser(id);
         ModelAndView modelAndView = new ModelAndView("user");
         modelAndView.addObject("user", user);
         modelAndView.addObject("roles", Role.values());
@@ -49,7 +50,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             modelAndView.addAllObjects(ControllerUtils.getErrors(bindingResult));
         }
-        if (userService.getUser(user.getUsername()) != null) {
+        if (userService.loadUserByUsername(user.getUsername()) != null) {
             modelAndView.addObject("userExistsError", "Пользователь с таким именем уже существует.");
         }
         if (!passwordConfirm.equals(user.getPassword())) {
@@ -64,10 +65,10 @@ public class UserController {
         return modelAndView;
     }
 
-    @PutMapping("{username}/")
+    @PutMapping("{id}/")
     public String update(
             @AuthenticationPrincipal User activeUser,
-            @PathVariable("username") User user,
+            @PathVariable("id") User user,
             @RequestParam Map<String, String> form,
             Model model
     ) {
@@ -75,7 +76,7 @@ public class UserController {
         String passwordConfirm = form.get("passwordConfirm");
         if (!activeUser.getRoles().contains(Role.ADMIN) &&
                 (user.getRoles().contains(Role.ADMIN) || user.getRoles().contains(Role.POWER) && !activeUser.equals(user))) {
-            model.addAttribute("accessError", "Не достаточно полномочий.");
+            model.addAttribute("accessError", "Недостаточно полномочий.");
         }
         if (!password.equals(passwordConfirm)) {
             model.addAttribute("passConfirmError", "Пароли не совпадают.");
@@ -91,9 +92,9 @@ public class UserController {
         return "user";
     }
 
-    @DeleteMapping("{username}/")
+    @DeleteMapping("{id}/")
     public String delete(
-            @PathVariable("username") User user,
+            @PathVariable("id") User user,
             @AuthenticationPrincipal User activeUser,
             Model model
     ) {

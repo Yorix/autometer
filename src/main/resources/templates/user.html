@@ -16,7 +16,7 @@
         <div class="card-header row mx-1">
             <div th:text="${user.username}" class="col header-text"></div>
             <div class="col text-right">
-                <form method="post" th:action="|/user/${user.username}/|">
+                <form method="post" th:action="|/user/${user.id}/|">
                     <input type="hidden" name="_method" value="delete">
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                     <input type="submit" class="btn btn-outline-danger" value="&#10008;">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <form method="post" th:action="|/user/${user.username}/|">
+        <form method="post" th:action="|/user/${user.id}/|">
             <input type="hidden" name="_method" value="put">
             <input type="hidden" name="_csrf" th:name="${_csrf.token}">
 

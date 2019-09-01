@@ -27,11 +27,11 @@ public class UserService extends AppService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findById(username).orElseThrow();
+        return userRepository.getByUsername(username);
     }
 
-    public User getUser(String username) {
-        return userRepository.findById(username).orElse(null);
+    public User getUser(int id) {
+        return userRepository.getOne(id);
     }
 
     public List<User> readAll() {
