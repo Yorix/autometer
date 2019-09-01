@@ -41,12 +41,8 @@ public class NoteService extends AppService {
         dbService.saveData();
     }
 
-    public Note read(Car car, int id) {
-        return noteRepository.getByCarAndId(car, id);
-    }
-
     public List<Note> readAllByCar(Car car) {
-        return noteRepository.getAllByCar(car);
+        return noteRepository.getAllByCarOrderByDate(car);
     }
 
     public List<Note> readAll() {
