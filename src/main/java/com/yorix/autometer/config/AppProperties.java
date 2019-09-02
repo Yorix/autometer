@@ -11,6 +11,7 @@ public class AppProperties {
     private String shell;
     private String shellArg;
     private String dbBackupLocation;
+    private String dbFilenameTimeFormat;
     private String imageStorageLocation;
     private String defaultImageFilename = "00_default.png";
     private String defaultImageFullFilename = "classpath:/static/media/" + defaultImageFilename;

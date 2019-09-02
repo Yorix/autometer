@@ -24,7 +24,7 @@ public class CarService extends AppService {
     }
 
     public List<Car> readAll() {
-        return carRepository.findAll();
+        return carRepository.findAllByOrderByIdDesc();
     }
 
     public void create(Car car) {

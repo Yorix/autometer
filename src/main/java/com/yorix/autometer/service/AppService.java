@@ -45,7 +45,8 @@ public abstract class AppService {
                 appProperties.getShellArg(),
                 "mysqldump -u" + dataSourceProperties.getUsername() + " -p" + dataSourceProperties.getPassword()
                         + " autometer > " + appProperties.getDbBackupLocation() + "/autometer_"
-                        + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd_hh.mm.ss")) + ".sql"
+                        + LocalDateTime.now().format(DateTimeFormatter.ofPattern(appProperties.getDbFilenameTimeFormat()))
+                        + ".sql"
         };
 
         try {
