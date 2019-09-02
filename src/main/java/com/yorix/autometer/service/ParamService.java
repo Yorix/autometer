@@ -17,6 +17,7 @@ public class ParamService extends AppService {
 
     public void create(Param param) {
         paramRepository.save(param);
+        saveData();
     }
 
     public double read(String name) {
@@ -27,5 +28,6 @@ public class ParamService extends AppService {
         if (!name.equals(param.getName()))
             throw new NoSuchParamsNameException();
         paramRepository.save(param);
+        saveData();
     }
 }

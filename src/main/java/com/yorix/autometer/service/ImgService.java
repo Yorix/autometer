@@ -1,6 +1,5 @@
 package com.yorix.autometer.service;
 
-import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.errors.StorageException;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.Img;
@@ -32,7 +31,7 @@ public class ImgService extends AppService {
         img = new Img();
         img.setFilename(filename);
         img.setCar(car);
-        String path = getProperties().getImageStorageLocation()
+        String path = getAppProperties().getImageStorageLocation()
                 .concat(File.separator)
                 .concat(filename);
         try {
@@ -41,6 +40,7 @@ public class ImgService extends AppService {
             throw new StorageException("Failed to store file " + filename, e);
         }
         imgRepository.save(img);
+        saveData();
     }
 
     public Img read(String filename) {
@@ -53,13 +53,14 @@ public class ImgService extends AppService {
 
     public void delete(String filename, Car car) {
         if (filename.equals(car.getImgFilename())) {
-            car.setImgFilename(getProperties().getDefaultImageFilename());
+            car.setImgFilename(getAppProperties().getDefaultImageFilename());
         }
 
-        File file = new File(getProperties().getImageStorageLocation()
+        File file = new File(getAppProperties().getImageStorageLocation()
                 .concat(File.separator)
                 .concat(filename));
         file.delete();
         imgRepository.deleteById(filename);
+        saveData();
     }
 }

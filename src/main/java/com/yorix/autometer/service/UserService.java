@@ -43,6 +43,7 @@ public class UserService extends AppService implements UserDetailsService {
         if (user.getRoles() == null || user.getRoles().isEmpty())
             user.setRoles(Collections.singleton(Role.USER));
         userRepository.save(user);
+        saveData();
     }
 
     public void update(User user, Map<String, String> form) {
@@ -60,9 +61,11 @@ public class UserService extends AppService implements UserDetailsService {
             user.setRoles(roles);
         }
         userRepository.save(user);
+        saveData();
     }
 
     public void delete(User user) {
         userRepository.delete(user);
+        saveData();
     }
 }

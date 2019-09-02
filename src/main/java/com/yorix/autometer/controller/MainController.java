@@ -2,14 +2,10 @@ package com.yorix.autometer.controller;
 
 import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.service.CurrencyParser;
-import com.yorix.autometer.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
@@ -24,7 +20,6 @@ public class MainController {
     @Autowired
     public MainController(
             CurrencyParser currencyParser,
-            DbService dbService,
             AppProperties properties
     ) {
         this.currencyParser = currencyParser;
@@ -38,14 +33,6 @@ public class MainController {
             double rate = currencyParser.getRate(currencyCode, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
             modelAndView.addObject(currencyCode, rate);
         }
-        modelAndView.addObject("budget", currencyParser.getBudget());
-        modelAndView.addObject("balance", currencyParser.getBalance());
-        return modelAndView;
-    }
-
-    @GetMapping("db/")
-    public ModelAndView loadDb() {
-        ModelAndView modelAndView = new ModelAndView("load-db");
         modelAndView.addObject("budget", currencyParser.getBudget());
         modelAndView.addObject("balance", currencyParser.getBalance());
         return modelAndView;

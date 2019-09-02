@@ -13,12 +13,10 @@ import java.util.List;
 @Service
 public class CarService extends AppService {
     private final CarRepository carRepository;
-    private final DbService dbService;
 
     @Autowired
-    public CarService(CarRepository carRepository, DbService dbService) {
+    public CarService(CarRepository carRepository) {
         this.carRepository = carRepository;
-        this.dbService = dbService;
     }
 
     public Car read(int id) {
@@ -31,16 +29,16 @@ public class CarService extends AppService {
 
     public void create(Car car) {
         if (car.getImgFilename() == null)
-            car.setImgFilename(getProperties().getDefaultImageFilename());
+            car.setImgFilename(getAppProperties().getDefaultImageFilename());
         car.setMake(car.getMake().replace(Character.toString(160), " ").trim());
         car.setModel(car.getModel().replace(Character.toString(160), " ").trim());
         carRepository.save(car);
-        dbService.saveData();
+        saveData();
     }
 
     public void delete(int id) {
         carRepository.deleteById(id);
-        dbService.saveData();
+        saveData();
     }
 
     public void update(int id, Car newCar) {
@@ -63,6 +61,6 @@ public class CarService extends AppService {
             carFromDb.setImgs(newCarImgs);
 
         carRepository.save(carFromDb);
-        dbService.saveData();
+        saveData();
     }
 }

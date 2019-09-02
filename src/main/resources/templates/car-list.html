@@ -20,16 +20,13 @@
         <div class="card bg-dark selectable" th:onclick="|goto('/cars/${car.id}/')|">
             <div class="card-header">
                 <div th:text="|${car.make} ${car.model}|"></div>
-                <div th:text="${textProperties.header}"></div>
             </div>
             <div class="card-body text-center" style="height: 400px">
-                <div th:text="${textProperties.body}"></div>
                 <img th:src="|/img/${car.imgFilename}|"
                      th:if="${car.imgFilename}"
                      style="max-width: 100%; max-height: 350px;">
             </div>
             <div class="card-footer">
-                <span th:text="${textProperties.footer}"></span>
                 <div class="row">
                     <div class="col text-left money" th:text="${car.spending+car.income}"
                          title="Баланс по машине"></div>

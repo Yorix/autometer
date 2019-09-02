@@ -3,7 +3,6 @@ package com.yorix.autometer.controller;
 import com.yorix.autometer.model.Param;
 import com.yorix.autometer.service.ParamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

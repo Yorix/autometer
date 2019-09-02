@@ -1,6 +1,5 @@
 package com.yorix.autometer.controller;
 
-import com.yorix.autometer.config.CardTextProperties;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.CarViewDTO;
 import com.yorix.autometer.model.Note;
@@ -17,12 +16,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/cars/")
 public class CarController {
     private final CarService carService;
-    private final CardTextProperties properties;
 
     @Autowired
-    public CarController(CarService carService, CardTextProperties properties) {
+    public CarController(CarService carService) {
         this.carService = carService;
-        this.properties = properties;
     }
 
     @GetMapping
@@ -35,7 +32,6 @@ public class CarController {
         modelAndView.addObject("budget", carService.getBudget());
         modelAndView.addObject("balance", carService.getBalance());
         modelAndView.addObject("cars", cars);
-        modelAndView.addObject("textProperties", properties);
         return modelAndView;
     }
 

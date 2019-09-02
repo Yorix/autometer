@@ -4,7 +4,6 @@ import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,12 +13,12 @@ public class CurrencyParser extends AppService {
 
     public double getRate(String currencyCode, String date) {
         String params = String.format(
-                getProperties().getCurrencyUrlParams(),
+                getAppProperties().getCurrencyUrlParams(),
                 currencyCode,
                 date
         );
 
-        String path = getProperties().getCurrencyUrl().concat(params);
+        String path = getAppProperties().getCurrencyUrl().concat(params);
 
         double rate = 0;
         try {
