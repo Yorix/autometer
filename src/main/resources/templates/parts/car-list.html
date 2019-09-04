@@ -4,7 +4,7 @@
 
 <div th:fragment="list(arg1, arg2)">
     <div class="row">
-        <div class="container col-4 my-3" th:each="car:${cars}" th:if="${car.spending+car.income}*${arg1}+${arg2} > 0">
+        <div class="container col-lg-4 my-3" th:each="car:${cars}" th:if="${car.spending+car.income}*${arg1}+${arg2} > 0">
             <div class="card bg-dark selectable" th:onclick="|goto('/cars/${car.id}/')|">
                 <div class="card-header">
                     <div th:text="|${car.make} ${car.model}|"></div>

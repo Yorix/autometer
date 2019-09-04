@@ -14,11 +14,18 @@
     <div class="card bg-dark">
         <div class="card-header" th:object="${car}">
             <div class="row">
-                <div class="col-8">
-                    <img th:src="|/img/*{imgFilename}|" style="max-width: 100%; max-height: 170px;">
-                    <div class="content header-text text-right pr-3" th:text="|*{make} *{model}|"></div>
+                <div class="col-lg-4">
+                    <div class="mb-5">
+                        <span class="header-text" th:text="|*{make} *{model}|"></span>
+                    </div>
+                    <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад">
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4">
+                    <img th:src="|/img/*{imgFilename}|" class="modal-show"
+                         th:data-content="'<img class=\'modal-img\' src=\'/img/'+*{imgFilename}+'\'/>'"
+                         style="max-height: 170px;" src="#" alt="#" title="Текущее изображение"/>
+                </div>
+                <div class="col-lg-4">
                     <table>
                         <tr>
                             <td>Расходы:</td>
@@ -92,5 +99,6 @@
 
 <script src="/js/app.js"></script>
 <script src="/js/notes.js"></script>
+<script src="/js/modal.js"></script>
 </body>
 </html>

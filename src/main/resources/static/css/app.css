@@ -24,7 +24,7 @@ td {
     color: #ddd !important;
 }
 
-.content {
+.pos-abs {
     position: absolute;
     top: 0;
     left: 0;
@@ -68,4 +68,19 @@ td {
 
 .selectable:hover .read-only-input {
     background: #242a30 !important;
+}
+
+.modal-custom .modal-content {
+    background: #242a30;
+    border: darkgray double 5px;
+    border-radius: 20px;
+}
+
+.modal-custom {
+    display: table;
+}
+
+.modal-img {
+    max-width: 1200px;
+    max-height: 550px;
 }

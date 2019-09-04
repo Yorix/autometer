@@ -13,7 +13,7 @@
     <div class="card bg-dark">
         <div class="card-header">
             <div class="row">
-                <div class="col">
+                <div class="col-lg">
                     <label>Год выпуска
                         <input id="input-year-of-issue" type="number" min="1970" max="2019" value="2019" class="form-control">
                     </label>
@@ -27,7 +27,7 @@
                                oninput="cuttingDecimalPlaces(this)">
                     </label>
                 </div>
-                <div class="col">
+                <div class="col-lg">
                     <label>Доллар
                         <input id="input-usd" type="number" step="0.01" min="0" max="999"
                                class="form-control" placeholder="0.00" th:value="${usd}">
