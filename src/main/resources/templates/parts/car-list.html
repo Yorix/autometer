@@ -4,26 +4,29 @@
 
 <div th:fragment="list(arg1, arg2)">
     <div class="row">
-        <div class="container col-lg-4 my-3" th:each="car:${cars}" th:if="${car.spending+car.income}*${arg1}+${arg2} > 0">
-            <div class="card bg-dark selectable" th:onclick="|goto('/cars/${car.id}/')|">
-                <div class="card-header">
-                    <div th:text="|${car.make} ${car.model}|"></div>
-                </div>
-                <div class="card-body text-center" style="height: 400px">
-                    <img th:src="|/img/${car.imgFilename}|"
-                         th:if="${car.imgFilename}"
-                         style="max-width: 100%; max-height: 350px;">
-                </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col text-left money" th:text="${car.spending+car.income}"
-                             title="Баланс по машине"></div>
-                        <div class="col text-right money grey-white" title="+40% от расходов"
-                             th:text="${car.spending*-1+car.spending*-0.4}">
+        <div class="container col-lg-4 my-3" th:each="car:${cars}"
+             th:if="${car.spending+car.income}*${arg1}+${arg2} > 0">
+            <a th:href="|/cars/${car.id}/|">
+                <div class="card bg-dark selectable">
+                    <div class="card-header">
+                        <div th:text="|${car.make} ${car.model}|"></div>
+                    </div>
+                    <div class="card-body text-center" style="height: 400px">
+                        <img th:src="|/img/${car.imgFilename}|"
+                             th:if="${car.imgFilename}"
+                             style="max-width: 100%; max-height: 350px;">
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col text-left money" th:text="${car.spending+car.income}"
+                                 title="Баланс по машине"></div>
+                            <div class="col text-right money grey-white" title="+40% от расходов"
+                                 th:text="${car.spending*-1+car.spending*-0.4}">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>

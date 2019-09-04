@@ -22,9 +22,11 @@
                 </div>
                 <div class="col-lg">
                     <div class="text-right pr-3">
-                        <img th:src="|/img/${car.imgFilename}|" class="modal-show"
-                             th:data-content="'<img class=\'modal-img\' src=\'/img/'+${car.imgFilename}+'\'/>'"
-                             style="max-height: 170px;" src="#" alt="#" title="Текущее изображение"/>
+                        <a href="#" class="modal-show"
+                           th:data-content="'<img class=\'modal-img\' src=\'/img/'+${car.imgFilename}+'\'/>'">
+                            <img th:src="|/img/${car.imgFilename}|" style="max-height: 170px;" src="#" alt="#"
+                                 title="Текущее изображение"/>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -47,9 +49,11 @@
             <div class="row">
                 <div class="col-lg-3 my-3" th:each="img:${imgs}">
                     <div class="card bg-dark" style="position: relative;">
-                        <img th:src="|/img/${img.filename}|" class="modal-show"
-                             th:data-content="'<img class=\'modal-img\' src=\'/img/'+${img.filename}+'\'/>'"
-                             style="position: relative; max-width: 100%;" src="#" alt="#"/>
+                        <a href="#" class="modal-show"
+                           th:data-content="'<img class=\'modal-img\' src=\'/img/'+${img.filename}+'\'/>'">
+                            <img th:src="|/img/${img.filename}|" style="position: relative; max-width: 100%;" src="#"
+                                 alt="#"/>
+                        </a>
 
                         <form method="post" th:action="|/cars/${car.id}/|" th:object="${car}"
                               sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">

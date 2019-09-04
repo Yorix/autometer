@@ -21,9 +21,11 @@
                     <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад">
                 </div>
                 <div class="col-lg-4">
-                    <img th:src="|/img/*{imgFilename}|" class="modal-show"
-                         th:data-content="'<img class=\'modal-img\' src=\'/img/'+*{imgFilename}+'\'/>'"
-                         style="max-height: 170px;" src="#" alt="#" title="Текущее изображение"/>
+                    <a href="#" class="modal-show"
+                       th:data-content="'<img class=\'modal-img\' src=\'/img/'+*{imgFilename}+'\'/>'">
+                        <img th:src="|/img/*{imgFilename}|" style="max-height: 170px;" src="#" alt="#"
+                             title="Текущее изображение"/>
+                    </a>
                 </div>
                 <div class="col-lg-4">
                     <table>
@@ -63,7 +65,8 @@
                                            class="form-control-sm bg-dark text-light read-only-input" readonly>
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" th:id="|input-desc*{id}|" name="description" th:value="*{description}"
+                                    <input type="text" th:id="|input-desc*{id}|" name="description"
+                                           th:value="*{description}"
                                            class="read-only-input" readonly>
                                 </div>
                                 <div class="col-2">

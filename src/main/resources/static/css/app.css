@@ -12,6 +12,11 @@ td {
     font-size: 20px;
 }
 
+a, a:hover {
+    color: lightgray;
+    text-decoration: none;
+}
+
 .posMoney {
     color: #8f8 !important;
 }
