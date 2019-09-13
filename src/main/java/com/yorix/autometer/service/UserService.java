@@ -2,7 +2,9 @@ package com.yorix.autometer.service;
 
 import com.yorix.autometer.model.Role;
 import com.yorix.autometer.model.User;
+import com.yorix.autometer.model.Visit;
 import com.yorix.autometer.storage.UserRepository;
+import com.yorix.autometer.storage.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,11 +21,13 @@ import java.util.stream.Collectors;
 public class UserService extends AppService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final VisitRepository visitRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, VisitRepository visitRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.visitRepository = visitRepository;
     }
 
     @Override
@@ -67,5 +72,12 @@ public class UserService extends AppService implements UserDetailsService {
     public void delete(User user) {
         userRepository.delete(user);
         saveData();
+    }
+
+    public void saveVisit(User user) {
+        Visit visit = new Visit();
+        visit.setUser(user);
+        visit.setTime(LocalDateTime.now());
+        visitRepository.save(visit);
     }
 }

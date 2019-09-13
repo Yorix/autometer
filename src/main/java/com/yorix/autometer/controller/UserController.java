@@ -44,6 +44,12 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("save-visit/")
+    public String saveVisit(@AuthenticationPrincipal User user) {
+        userService.saveVisit(user);
+        return "redirect:/";
+    }
+
     @PostMapping
     public ModelAndView create(@Valid User user, BindingResult bindingResult, @RequestParam("passwordConfirm") String passwordConfirm) {
         ModelAndView modelAndView = new ModelAndView("user-list");
