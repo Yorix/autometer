@@ -19,9 +19,11 @@
                 <input type="hidden" name="location" th:value="${#httpServletRequest.requestURL}">
                 <input id="input-make" type="hidden" th:field="*{make}">
                 <input id="input-model" type="hidden" th:field="*{model}">
+                <input id="input-year" type="hidden" th:field="*{year}">
                 <div class="row">
                     <div id="div-make" class="header-text ml-3" th:text="${car.make}"></div>
                     <div id="div-model" class="header-text ml-3" th:text="${car.model}"></div>
+                    <div id="div-year" class="header-text ml-3" th:text="${car.year}"></div>
                     <div class="ml-3" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                         <input type="button" id="btn-edit-carname" class="btn btn-outline-warning" value="<<">
                         <input type="submit" id="btn-submit-carname" class="btn btn-outline-success" value=">>">

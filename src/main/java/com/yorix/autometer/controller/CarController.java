@@ -61,6 +61,12 @@ public class CarController {
         return String.format("redirect:/cars/%s/", car.getId());
     }
 
+    @PostMapping("parse")
+    public String createFromSided(@RequestParam String url) {
+        Car car = carService.parse(url);
+        return String.format("redirect:/cars/%s/", car.getId());
+    }
+
     @PutMapping("{id}/")
     public String update(
             @PathVariable("id") int id,

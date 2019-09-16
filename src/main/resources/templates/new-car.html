@@ -10,13 +10,14 @@
 <div th:insert="~{parts/header-menu :: menu}"></div>
 
 <div class="container card bg-dark">
-    <form id="form-new-car" action="/cars/" method="post" th:object="${car}">
-        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
 
-        <div class="card-header">
-            <h5 id="header"></h5>
-        </div>
-        <div class="card-body">
+
+    <div class="card-header">
+        <h5 id="header"></h5>
+    </div>
+    <div class="card-body">
+        <form id="form-new-car" action="/cars/" method="post" th:object="${car}">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
             <div class="form-group row">
                 <div class="col">
                     <input id="input-make" type="text" class="form-control"
@@ -26,37 +27,32 @@
                     <input id="input-model" type="text" class="form-control"
                            placeholder="Модель" th:field="*{model}"/>
                 </div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="row">
-                <div class="col-10">
-                    <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
-                        << Отмена
-                    </button>
-                </div>
-                <div class="col-2">
-                    <input id="btn-submit" type="button" class="btn btn-outline-success"
-                           value="Добавить >>">
+                <div class="col">
+                    <input id="input-year" type="number" min="1970" class="form-control"
+                           placeholder="Год" th:field="*{year}"/>
                 </div>
             </div>
+        </form>
+        <form id="form-parse-car" action="/cars/parse" method="post">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+            <input type="text" name="url" class="form-control" placeholder="url">
+            <input type="submit" class="btn btn-outline-success">
+        </form>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-10">
+                <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
+                    << Отмена
+                </button>
+            </div>
+            <div class="col-2">
+                <input id="btn-submit" type="button" class="btn btn-outline-success"
+                       value="Добавить >>">
+            </div>
         </div>
-    </form>
+    </div>
 </div>
-
-
-<script>
-    var inputMake = document.getElementById('inputMake');
-    var inputModel = document.getElementById('inputModel');
-    var header = document.getElementById('header');
-
-    inputMake.addEventListener('keyup', input);
-    inputModel.addEventListener('keyup', input);
-
-    function input() {
-        header.textContent = inputMake.value + ' ' + inputModel.value;
-    }
-</script>
 
 <script src="/js/new-car.js"></script>
 <script src="/js/app.js"></script>

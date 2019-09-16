@@ -7,6 +7,7 @@ public class CarViewDTO {
     private int id;
     private String make;
     private String model;
+    private int year;
     private String imgFilename;
     private double spending;
     private double income;
@@ -15,6 +16,7 @@ public class CarViewDTO {
         this.id = car.getId();
         this.make = car.getMake();
         this.model = car.getModel();
+        this.year = car.getYear();
         this.imgFilename = car.getImgFilename();
         this.spending = getSpending(car);
         this.income = getIncome(car);

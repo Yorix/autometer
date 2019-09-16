@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,9 @@ public class Car {
 
     @Column(name = "model", nullable = false)
     private String model;
+
+    @Column(name = "year", nullable = false)
+    private int year = LocalDate.now().getYear();
 
     @Column(name = "img_filename", nullable = false)
     private String imgFilename;

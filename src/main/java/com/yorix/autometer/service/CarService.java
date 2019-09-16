@@ -13,10 +13,12 @@ import java.util.List;
 @Service
 public class CarService extends AppService {
     private final CarRepository carRepository;
+    private final CarParser carParser;
 
     @Autowired
-    public CarService(CarRepository carRepository) {
+    public CarService(CarRepository carRepository, CarParser carParser) {
         this.carRepository = carRepository;
+        this.carParser = carParser;
     }
 
     public Car read(int id) {
@@ -34,6 +36,11 @@ public class CarService extends AppService {
         car.setModel(car.getModel().replace(Character.toString(160), " ").trim());
         carRepository.save(car);
         saveData();
+    }
+
+    public Car parse(String url) {
+        Car car = carParser.parse(url);
+        return car;
     }
 
     public void delete(int id) {
