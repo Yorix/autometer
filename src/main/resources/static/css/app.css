@@ -7,9 +7,12 @@ body {
     color: #ccc;
 }
 
+.bg-darkgray {
+    background: #393f45;
+}
+
 td {
-    padding: 6px;
-    font-size: 20px;
+    padding: 0 15px 5px 0;
 }
 
 a, a:hover {
@@ -86,6 +89,6 @@ a, a:hover {
 }
 
 .modal-img {
-    max-width: 1200px;
-    max-height: 550px;
+    max-width: 1800px;
+    max-height: 900px;
 }

@@ -22,9 +22,8 @@
                 </div>
                 <div class="col-lg-4">
                     <a href="#" class="modal-show"
-                       th:data-content="'<img class=\'modal-img\' src=\'/img/'+*{imgFilename}+'\'/>'">
-                        <img th:src="|/img/*{imgFilename}|" style="max-height: 170px;" src="#" alt="#"
-                             title="Текущее изображение"/>
+                       th:data-content="'<img class=\'modal-img\' src=\'/img/'+*{currentImg}+'\'/>'">
+                        <img th:src="|/img/*{currentImg}|" style="max-height: 170px;" src="#" alt="#" title="Текущее изображение"/>
                     </a>
                 </div>
                 <div class="col-lg-4">

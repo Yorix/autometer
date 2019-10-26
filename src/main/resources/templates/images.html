@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Загрузка и просмотр изображений</title>
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
@@ -23,8 +23,8 @@
                 <div class="col-lg">
                     <div class="text-right pr-3">
                         <a href="#" class="modal-show"
-                           th:data-content="'<img class=\'modal-img\' src=\'/img/'+${car.imgFilename}+'\'/>'">
-                            <img th:src="|/img/${car.imgFilename}|" style="max-height: 170px;" src="#" alt="#"
+                           th:data-content="'<img class=\'modal-img\' src=\'/img/'+${car.currentImg}+'\'/>'">
+                            <img th:src="|/img/${car.currentImg}|" style="max-height: 170px;" src="#" alt="#"
                                  title="Текущее изображение"/>
                         </a>
                     </div>
@@ -50,8 +50,9 @@
                 <div class="col-lg-3 my-3" th:each="img:${imgs}">
                     <div class="card bg-dark" style="position: relative;">
                         <a href="#" class="modal-show"
-                           th:data-content="'<img class=\'modal-img\' src=\'/img/'+${img.filename}+'\'/>'">
-                            <img th:src="|/img/${img.filename}|" style="position: relative; max-width: 100%;" src="#"
+                           th:data-content="'<img class=\'modal-img\' src=\'/img/'+${car.id}+'_'+${img.id}+'.jpg\'/>'">
+                            <img th:src="|/img/${car.id}_${img.id}.jpg|" style="position: relative; max-width: 100%;"
+                                 src="#"
                                  alt="#"/>
                         </a>
 
@@ -60,7 +61,7 @@
                             <input type="hidden" name="_method" value="put">
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                             <input type="hidden" name="location" th:value="${#httpServletRequest.requestURL}">
-                            <input type="hidden" name="imgFilename" th:value="${img.filename}">
+                            <input type="hidden" name="currentImg" th:value="|${car.id}_${img.id}.jpg|">
                             <input type="submit" class="btn btn-outline-success"
                                    style="position: absolute; top: 5px; left: 5px;" value="&#10003;">
                         </form>
@@ -68,7 +69,7 @@
                               sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                             <input type="hidden" name="_method" value="delete">
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                            <input type="hidden" name="filename" th:value="${img.filename}">
+                            <input type="hidden" name="id" th:value="${img.id}">
                             <input type="submit" class="btn btn-outline-danger"
                                    style="position: absolute; bottom: 5px; right: 5px;" value="&#10008;">
                         </form>

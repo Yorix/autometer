@@ -58,12 +58,22 @@ public class CarController {
     @PostMapping
     public String create(Car car) {
         carService.create(car);
+        carService.saveData();
         return String.format("redirect:/cars/%s/", car.getId());
     }
 
-    @PostMapping("parse")
-    public String createFromSided(@RequestParam String url) {
-        Car car = carService.parse(url);
+    @PostMapping("parse/")
+    public String createFromSided(@RequestParam String vinOrLot) throws Exception {
+        Car car = new Car();
+        carService.parse(vinOrLot, car);
+        carService.saveData();
+        return String.format("redirect:/cars/%s/", car.getId());
+    }
+
+    @PostMapping("{id}/pull-info/")
+    public String pullCarInfo(@RequestParam String vinOrLot, @PathVariable("id") Car car) throws Exception {
+        carService.parse(vinOrLot, car);
+        carService.saveData();
         return String.format("redirect:/cars/%s/", car.getId());
     }
 
@@ -74,11 +84,13 @@ public class CarController {
             Car car
     ) {
         carService.update(id, car);
+        carService.saveData();
         return "redirect:" + location;
     }
 
     @DeleteMapping("{id}/")
     public void delete(@PathVariable("id") int id) {
         carService.delete(id);
+        carService.saveData();
     }
 }

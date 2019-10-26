@@ -17,7 +17,11 @@
 
 <div class="m-3">
     <div th:insert="~{parts/car-list :: list(-1, 1)}"></div>
-    <hr><hr>
+    <div class="container-fluid text-center text-secondary">
+        <hr>
+        <span>Продано</span>
+        <hr>
+    </div>
     <div th:insert="~{parts/car-list :: list(1, 0)}"></div>
 </div>
 

@@ -39,7 +39,7 @@ public abstract class AppService {
         return appProperties;
     }
 
-    void saveData() {
+    public void saveData() {
         String[] command = {
                 appProperties.getShell(),
                 appProperties.getShellArg(),

@@ -27,9 +27,9 @@ public class ImgController {
         this.multipartProperties = multipartProperties;
     }
 
-    @GetMapping("*/img/{filename}/")
-    public Img getByFilename(@PathVariable("filename") String filename) {
-        return imgService.read(filename);
+    @GetMapping("*/img/{id}/")
+    public Img getByFilename(@PathVariable int id) {
+        return imgService.read(id);
     }
 
     @GetMapping("{carId}/img/")
@@ -50,13 +50,15 @@ public class ImgController {
     public String create(@RequestParam("file") MultipartFile file, @PathVariable("carId") int carId) {
         Car car = carService.read(carId);
         imgService.create(file, car);
+        imgService.saveData();
         return String.format("redirect:/cars/%s/img/", carId);
     }
 
     @DeleteMapping("{carId}/img/")
-    public String delete(@PathVariable("carId") int carId, @RequestParam("filename") String filename) {
+    public String delete(@PathVariable("carId") int carId, @RequestParam int id) {
         Car car = carService.read(carId);
-        imgService.delete(filename, car);
+        imgService.delete(id, car);
+        imgService.saveData();
         return String.format("redirect:/cars/%s/img/", carId);
     }
 }

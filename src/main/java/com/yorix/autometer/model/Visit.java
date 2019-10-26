@@ -11,8 +11,8 @@ public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
-    @JoinColumn(name = "visit_user")
-    private User user;
     private LocalDateTime time;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
