@@ -21,4 +21,5 @@ public class AppProperties {
     private String[] currencyCodes = {"usd", "eur"};
     private String adminUsername;
     private String adminPassword;
+    private String mailTo;
 }

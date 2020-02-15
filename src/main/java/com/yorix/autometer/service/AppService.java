@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -23,6 +24,8 @@ public abstract class AppService {
     private AppProperties appProperties;
     @Autowired
     private DataSourceProperties dataSourceProperties;
+    @Autowired
+    private MailService mailService;
 
     public double getBalance() {
         return noteRepository.findAll()
@@ -40,13 +43,14 @@ public abstract class AppService {
     }
 
     public void saveData() {
+        String filename = appProperties.getDbBackupLocation() + "/autometer_"
+                + LocalDateTime.now().format(DateTimeFormatter.ofPattern(appProperties.getDbFilenameTimeFormat()))
+                + ".sql";
         String[] command = {
                 appProperties.getShell(),
                 appProperties.getShellArg(),
                 "mysqldump -u" + dataSourceProperties.getUsername() + " -p" + dataSourceProperties.getPassword()
-                        + " autometer > " + appProperties.getDbBackupLocation() + "/autometer_"
-                        + LocalDateTime.now().format(DateTimeFormatter.ofPattern(appProperties.getDbFilenameTimeFormat()))
-                        + ".sql"
+                        + " autometer > " + filename
         };
 
         try {
@@ -59,6 +63,12 @@ public abstract class AppService {
         File[] files = backupDir.listFiles();
         if ((files != null ? files.length : 0) > 500) {
             files[0].delete();
+        }
+
+        try {
+            mailService.send(new File(filename));
+        } catch (MessagingException e) {
+            e.printStackTrace();
         }
     }
 }
