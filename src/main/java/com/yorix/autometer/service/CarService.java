@@ -46,25 +46,45 @@ public class CarService extends AppService {
 
     public void update(int id, Car newCar) {
         Car carFromDb = read(id);
-        String newCarMake = newCar.getMake();
-        String newCarModel = newCar.getModel();
-        int newCarYear = newCar.getYear();
-        String newCarCurrentImg = newCar.getCurrentImg();
-        List<Note> newCarNotes = newCar.getNotes();
-        List<Img> newCarImgs = newCar.getImgs();
 
-        if (!StringUtils.isEmpty(newCarMake))
-            carFromDb.setMake(newCarMake.replace(Character.toString(160), " ").trim());
-        if (!StringUtils.isEmpty(newCarModel))
-            carFromDb.setModel(newCarModel.replace(Character.toString(160), " ").trim());
-        if (newCarYear != 0)
-            carFromDb.setYear(newCarYear);
-        if (!StringUtils.isEmpty(newCarCurrentImg))
-            carFromDb.setCurrentImg(newCarCurrentImg);
-        if (newCarNotes != null)
-            carFromDb.setNotes(newCarNotes);
-        if (newCarImgs != null)
-            carFromDb.setImgs(newCarImgs);
+        if (!StringUtils.isEmpty(newCar.getMake()))
+            carFromDb.setMake(newCar.getMake().replace(Character.toString(160), " ").trim());
+        if (!StringUtils.isEmpty(newCar.getModel()))
+            carFromDb.setModel(newCar.getModel().replace(Character.toString(160), " ").trim());
+        if (newCar.getYear() != 0)
+            carFromDb.setYear(newCar.getYear());
+        if (!StringUtils.isEmpty(newCar.getCurrentImg()))
+            carFromDb.setCurrentImg(newCar.getCurrentImg());
+        if (newCar.getNotes() != null)
+            carFromDb.setNotes(newCar.getNotes());
+        if (newCar.getImgs() != null)
+            carFromDb.setImgs(newCar.getImgs());
+        if (!StringUtils.isEmpty(newCar.getLot()))
+            carFromDb.setLot(newCar.getLot());
+        if (!StringUtils.isEmpty(newCar.getVin()))
+            carFromDb.setVin(newCar.getVin());
+        if (newCar.getOdometer() != 0)
+            carFromDb.setOdometer(newCar.getOdometer());
+        if (newCar.getEngine() != 0)
+            carFromDb.setEngine(newCar.getEngine());
+        if (!StringUtils.isEmpty(newCar.getFuel()))
+            carFromDb.setFuel(newCar.getFuel());
+        if (!StringUtils.isEmpty(newCar.getDriveLine()))
+            carFromDb.setDriveLine(newCar.getDriveLine());
+        if (!StringUtils.isEmpty(newCar.getTransmission()))
+            carFromDb.setTransmission(newCar.getTransmission());
+        if (!StringUtils.isEmpty(newCar.getColor()))
+            carFromDb.setColor(newCar.getColor());
+        if (!StringUtils.isEmpty(newCar.getLoss()))
+            carFromDb.setLoss(newCar.getLoss());
+        if (!StringUtils.isEmpty(newCar.getDamage()))
+            carFromDb.setDamage(newCar.getDamage());
+        if (!StringUtils.isEmpty(newCar.getRunAndDrive()))
+            carFromDb.setRunAndDrive(newCar.getRunAndDrive());
+        if (!StringUtils.isEmpty(newCar.getStarts()))
+            carFromDb.setStarts(newCar.getStarts());
+        if (!StringUtils.isEmpty(newCar.getCarKeys()))
+            carFromDb.setCarKeys(newCar.getCarKeys());
 
         carRepository.save(carFromDb);
     }

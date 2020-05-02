@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
-    private String storage;
+    private final String storage;
 
     @Autowired
     public MvcConfig(AppProperties properties) {

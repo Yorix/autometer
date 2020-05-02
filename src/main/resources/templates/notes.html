@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Все записи по авто</title>
@@ -23,7 +22,8 @@
                 <div class="col-lg-4">
                     <a href="#" class="modal-show"
                        th:data-content="'<img class=\'modal-img\' src=\'/img/'+*{currentImg}+'\'/>'">
-                        <img th:src="|/img/*{currentImg}|" style="max-height: 170px;" src="#" alt="#" title="Текущее изображение"/>
+                        <img th:src="|/img/*{currentImg}|" style="max-height: 170px;" src="#" alt="#"
+                             title="Текущее изображение"/>
                     </a>
                 </div>
                 <div class="col-lg-4">
@@ -61,24 +61,24 @@
                             <div class="row">
                                 <div class="col-3">
                                     <input type="date" th:id="|input-date*{id}|" name="date" th:value="*{date}"
-                                           class="form-control-sm bg-dark text-light read-only-input" readonly>
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
                                 </div>
                                 <div class="col-6">
                                     <input type="text" th:id="|input-desc*{id}|" name="description"
                                            th:value="*{description}"
-                                           class="read-only-input" readonly>
+                                           class="read-only-input" readonly/>
                                 </div>
                                 <div class="col-2">
                                     <input th:id="|input-value*{id}|" oninput="cuttingDecimalPlaces(this)" type="number"
                                            step="0.01" min="-9999999" max="9999999" class="read-only-input money"
-                                           placeholder="0.00" name="value" th:value="*{value}" readonly>
+                                           placeholder="0.00" name="value" th:value="*{value}" readonly/>
                                 </div>
                                 <div class="col-1" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                                     <input th:id="|btn-change*{id}|" type="button"
                                            th:onclick="|clickChange(${note.id})|"
-                                           class="btn btn-outline-warning btn-sm" value="<<">
+                                           class="btn btn-outline-warning btn-sm" value="<<"/>
                                     <input th:id="|btn-submit*{id}|" type="submit"
-                                           class="btn btn-outline-success btn-sm" style="display: none" value=">>">
+                                           class="btn btn-outline-success btn-sm" style="display: none" value=">>"/>
                                 </div>
                             </div>
                         </form>

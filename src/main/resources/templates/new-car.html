@@ -15,8 +15,8 @@
     </div>
     <div class="card-body">
         <form id="form-parse-car" action="/cars/parse/" method="post">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-            <input id="input-url" type="text" name="vinOrLot" class="form-control" placeholder="VIN или № лота">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <input type="text" name="vinOrLot" class="form-control" placeholder="временно недоступно" disabled/>
         </form>
     </div>
     <div class="card-footer">
@@ -27,8 +27,7 @@
                 </button>
             </div>
             <div class="col-2">
-                <input id="btn-parse-submit" type="button" class="btn btn-outline-success"
-                       value="Загрузить >>">
+                <input form="form-parse-car" type="submit" class="btn btn-outline-success" value="Загрузить >>" disabled>
             </div>
         </div>
     </div>
@@ -40,7 +39,7 @@
     </div>
     <div class="card-body">
         <form id="form-add-car" action="/cars/" method="post" th:object="${car}">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
             <div class="form-group row">
                 <div class="col">
                     <input id="input-make" type="text" class="form-control"

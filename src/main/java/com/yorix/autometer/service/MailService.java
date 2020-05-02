@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class MailService {
     private final JavaMailSender sender;
-    private String receiver;
+    private final String receiver;
 
     @Autowired
     public MailService(JavaMailSender sender, AppProperties properties) {
@@ -28,7 +28,7 @@ public class MailService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setTo(receiver);
-        helper.setSubject("autometer_db: ".concat(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YY.MM.dd HH:mm:ss"))));
+        helper.setSubject("autometer_db: ".concat(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy.MM.dd HH:mm:ss"))));
         helper.setText("");
         helper.addAttachment(file.getName(), file);
         sender.send(message);

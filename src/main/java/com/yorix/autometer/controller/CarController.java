@@ -80,12 +80,11 @@ public class CarController {
     @PutMapping("{id}/")
     public String update(
             @PathVariable("id") int id,
-            @RequestParam("location") String location,
             Car car
     ) {
         carService.update(id, car);
         carService.saveData();
-        return "redirect:" + location;
+        return "redirect:";
     }
 
     @DeleteMapping("{id}/")

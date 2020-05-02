@@ -11,134 +11,195 @@
 
 <div class="container-fluid">
     <div class="card bg-dark">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-9 row">
-                    <div id="div-make" class="header-text ml-3" th:text="${car.make}"></div>
-                    <div id="div-model" class="header-text ml-3" th:text="${car.model}"></div>
-                    <div id="div-year" class="header-text ml-3" th:text="${car.year}"></div>
-                </div>
-                <div class="col-3 text-right">
-                    <form method="post" th:action="|/cars/${car.id}/pull-info/|">
-                        <div class="input-group" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
-                            <input type="text" name="vinOrLot" class="form-control" placeholder="VIN или № лота"/>
-                            <div class="input-group-append">
-                                <input type="submit" class="btn btn-outline-warning form-control"
-                                       value="Вытащить инфо"/>
-                            </div>
+        <form method="post" th:object="${car}">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <input type="hidden" name="_method" value="put"/>
+            <input type="hidden" name="id" th:value="*{id}"/>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-10 row">
+                        <div>
+                            <input type="text" name="make" th:value="*{make}" style="width: 100%"
+                                   class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="card-body bg-darkgray">
-            <div class="row">
-                <div class="col">
-                    <a href="img/">
-                        <img th:src="|/img/${car.currentImg}|" style="max-width: 100%; max-height: 370px;"/>
-                    </a>
-                </div>
-                <div class="col card bg-dark mx-1">
-                    <div class="card-header">АВТОМОБИЛЬ</div>
-                    <div class="card-body">
-                        <table>
-                            <tr>
-                                <td>Одометр, миль:</td>
-                                <td th:text="${car.odometer}"></td>
-                            </tr>
-                            <tr>
-                                <td>Двигатель:</td>
-                                <td th:text="${car.engine}"></td>
-                            </tr>
-                            <tr>
-                                <td>Топливо:</td>
-                                <td th:text="${car.fuel}"></td>
-                            </tr>
-                            <tr>
-                                <td>Привод:</td>
-                                <td th:text="${car.driveLine}"></td>
-                            </tr>
-                            <tr>
-                                <td>Трансмиссия:</td>
-                                <td th:text="${car.transmission}"></td>
-                            </tr>
-                            <tr>
-                                <td>Цвет:</td>
-                                <td th:text="${car.color}"></td>
-                            </tr>
-                        </table>
+                        <div>
+                            <input type="text" name="model" th:value="*{model}"
+                                   class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
+                        </div>
+                        <div>
+                            <input type="number" min="1970" name="year" th:value="*{year}"
+                                   class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
+                        </div>
                     </div>
-                </div>
-                <div class="col card bg-dark mx-1">
-                    <div class="card-header">ПРОИСШЕСТВИЕ</div>
-                    <div class="card-body">
-                        <table>
-                            <tr>
-                                <td>Урон:</td>
-                                <td th:text="${car.loss}"></td>
-                            </tr>
-                            <tr>
-                                <td>Повреждение:</td>
-                                <td th:text="${car.damage}"></td>
-                            </tr>
-                            <tr>
-                                <td>Заводится и едет:</td>
-                                <td th:text="${car.runAndDrive}"></td>
-                            </tr>
-                            <tr>
-                                <td>Заводится:</td>
-                                <td th:text="${car.starts}"></td>
-                            </tr>
-                            <tr>
-                                <td>Ключи:</td>
-                                <td th:text="${car.carKeys}"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col card bg-dark mx-1">
-                    <div class="card-header">ОБЩЕЕ</div>
-                    <div class="card-body">
-                        <table>
-                            <tr>
-                                <td>Лот:</td>
-                                <td th:text="${car.lot}"></td>
-                            </tr>
-                            <tr>
-                                <td>VIN:</td>
-                                <td th:text="${car.vin}"></td>
-                            </tr>
-                            <tr>
-                                <td>Расходы:</td>
-                                <td class="money" th:text="${car.spending}"></td>
-                            </tr>
-                            <tr>
-                                <td>Выручка:</td>
-                                <td class="money" th:text="${car.income}"></td>
-                            </tr>
-                            <tr>
-                                <td>Прибыль:</td>
-                                <td class="money" th:text="${car.spending+car.income}"></td>
-                            </tr>
-                            <tr>
-                                <td>+40% от расходов:</td>
-                                <td class="money grey-white" th:text="${car.spending*-1+car.spending*-0.4}"></td>
-                            </tr>
-                        </table>
+                    <div class="col-2 text-right" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+                        <input id="btn-change" type="button" onclick="clickChange()"
+                               class="btn btn-outline-warning" value="<< править"/>
+                        <input id="btn-submit" type="submit"
+                               class="btn btn-outline-success" style="display: none" value="сохранить >>"/>
+
+                        <!--                    <form method="post" th:action="|/cars/${car.id}/pull-info/|">-->
+                        <!--                        <div class="input-group" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">-->
+                        <!--                            <input type="text" name="vinOrLot" class="form-control" placeholder="VIN или № лота"/>-->
+                        <!--                            <div class="input-group-append">-->
+                        <!--                                <input type="submit" class="btn btn-outline-warning form-control"-->
+                        <!--                                       value="Вытащить инфо"/>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                    </form>-->
+
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-footer">
-            <div class="row">
-                <div class="col">
-                    <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Выбор авто</button>
-                </div>
-                <div class="col text-right">
-                    <button type="button" class="btn btn-outline-light" onclick="goto('notes/')">Все записи >></button>
+            <div class="card-body bg-darkgray">
+                <div class="row">
+                    <div class="col">
+                        <a href="img/">
+                            <img th:src="|/img/*{currentImg}|" style="max-width: 100%; max-height: 370px;"/>
+                        </a>
+                    </div>
+                    <div class="col card bg-dark mx-1">
+                        <div class="card-header">АВТОМОБИЛЬ</div>
+                        <div class="card-body">
+                            <table>
+                                <tr>
+                                    <td>Одометр, миль:</td>
+                                    <td>
+                                        <input type="number" id="odometer" name="odometer" th:value="*{odometer}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Двигатель:</td>
+                                    <td>
+                                        <input type="number" step=".1" id="engine" name="engine" th:value="*{engine}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Топливо:</td>
+                                    <td>
+                                        <input type="text" id="fuel" name="fuel" th:value="*{fuel}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Привод:</td>
+                                    <td>
+                                        <input type="text" id="driveLine" name="driveLine" th:value="*{driveLine}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Трансмиссия:</td>
+                                    <td>
+                                        <input type="text" id="transmission" name="transmission"
+                                               th:value="*{transmission}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Цвет:</td>
+                                    <td>
+                                        <input type="text" id="color" name="color" th:value="*{color}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col card bg-dark mx-1">
+                        <div class="card-header">ПРОИСШЕСТВИЕ</div>
+                        <div class="card-body">
+                            <table>
+                                <tr>
+                                    <td>Урон:</td>
+                                    <td>
+                                        <input type="text" id="loss" name="loss" th:value="*{loss}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Повреждение:</td>
+                                    <td>
+                                        <input type="text" id="damage" name="damage" th:value="*{damage}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Заводится и едет:</td>
+                                    <td>
+                                        <input type="text" id="runAndDrive" name="runAndDrive" th:value="*{runAndDrive}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Заводится:</td>
+                                    <td>
+                                        <input type="text" id="starts" name="starts" th:value="*{starts}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Ключи:</td>
+                                    <td>
+                                        <input type="text" id="carKeys" name="carKeys" th:value="*{carKeys}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col card bg-dark mx-1">
+                        <div class="card-header">ОБЩЕЕ</div>
+                        <div class="card-body">
+                            <table>
+                                <tr>
+                                    <td>Лот:</td>
+                                    <td>
+                                        <input type="number" id="lot" name="lot" th:value="*{lot}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>VIN:</td>
+                                    <td>
+                                        <input type="text" id="vin" name="vin" th:value="*{vin}"
+                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Расходы:</td>
+                                    <td class="money" th:text="*{spending}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Выручка:</td>
+                                    <td class="money" th:text="*{income}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Прибыль:</td>
+                                    <td class="money" th:text="*{spending+income}"></td>
+                                </tr>
+                                <tr>
+                                    <td>+30% от расходов:</td>
+                                    <td class="money grey-white" th:text="*{spending*-1+spending*-0.3}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Выбор авто</button>
+                    </div>
+                    <div class="col text-right">
+                        <button type="button" class="btn btn-outline-light" onclick="goto('notes/')">Все записи >>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 
     <div th:insert="~{parts/new-note :: create}"></div>

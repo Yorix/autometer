@@ -56,7 +56,7 @@
                                  alt="#"/>
                         </a>
 
-                        <form method="post" th:action="|/cars/${car.id}/|" th:object="${car}"
+                        <form method="post" th:action="|/cars/${car.id}/|"
                               sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                             <input type="hidden" name="_method" value="put">
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
