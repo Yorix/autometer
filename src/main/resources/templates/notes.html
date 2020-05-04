@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Все записи по авто</title>
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
@@ -17,7 +17,7 @@
                     <div class="mb-5">
                         <span class="header-text" th:text="|*{make} *{model} *{year}|"></span>
                     </div>
-                    <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад">
+                    <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад"/>
                 </div>
                 <div class="col-lg-4">
                     <a href="#" class="modal-show"
@@ -41,8 +41,8 @@
                             <td class="money" th:text="*{spending+income}"></td>
                         </tr>
                         <tr>
-                            <td>+40% от расходов:</td>
-                            <td class="money grey-white" th:text="*{spending*-1+spending*-0.4}"></td>
+                            <td>+30% от расходов:</td>
+                            <td class="money grey-white" th:text="*{spending*-1+spending*-0.3}"></td>
                         </tr>
                     </table>
                 </div>
@@ -56,8 +56,8 @@
                 <div class="row">
                     <div class="col-11">
                         <form method="post" th:action="|/cars/${car.id}/notes/${note.id}/|" th:object="${note}">
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                            <input type="hidden" name="_method" value="put">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                            <input type="hidden" name="_method" value="put"/>
                             <div class="row">
                                 <div class="col-3">
                                     <input type="date" th:id="|input-date*{id}|" name="date" th:value="*{date}"
@@ -85,16 +85,16 @@
                     </div>
                     <div class="col-1" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                         <form method="post" th:action="|/cars/${car.id}/notes/${note.id}/|">
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                            <input type="hidden" name="_method" value="delete">
-                            <input type="submit" class="btn btn-outline-danger btn-sm" value="&#10008;">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                            <input type="hidden" name="_method" value="delete"/>
+                            <input type="submit" class="btn btn-outline-danger btn-sm" value="&#10008;"/>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer">
-            <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад">
+            <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад"/>
         </div>
     </div>
 </div>

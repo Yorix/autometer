@@ -15,7 +15,7 @@ public class AppProperties {
     private String imageStorageLocation;
     private String defaultImageFilename = "0_0.png";
     private String defaultImageFullFilename = "classpath:/static/media/" + defaultImageFilename;
-    private String auctionUrl = "https://autoastat.com/ru/";
+    private String auctionUrl;
     private String currencyUrl = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange";
     private String currencyUrlParams = "?valcode=%s&date=%s&json";
     private String[] currencyCodes = {"usd", "eur"};

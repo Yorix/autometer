@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Список пользователей</title>
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
@@ -14,26 +14,26 @@
         <div class="card-header">
             <div class="header-text">Регистрация нового пользователя</div>
             <form method="post" action="/user/">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                 <div class="card-body form-group row">
                     <div class="col-5">
                         <input name="username" type="text" placeholder="Имя пользователя" class="form-control"
-                               th:classappend="(${userExistsError}or${usernameError})?'is-invalid':''">
+                               th:classappend="(${userExistsError}or${usernameError})?'is-invalid':''"/>
                         <div class="invalid-feedback" th:if="${userExistsError}" th:text="${userExistsError}"></div>
                         <div class="invalid-feedback" th:if="${usernameError}" th:text="${usernameError}"></div>
                     </div>
                     <div class="col-3">
                         <input name="password" type="password" placeholder="Пароль" class="form-control"
-                               th:classappend="(${passConfirmError}or${passwordError})?'is-invalid':''">
+                               th:classappend="(${passConfirmError}or${passwordError})?'is-invalid':''"/>
                         <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
                     </div>
                     <div class="col-3">
                         <input name="passwordConfirm" type="password" placeholder="Повторите пароль"
-                               class="form-control" th:classappend="${passConfirmError}?'is-invalid'">
+                               class="form-control" th:classappend="${passConfirmError}?'is-invalid'"/>
                         <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
                     </div>
                     <div class="col-1">
-                        <input type="submit" class="btn btn-outline-success" value=">>">
+                        <input type="submit" class="btn btn-outline-success" value=">>"/>
                     </div>
                 </div>
             </form>
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад">
+            <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад"/>
         </div>
     </div>
 </div>

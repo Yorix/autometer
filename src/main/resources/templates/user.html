@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Страница авто</title>
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
@@ -17,35 +17,35 @@
             <div th:text="${user.username}" class="col header-text"></div>
             <div class="col text-right">
                 <form method="post" th:action="|/user/${user.id}/|">
-                    <input type="hidden" name="_method" value="delete">
-                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                    <input type="submit" class="btn btn-outline-danger" value="&#10008;">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                    <input type="submit" class="btn btn-outline-danger" value="&#10008;"/>
                 </form>
             </div>
         </div>
 
         <form method="post" th:action="|/user/${user.id}/|">
-            <input type="hidden" name="_method" value="put">
-            <input type="hidden" name="_csrf" th:name="${_csrf.token}">
+            <input type="hidden" name="_method" value="put"/>
+            <input type="hidden" name="_csrf" th:name="${_csrf.token}"/>
 
             <div class="card-body px-5">
                 <div class="row mb-3">
                     <div class="col">
                         <input type="password" name="password" class="form-control" placeholder="Пароль"
-                               th:classappend="(${passwordError}or${passConfirmError})?'is-invalid':''">
+                               th:classappend="(${passwordError}or${passConfirmError})?'is-invalid':''"/>
                         <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
                     </div>
                     <div class="col">
                         <input type="password" name="passwordConfirm" class="form-control"
                                placeholder="Повторите пароль"
-                               th:classappend="${passConfirmError}?'is-invalid'">
+                               th:classappend="${passConfirmError}?'is-invalid'"/>
                         <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
                     </div>
                 </div>
                 <div th:each="role:${roles}" sec:authorize="hasAuthority('ADMIN')">
                     <label>
                         <input type="checkbox" th:name="${role.name()}"
-                               th:checked="${#lists.contains(user.roles, role)}">
+                               th:checked="${#lists.contains(user.roles, role)}"/>
                         <span th:text="${role}"></span>
                     </label>
                 </div>
@@ -55,10 +55,10 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col">
-                        <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад">
+                        <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад"/>
                     </div>
                     <div class="col text-right">
-                        <input type="submit" class="btn btn-outline-success" value="Подтвердить >>">
+                        <input type="submit" class="btn btn-outline-success" value="Подтвердить >>"/>
                     </div>
                 </div>
             </div>

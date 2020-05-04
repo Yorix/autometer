@@ -36,7 +36,7 @@
 
             <form id="form-send-file" action="./" method="post" enctype="multipart/form-data"
                   sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                 <div class="container input-group mb-5">
                     <input id="input-file" name="file" type="file" class="custom-file"/>
                     <div class="input-group-append">
@@ -58,27 +58,28 @@
 
                         <form method="post" th:action="|/cars/${car.id}/|"
                               sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
-                            <input type="hidden" name="_method" value="put">
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                            <input type="hidden" name="location" th:value="${#httpServletRequest.requestURL}">
-                            <input type="hidden" name="currentImg" th:value="|${car.id}_${img.id}.jpg|">
+                            <input type="hidden" name="_method" value="put"/>
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                            <input type="hidden" name="location" th:value="${#httpServletRequest.requestURL}"/>
+                            <input type="hidden" name="currentImg" th:value="|${car.id}_${img.id}.jpg|"/>
                             <input type="submit" class="btn btn-outline-success"
-                                   style="position: absolute; top: 5px; left: 5px;" value="&#10003;">
+                                   style="position: absolute; top: 5px; left: 5px;" value="&#10003;"/>
                         </form>
                         <form method="post" th:action="|/cars/${car.id}/img/|"
                               sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
-                            <input type="hidden" name="_method" value="delete">
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                            <input type="hidden" name="id" th:value="${img.id}">
+                            <input type="hidden" name="_method" value="delete"/>
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                            <input type="hidden" name="id" th:value="${img.id}"/>
                             <input type="submit" class="btn btn-outline-danger"
-                                   style="position: absolute; bottom: 5px; right: 5px;" value="&#10008;">
+                                   style="position: absolute; bottom: 5px; right: 5px;" value="&#10008;"/>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Назад</button>
-            </div>
+        </div>
+
+        <div class="card-footer">
+            <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Назад</button>
         </div>
     </div>
 </div>

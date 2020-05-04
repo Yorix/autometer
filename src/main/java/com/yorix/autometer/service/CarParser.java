@@ -7,7 +7,6 @@ import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.storage.CarRepository;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,78 +37,66 @@ public class CarParser {
         this.appProperties = appProperties;
     }
 
-    void parse(String vinOrLot, Car car) throws Exception {
-        try (final WebClient webClient = new WebClient(BrowserVersion.CHROME)) {
-            webClient.getOptions().setJavaScriptEnabled(true);
-            webClient.getOptions().setCssEnabled(true);
-            webClient.getOptions().setThrowExceptionOnScriptError(false);
-            webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+    void parse(String vinOrLot, Car car) throws IOException {
+        final WebClient webClient = new WebClient(BrowserVersion.CHROME);
+        webClient.getOptions().setJavaScriptEnabled(true);
+        webClient.getOptions().setCssEnabled(true);
+        webClient.getOptions().setThrowExceptionOnScriptError(false);
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 
-            final HtmlPage startPage = webClient.getPage(appProperties.getAuctionUrl());
-            final HtmlForm form = startPage.getFormByName("search_lot_by_identifier_form");
-            final HtmlButton button = form.getButtonByName("search_lot_by_identifier_form[search]");
-            final HtmlTextInput textField = form.getInputByName("search_lot_by_identifier_form[field]");
-            textField.type(vinOrLot);
+        final HtmlPage startPage = webClient.getPage(appProperties.getAuctionUrl().concat(vinOrLot).concat("/"));
+        final HtmlAnchor a = startPage.getFirstByXPath("//*[@id=\"w0\"]/table/tbody/tr/td[2]/ul/li[1]/a");
+        if (a == null) throw new IOException("Авто не найдено, или неверный VIN/номер лота.");
+        document = a.click();
 
-            document = button.click();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        DomNode infoScriptTag = document.querySelector("body > script:nth-child(8)");
-        if (infoScriptTag == null)
-            throw new Exception("Авто не найдено, или неверный VIN/номер лота.");
-
-        String infoJson = infoScriptTag.getTextContent()
-                .replaceAll("^[\\s\\S]*\\{", "{")
-                .replaceAll("\\)$", "");
-
-        JSONObject carInfo = new JSONObject(infoJson);
-
-        String make = carInfo.getString("Make");
-        String model = carInfo.getString("Model");
-        int year = Integer.parseInt(carInfo.getString("Year"));
-        int lot = Integer.parseInt(document
-                .querySelector("body > div.page > div > div > div:nth-child(2) > div:nth-child(2) > div > div.card-body > div.row > div > dl > dd:nth-child(2)")
-                .getTextContent());
-        String vin = document
-                .querySelector("body > div.page > div > div > div:nth-child(2) > div:nth-child(2) > div > div.card-body > div.row > div > dl > dd:nth-child(4)")
+        String make = ((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[13]/td[2]"))
                 .getTextContent();
-        int odometer = Integer.parseInt(document
-                .querySelector("body > div.page > div > div > div:nth-child(3) > div:nth-child(1) > div > div.card-body > dl > dd:nth-child(2)")
+        String model = ((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[14]/td[2]"))
+                .getTextContent();
+        int year = Integer.parseInt(((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[16]/td[2]"))
                 .getTextContent()
                 .replaceAll("\\D", ""));
-        double engine = Double.parseDouble(document
-                .querySelector("body > div.page > div > div > div:nth-child(3) > div:nth-child(1) > div > div.card-body > dl > dd:nth-child(4)")
+        int lot = Integer.parseInt(((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[2]/td[2]"))
                 .getTextContent()
-                .replaceAll("[^\\d.]", "")
-        );
-        String fuel = document
-                .querySelector("body > div.page > div > div > div:nth-child(3) > div:nth-child(1) > div > div.card-body > dl > dd:nth-child(6)")
+                .replaceAll("\\D", ""));
+        String vin = ((HtmlBold) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[4]/td[2]/b"))
                 .getTextContent();
-        String driveLine = document
-                .querySelector("body > div.page > div > div > div:nth-child(3) > div:nth-child(1) > div > div.card-body > dl > dd:nth-child(8)")
+        int odometer = Integer.parseInt(((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[7]/td[2]"))
+                .getTextContent()
+                .replaceAll("\\D+.*", ""));
+        double engine = Double.parseDouble(((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[21]/td[2]"))
+                .getTextContent()
+                .replaceAll("[^\\d.]+.*", ""));
+        String fuel = ((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[25]/td[2]"))
                 .getTextContent();
-        String transmission = document
-                .querySelector("body > div.page > div > div > div:nth-child(3) > div:nth-child(1) > div > div.card-body > dl > dd:nth-child(10)")
+        String driveLine = ((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[23]/td[2]"))
                 .getTextContent();
-        String color = document
-                .querySelector("body > div.page > div > div > div:nth-child(3) > div:nth-child(1) > div > div.card-body > dl > dd:nth-child(12)")
+        String transmission = ((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[22]/td[2]"))
                 .getTextContent();
-        String loss = document
-                .querySelector("body > div.page > div > div > div:nth-child(3) > div:nth-child(2) > div > div.card-body > dl > dd:nth-child(2)")
+        String color = ((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[18]/td[2]"))
                 .getTextContent();
-        String damage = document
-                .querySelector("body > div.page > div > div > div:nth-child(3) > div:nth-child(2) > div > div.card-body > dl > dd:nth-child(4)")
+        String loss = "";
+        String damage = ((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[5]/td[2]"))
                 .getTextContent();
-        String runAndDrive = document
-                .querySelector("body > div.page > div > div > div:nth-child(3) > div:nth-child(2) > div > div.card-body > dl > dd:nth-child(6)")
+        String runAndDrive = "";
+        String starts = ((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[8]/td[2]"))
                 .getTextContent();
-        String starts = document
-                .querySelector("body > div.page > div > div > div:nth-child(3) > div:nth-child(2) > div > div.card-body > dl > dd:nth-child(8)")
-                .getTextContent();
-        String carKeys = document
-                .querySelector("body > div.page > div > div > div:nth-child(3) > div:nth-child(2) > div > div.card-body > dl > dd:nth-child(10)")
+        String carKeys = ((HtmlTableDataCell) document
+                .getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[9]/td[2]"))
                 .getTextContent();
 
         String currentImg = appProperties.getDefaultImageFilename();
@@ -133,29 +120,28 @@ public class CarParser {
         car.setCurrentImg(currentImg);
         carRepository.save(car);
 
-
-        LocalDate auctionDate = LocalDate.parse(carInfo.getString("Auction Date"));
-
-        double price = Double.parseDouble(document
-                .querySelector("body > div.page > div > div > div:nth-child(2) > div:nth-child(2) > div > div.card-body > div.table-responsive > table > tbody > tr:nth-child(1) > td:nth-child(3)")
-                .getTextContent()
-                .replaceAll("\\D", "")
-        ) * -1;
-
-        Note note = new Note();
-        note.setDescription("Покупка");
-        note.setValue(price);
-        note.setCar(car);
-        note.setDate(auctionDate);
-        noteService.create(note);
-
-
-        DomNodeList<DomNode> imgUrlList = document.querySelectorAll("#modal-img > div > div > div.modal-body > img");
-
-        List<String> imgUrls = imgUrlList.stream()
-                .map(element -> element.getAttributes().getNamedItem("src").getTextContent())
-                .collect(Collectors.toList());
-
-        imgUrls.forEach(url -> imgService.create(url, car));
+//        String date = (((HtmlTableDataCell) document.getFirstByXPath("/html/body/div[2]/div/div/div/div[4]/table/tbody/tr[3]/td[2]")).getTextContent());
+//        LocalDate auctionDate = LocalDate.parse(date);
+//
+//        double price = Double.parseDouble(((HtmlTableDataCell) document
+//                .getFirstByXPath(""))
+//                .getTextContent()
+//                .replaceAll("[^\\d.]+.*", "")) * -1; //TODO
+//
+//        Note note = new Note();
+//        note.setDescription("Покупка");
+//        note.setValue(price);
+//        note.setCar(car);
+//        note.setDate(auctionDate);
+//        noteService.create(note);
+//
+//
+//        DomNodeList<DomNode> imgUrlList = document.querySelectorAll("#modal-img > div > div > div.modal-body > img");
+//
+//        List<String> imgUrls = imgUrlList.stream()
+//                .map(element -> element.getAttributes().getNamedItem("src").getTextContent())
+//                .collect(Collectors.toList());
+//
+//        imgUrls.forEach(url -> imgService.create(url, car));
     }
 }

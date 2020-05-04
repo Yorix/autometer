@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Добавление авто</title>
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
@@ -9,63 +9,66 @@
 
 <div th:insert="~{parts/header-menu :: menu}"></div>
 
-<div class="container card bg-dark my-3">
-    <div class="card-header">
-        <h5>Загрузить по VIN или номеру лота</h5>
-    </div>
-    <div class="card-body">
-        <form id="form-parse-car" action="/cars/parse/" method="post">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-            <input type="text" name="vinOrLot" class="form-control" placeholder="временно недоступно" disabled/>
-        </form>
-    </div>
-    <div class="card-footer">
-        <div class="row">
-            <div class="col-10">
-                <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
-                    << Отмена
-                </button>
-            </div>
-            <div class="col-2">
-                <input form="form-parse-car" type="submit" class="btn btn-outline-success" value="Загрузить >>" disabled>
+<div class="container my-3">
+    <div class="card bg-dark">
+        <div class="card-header">
+            <h5>Загрузить по VIN или номеру лота</h5>
+        </div>
+        <div class="card-body">
+            <form id="form-parse-car" action="/cars/parse/" method="post">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <input type="text" name="vinOrLot" class="form-control" placeholder="VIN-код или номер лота"/>
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-10">
+                    <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
+                        << Отмена
+                    </button>
+                </div>
+                <div class="col-2">
+                    <input form="form-parse-car" type="submit" class="btn btn-outline-success" value="Загрузить >>"/>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container card bg-dark my-3">
-    <div class="card-header">
-        <h5 id="header">Добавление вручную</h5>
-    </div>
-    <div class="card-body">
-        <form id="form-add-car" action="/cars/" method="post" th:object="${car}">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-            <div class="form-group row">
-                <div class="col">
-                    <input id="input-make" type="text" class="form-control"
-                           placeholder="Марка" th:field="*{make}"/>
+<div class="container my-3">
+    <div class="card bg-dark">
+        <div class="card-header">
+            <h5 id="header">Добавление вручную</h5>
+        </div>
+        <div class="card-body">
+            <form id="form-add-car" action="/cars/" method="post" th:object="${car}">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <div class="form-group row">
+                    <div class="col">
+                        <input id="input-make" type="text" class="form-control"
+                               placeholder="Марка" th:field="*{make}"/>
+                    </div>
+                    <div class="col">
+                        <input id="input-model" type="text" class="form-control"
+                               placeholder="Модель" th:field="*{model}"/>
+                    </div>
+                    <div class="col">
+                        <input id="input-year" type="number" min="1970" class="form-control"
+                               placeholder="Год" th:field="*{year}"/>
+                    </div>
                 </div>
-                <div class="col">
-                    <input id="input-model" type="text" class="form-control"
-                           placeholder="Модель" th:field="*{model}"/>
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-10">
+                    <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
+                        << Отмена
+                    </button>
                 </div>
-                <div class="col">
-                    <input id="input-year" type="number" min="1970" class="form-control"
-                           placeholder="Год" th:field="*{year}"/>
+                <div class="col-2">
+                    <input id="btn-add-submit" type="button" class="btn btn-outline-success" value="Добавить >>"/>
                 </div>
-            </div>
-        </form>
-    </div>
-    <div class="card-footer">
-        <div class="row">
-            <div class="col-10">
-                <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
-                    << Отмена
-                </button>
-            </div>
-            <div class="col-2">
-                <input id="btn-add-submit" type="button" class="btn btn-outline-success"
-                       value="Добавить >>">
             </div>
         </div>
     </div>
