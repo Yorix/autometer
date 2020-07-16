@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Список запчастей</title>
+    <link rel="stylesheet" href="/css/app.css"/>
+</head>
+<body>
+
+<div th:insert="~{parts/header-menu :: menu}"></div>
+
+<div class="mx-5">
+    <input sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
+           type="button" class="btn btn-outline-success" onclick="goto('new-car/')" value="&#10010;">
+</div>
+
+<div class="m-3">
+    <div th:insert="~{parts/car-list :: list(-1, 1)}"></div>
+    <div class="container-fluid text-center text-secondary">
+        <hr>
+        <span>Продано</span>
+        <hr>
+    </div>
+    <div th:insert="~{parts/car-list :: list(1, 0)}"></div>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

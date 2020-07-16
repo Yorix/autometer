@@ -1,8 +1,6 @@
 package com.yorix.autometer.service;
 
 import com.yorix.autometer.model.Car;
-import com.yorix.autometer.model.Img;
-import com.yorix.autometer.model.Note;
 import com.yorix.autometer.storage.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

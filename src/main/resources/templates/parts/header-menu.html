@@ -19,6 +19,10 @@
                     th:classappend="${#httpServletRequest.requestURI}=='/cars/new-car/' ? 'active' : null">
                     <a class="nav-link" href="/cars/new-car/">Добавить авто</a>
                 </li>
+                <li class="nav-item" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
+                    th:classappend="${#httpServletRequest.requestURI}=='/spares/' ? 'active' : null">
+                    <a class="nav-link" href="/spares/">Запчасти</a>
+                </li>
                 <li class="nav-item"
                     th:classappend="${#httpServletRequest.requestURI}=='/calculator/' ? 'active' : null">
                     <a class="nav-link" href="/calculator/">Калькулятор</a>

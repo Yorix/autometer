@@ -2,18 +2,17 @@ package com.yorix.autometer.service;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.*;
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
+import com.gargoylesoftware.htmlunit.html.HtmlBold;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlTableDataCell;
 import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.model.Car;
-import com.yorix.autometer.model.Note;
 import com.yorix.autometer.storage.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CarParser {
@@ -45,7 +44,7 @@ public class CarParser {
         webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 
         final HtmlPage startPage = webClient.getPage(appProperties.getAuctionUrl().concat(vinOrLot).concat("/"));
-        final HtmlAnchor a = startPage.getFirstByXPath("//*[@id=\"w0\"]/table/tbody/tr/td[2]/ul/li[1]/a");
+        final HtmlAnchor a = startPage.getFirstByXPath("/html/body/div[2]/div/div/div/div[3]/div/div/div/table/tbody/tr/td[2]/ul/li[1]/a");
         if (a == null) throw new IOException("Авто не найдено, или неверный VIN/номер лота.");
         document = a.click();
 
