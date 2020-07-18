@@ -1,8 +1,6 @@
 package com.yorix.autometer.controller;
 
-import com.yorix.autometer.model.Car;
-import com.yorix.autometer.model.CarViewDTO;
-import com.yorix.autometer.model.Note;
+import com.yorix.autometer.model.Spare;
 import com.yorix.autometer.service.SpareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/spares/")
@@ -25,10 +22,33 @@ public class SpareController {
     @GetMapping
     public ModelAndView getAll() {
         ModelAndView modelAndView = new ModelAndView("spares");
-        List<CarViewDTO> cars = null;
-        modelAndView.addObject("budget", 0.0);
-        modelAndView.addObject("balance", 0.0);
-        modelAndView.addObject("cars", cars);
+        List<Spare> spares = spareService.getAll();
+        double sum = spares.stream().mapToDouble(spare -> spare.getBuy() + spare.getSale()).sum();
+        modelAndView.addObject("budget", spareService.getBudget());
+        modelAndView.addObject("balance", spareService.getBalance());
+        modelAndView.addObject("sum", sum);
+        modelAndView.addObject("spares", spares);
+        modelAndView.addObject("spare", new Spare());
         return modelAndView;
+    }
+
+    @PostMapping
+    public String create(Spare spare) {
+        spareService.create(spare);
+        spareService.saveData();
+        return "redirect:/spares/";
+    }
+
+    @PutMapping("{spareId}/")
+    public String update(@PathVariable int spareId, Spare spare) {
+        spareService.update(spareId, spare);
+        spareService.saveData();
+        return "redirect:/spares/";
+    }
+
+    @DeleteMapping("{spareId}")
+    public String delete(@PathVariable int spareId) {
+        spareService.delete(spareId);
+        return "redirect:/spares/";
     }
 }
