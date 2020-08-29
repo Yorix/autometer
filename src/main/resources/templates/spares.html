@@ -12,9 +12,6 @@
 <div class="container">
     <div class="card bg-dark">
         <div class="card-header">
-            Сумма: <span th:text="${sum}" class="money"></span>
-        </div>
-        <div class="card-body">
             <div class="card bg-dark my-2" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                 <form method="post" action="/spares/" th:object="${spare}">
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}">
@@ -42,7 +39,11 @@
                     </div>
                 </form>
             </div>
-
+        </div>
+        <div class="card-body">
+            <div class="m-3">
+                Баланс по запчастям: <span th:text="${sum}" class="money"></span>
+            </div>
             <div class="card px-3 bg-dark selectable" th:each="spare:${spares}">
                 <div class="row">
                     <div class="col-11">
@@ -59,13 +60,17 @@
                                            th:value="*{description}" class="read-only-input" readonly/>
                                 </div>
                                 <div class="col-2">
-                                    <input th:id="|input-buy*{id}|" oninput="cuttingDecimalPlaces(this)" type="number"
-                                           step="0.01" min="-9999999" max="9999999" class="read-only-input money"
+                                    <input th:id="|input-buy*{id}|" oninput="cuttingDecimalPlaces(this)"
+                                           type="number"
+                                           step="0.01" min="-9999999" max="9999999"
+                                           class="read-only-input money"
                                            name="buy" th:value="*{buy}" readonly/>
                                 </div>
                                 <div class="col-2">
-                                    <input th:id="|input-sale*{id}|" oninput="cuttingDecimalPlaces(this)" type="number"
-                                           step="0.01" min="-9999999" max="9999999" class="read-only-input money"
+                                    <input th:id="|input-sale*{id}|" oninput="cuttingDecimalPlaces(this)"
+                                           type="number"
+                                           step="0.01" min="-9999999" max="9999999"
+                                           class="read-only-input money"
                                            name="sale" th:value="*{sale}" readonly/>
                                 </div>
                                 <div class="col-1" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
@@ -73,7 +78,8 @@
                                            th:onclick="|clickChange(*{id})|"
                                            class="btn btn-outline-warning btn-sm" value="<<"/>
                                     <input th:id="|btn-submit*{id}|" type="submit"
-                                           class="btn btn-outline-success btn-sm" style="display: none" value=">>"/>
+                                           class="btn btn-outline-success btn-sm" style="display: none"
+                                           value=">>"/>
                                 </div>
                             </div>
                         </form>

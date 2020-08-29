@@ -2,8 +2,10 @@ package com.yorix.autometer.service;
 
 import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.model.Note;
+import com.yorix.autometer.model.Spare;
 import com.yorix.autometer.storage.NoteRepository;
 import com.yorix.autometer.storage.ParamRepository;
+import com.yorix.autometer.storage.SpareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ public abstract class AppService {
     @Autowired
     private NoteRepository noteRepository;
     @Autowired
+    private SpareRepository spareRepository;
+    @Autowired
     private ParamRepository paramRepository;
     @Autowired
     private AppProperties appProperties;
@@ -28,10 +32,13 @@ public abstract class AppService {
     private MailService mailService;
 
     public double getBalance() {
-        return noteRepository.findAll()
-                .stream()
+        double notesBalance = noteRepository.findAll().stream()
                 .mapToDouble(Note::getValue)
                 .sum();
+        double sparesBalance = spareRepository.findAll().stream()
+                .mapToDouble(spare -> spare.getBuy() + spare.getSale())
+                .sum();
+        return notesBalance + sparesBalance;
     }
 
     public double getBudget() {

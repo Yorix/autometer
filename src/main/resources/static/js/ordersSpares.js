@@ -8,7 +8,7 @@ inputSale.value = "";
 
 function clickChange(id) {
     var inputDate = document.getElementById("input-date" + id);
-    var descInput = document.getElementById("input-desc" + id);
+    var inputDesc = document.getElementById("input-desc" + id);
     var inputBuy = document.getElementById("input-buy" + id);
     var inputSale = document.getElementById("input-sale" + id);
 
@@ -16,7 +16,7 @@ function clickChange(id) {
     var btnSubmit = document.getElementById("btn-submit" + id);
 
     inputDate.removeAttribute("readOnly");
-    descInput.removeAttribute("readOnly");
+    inputDesc.removeAttribute("readOnly");
     inputBuy.removeAttribute("readOnly");
     inputSale.removeAttribute("readOnly");
 
@@ -31,5 +31,23 @@ function clickSubmit() {
     if (inputSale.value === '')
         inputSale.value = 0;
 
-    inputBuy.value = inputBuy.value * -1;
+    if (inputBuy.value > 0)
+        inputBuy.value = inputBuy.value * -1;
 }
+//
+// function clickOrderChange(id) {
+//     var btnOrderChange = document.getElementById("btn-order-change" + id);
+//     var btnOrderSubmit = document.getElementById("btn-order-submit" + id);
+//     var inputOrderDesc = document.getElementById("input-order-desc" + id);
+//     var inputOrderBuy = document.getElementById("input-order-buy" + id);
+//     var inputOrderSale = document.getElementById("input-order-sale" + id);
+//     var inputOrderBalance = document.getElementById("input-order-balance" + id);
+//
+//     btnOrderChange.style.display = "none";
+//     btnOrderSubmit.style.display = "inline";
+//
+//     inputOrderDesc.removeAttribute("readOnly");
+//     inputOrderBuy.removeAttribute("hidden");
+//     inputOrderSale.removeAttribute("hidden");
+//     inputOrderBalance.setAttribute("hidden", "hidden");
+// }

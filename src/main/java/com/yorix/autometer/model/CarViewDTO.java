@@ -4,26 +4,26 @@ import lombok.Getter;
 
 @Getter
 public class CarViewDTO {
-    private int id;
-    private String make;
-    private String model;
-    private int year;
-    private int lot;
-    private String vin;
-    private int odometer;
-    private double engine;
-    private String fuel;
-    private String driveLine;
-    private String transmission;
-    private String color;
-    private String loss;
-    private String damage;
-    private String runAndDrive;
-    private String starts;
-    private String carKeys;
-    private String currentImg;
-    private double spending;
-    private double income;
+    private final int id;
+    private final String make;
+    private final String model;
+    private final int year;
+    private final int lot;
+    private final String vin;
+    private final int odometer;
+    private final double engine;
+    private final String fuel;
+    private final String driveLine;
+    private final String transmission;
+    private final String color;
+    private final String loss;
+    private final String damage;
+    private final String runAndDrive;
+    private final String starts;
+    private final String carKeys;
+    private final String currentImg;
+    private final double spending;
+    private final double income;
 
     public CarViewDTO(Car car) {
         this.id = car.getId();

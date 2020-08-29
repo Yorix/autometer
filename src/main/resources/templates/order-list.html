@@ -10,56 +10,41 @@
 
 <div th:insert="~{parts/header-menu :: menu}"></div>
 
-<div class="container-fluid">
-    <div class="card bg-dark my-2" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
-        <form method="post" action="/orders/" th:object="${order}">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-            <div class="card-body form-group row">
-                <div class="col-lg-3 my-1">
-                    <input id="input-date" type="date" class="form-control" th:field="*{date}"/>
-                </div>
-                <div class="col-lg-4 my-1">
-                    <input type="text" class="form-control" placeholder="Описание"
-                           th:field="*{description}"/>
-                </div>
-                <div class="col-lg-2 my-1 input-group">
-                    <input id="input-buy" oninput="cuttingDecimalPlaces(this)"
-                           type="number" step="0.01" max="9999999" class="form-control"
-                           placeholder="Покупка" th:field="*{buy}">
-                </div>
-                <div class="col-lg-2 my-1 input-group">
-                    <input id="input-sale" oninput="cuttingDecimalPlaces(this)"
-                           type="number" step="0.01" max="9999999" class="form-control"
-                           placeholder="Продажа" th:field="*{sale}">
-                </div>
-                <div class="col-lg-1 input-group">
-                    <input type="submit" class="btn btn-outline-success" onclick="clickSubmit()" value=">>">
-                </div>
-            </div>
-        </form>
-    </div>
+<div class="mx-5">
+    <input sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
+           type="button" class="btn btn-outline-success" onclick="goto('new-car/')" value="&#10010;">
 </div>
 
 <div class="m-3">
-    <div class="container col-lg-4 my-3" th:if="!${orders.isEmpty()}" th:each="order:${orders}">
-        <div class="card bg-dark selectable">
-            <div class="card-header">
-                <div th:text="|${order.description}|"></div>
+    Баланс по заказам: <span th:text="${sum}" class="money"></span>
+</div>
+
+<div class="row m-3">
+    <div class="container col-lg-4 my-3" th:each="order:${orders}">
+        <a th:href="|/orders/${order.id}/|">
+            <div class="card bg-dark selectable">
+                <div class="card-header">
+                    <div th:text="|${order.make} ${order.model} ${order.year}|"></div>
+                </div>
+                <div class="card-body text-center" style="height: 400px">
+                    <img th:src="|/img/${car.currentImg}|"
+                         th:if="${car.currentImg}"
+                         style="max-width: 100%; max-height: 350px;">
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col text-left money" th:text="${car.spending+car.income}"
+                             title="Баланс по машине"></div>
+                        <div class="col text-right money grey-white" title="+30% от расходов"
+                             th:text="${car.spending*-1+car.spending*-0.3}">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body text-center" style="height: 400px">
-                <img th:src="|/img/${order.currentImg}|"
-                     th:if="${order.currentImg}"
-                     style="max-width: 100%; max-height: 350px;">
-            </div>
-            <div class="card-footer">
-                <div class="text-left money" th:text="${order.buy+order.sale}"
-                     title="Баланс по заказу"></div>
-            </div>
-        </div>
+        </a>
     </div>
 </div>
 
 <script src="/js/app.js"></script>
-<script src="/js/ordersSpares.js"></script>
 </body>
 </html>

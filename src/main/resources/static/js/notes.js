@@ -25,6 +25,6 @@ function noteSubmit() {
     if (noteValueInput.value === '')
         noteValueInput.value = 0;
 
-    if (negativeSelect.selectedIndex === 0)
+    if (negativeSelect.selectedIndex === 0 && noteValueInput.value > 0 || negativeSelect.selectedIndex === 1 && noteValueInput.value < 0)
         noteValueInput.value = noteValueInput.value * -1;
 }

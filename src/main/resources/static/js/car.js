@@ -4,6 +4,6 @@ function clickChange() {
     const roInputs = document.getElementsByClassName("read-only-input");
 
     changeBtn.style.display = "none";
-    submitBtn.style.display = "block";
+    submitBtn.style.display = "inline";
     Array.from(roInputs).forEach(element => element.removeAttribute("readonly"));
 }
