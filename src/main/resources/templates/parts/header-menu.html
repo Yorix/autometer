@@ -3,80 +3,77 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 
-<div class="py-5" th:fragment="menu">
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<nav th:fragment="menu" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item" th:classappend="${#httpServletRequest.requestURI}=='/cars/' ? 'active' : null">
-                    <a class="nav-link" href="/cars/">Список авто</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
-                    th:classappend="${#httpServletRequest.requestURI}=='/cars/new-car/' ? 'active' : null">
-                    <a class="nav-link" href="/cars/new-car/">Добавить авто</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
-                    th:classappend="${#httpServletRequest.requestURI}=='/spares/' ? 'active' : null">
-                    <a class="nav-link" href="/spares/">Запчасти</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
-                    th:classappend="${#httpServletRequest.requestURI}=='/orders/' ? 'active' : null">
-                    <a class="nav-link" href="/orders/">Заказы</a>
-                </li>
-                <li class="nav-item"
-                    th:classappend="${#httpServletRequest.requestURI}=='/calculator/' ? 'active' : null">
-                    <a class="nav-link" href="/calculator/">Калькулятор</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
-                    th:classappend="${#httpServletRequest.requestURI}=='/user/' ? 'active' : null">
-                    <a class="nav-link" href="/user/">Управление пользователями</a>
-                </li>
-            </ul>
-        </div>
-
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <form th:action="@{/logout}" method="post">
-                    <span sec:authentication="name"></span>
-                    <input type="submit" value="Выход" class="btn btn-outline-light btn-sm">
-                </form>
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" th:classappend="${#httpServletRequest.requestURI}=='/cars/' ? 'active' : null">
+                <a class="nav-link" href="/cars/">Список авто</a>
+            </li>
+            <li class="nav-item" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
+                th:classappend="${#httpServletRequest.requestURI}=='/cars/new-car/' ? 'active' : null">
+                <a class="nav-link" href="/cars/new-car/">Добавить авто</a>
+            </li>
+            <li class="nav-item" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
+                th:classappend="${#httpServletRequest.requestURI}=='/spares/' ? 'active' : null">
+                <a class="nav-link" href="/spares/">Запчасти</a>
+            </li>
+            <li class="nav-item" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
+                th:classappend="${#httpServletRequest.requestURI}=='/orders/' ? 'active' : null">
+                <a class="nav-link" href="/orders/">Заказы</a>
+            </li>
+            <li class="nav-item"
+                th:classappend="${#httpServletRequest.requestURI}=='/calculator/' ? 'active' : null">
+                <a class="nav-link" href="/calculator/">Калькулятор</a>
+            </li>
+            <li class="nav-item" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
+                th:classappend="${#httpServletRequest.requestURI}=='/user/' ? 'active' : null">
+                <a class="nav-link" href="/user/">Управление пользователями</a>
             </li>
         </ul>
+    </div>
 
-        <ul class="navbar-nav">
-            <li class="nav-item ml-3">
-                <form method="post" action="/params/budget/">
-                    <input type="hidden" name="_method" value="put">
-                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                    <input type="hidden" name="location" th:value="${#httpServletRequest.requestURI}">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <form th:action="@{/logout}" method="post">
+                <span sec:authentication="name"></span>
+                <input type="submit" value="Выход" class="btn btn-outline-light btn-sm">
+            </form>
+        </li>
+    </ul>
 
-                    <span>Баланс: </span>
-                    <span class="money" th:text="${budget+balance}"></span>
-                    <input sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
-                           id="btn-add-to-budget" type="button" onclick="editBudget();"
-                           class="btn btn-outline-success btn-sm" value="&#10010;">
-                    <div class="input-group">
-                        <input id="input-budget" type="number" name="paramValue" step="0.01" min="0" max="9999999"
-                               class="form-control-sm" style="display: none" placeholder="0.00"
-                               oninput="cuttingDecimalPlaces(this)"/>
-                        <div class="input-group-append">
-                            <input id="btn-submit-budget" type="submit" onclick="submitBudget()"
-                                   class="btn btn-outline-success btn-sm" style="display: none" value=">>">
-                        </div>
+    <ul class="navbar-nav">
+        <li class="nav-item ml-3">
+            <form method="post" action="/params/budget/">
+                <input type="hidden" name="_method" value="put">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                <input type="hidden" name="location" th:value="${#httpServletRequest.requestURI}">
+
+                <span>Баланс: </span>
+                <span class="money" th:text="${budget+balance}"></span>
+                <input sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
+                       id="btn-add-to-budget" type="button" onclick="editBudget();"
+                       class="btn btn-outline-success btn-sm" value="&#10010;">
+                <div class="input-group">
+                    <input id="input-budget" type="number" name="paramValue" step="0.01" min="0" max="9999999"
+                           class="form-control-sm" style="display: none" placeholder="0.00"
+                           oninput="cuttingDecimalPlaces(this)"/>
+                    <div class="input-group-append">
+                        <input id="btn-submit-budget" type="submit" onclick="submitBudget()"
+                               class="btn btn-outline-success btn-sm" style="display: none" value=">>">
                     </div>
-                </form>
-            </li>
-        </ul>
-    </nav>
-
+                </div>
+            </form>
+        </li>
+    </ul>
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-</div>
+</nav>
 
 </body>
 </html>

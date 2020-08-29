@@ -1,14 +1,21 @@
 @import "bootstrap/bootstrap.min.css";
 
 body {
-    padding: 0;
+    background-blend-mode: color;
+    background: rgba(20, 20, 20, .7) url("/media/bg.jpg") no-repeat center fixed;
+    background-size: cover;
+    padding: 100px 0;
     margin: auto;
-    background: #555;
     color: #ccc;
+    text-shadow: 2px 2px 2px #000, 1px 1px #000;
 }
 
 .bg-darkgray {
     background: #393f45;
+}
+
+body > div {
+    opacity: .97;
 }
 
 td {

@@ -3,7 +3,7 @@ package com.yorix.autometer.model;
 import lombok.Getter;
 
 @Getter
-public class CarViewDTO {
+public class OrderViewDTO {
     private final int id;
     private final String make;
     private final String model;
@@ -25,7 +25,7 @@ public class CarViewDTO {
     private final double spending;
     private final double income;
 
-    public CarViewDTO(Car car) {
+    public OrderViewDTO(Car car) {
         this.id = car.getId();
         this.make = car.getMake();
         this.model = car.getModel();
