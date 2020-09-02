@@ -7,7 +7,7 @@ body {
     padding: 100px 0;
     margin: auto;
     color: #ccc;
-    text-shadow: 2px 2px 2px #000, 1px 1px #000;
+    text-shadow: 1px 1px 4px #000, 1px 1px #000;
 }
 
 .bg-darkgray {
@@ -49,12 +49,12 @@ a, a:hover {
 
 .header-text {
     font-size: 30px;
-    color: #fff;
+    color: #def;
     text-shadow: 1px 1px 0 #000,
     -1px -1px 0 #000,
     1px -1px 0 #000,
     -1px 1px 0 #000,
-    0 0 4px #000;
+    0 0 10px #def;
 }
 
 .grey-white {

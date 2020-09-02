@@ -15,6 +15,8 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false)
+    private boolean ord;
+    @Column(nullable = false)
     private String make;
     @Column(nullable = false)
     private String model;

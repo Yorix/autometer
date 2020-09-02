@@ -23,8 +23,8 @@ public class CarService extends AppService {
         return carRepository.getOne(id);
     }
 
-    public List<Car> readAll() {
-        return carRepository.findAllByOrderByIdDesc();
+    public List<Car> readAll(boolean ord) {
+        return carRepository.findAllByOrdOrderByIdDesc(ord);
     }
 
     public void create(Car car) {

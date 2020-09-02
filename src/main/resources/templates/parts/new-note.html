@@ -17,7 +17,7 @@
             <div class="col-lg-2 my-1">
                 <select id="select-negative" class="form-control">
                     <option>Расход</option>
-                    <option>Приход</option>
+                    <option th:if="!${car.ord}">Приход</option>
                 </select>
             </div>
             <div class="col-lg-3 my-1 input-group">

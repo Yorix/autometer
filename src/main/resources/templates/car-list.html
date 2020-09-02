@@ -7,14 +7,19 @@
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
-<div class="mx-5">
-    <input sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
-           type="button" class="btn btn-outline-success" onclick="goto('new-car/')" value="&#10010;">
+<div class="mx-5 row">
+    <div class="col-1">
+        <input sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
+               type="button" class="btn btn-outline-success" onclick="goto('new-car/')" value="&#10010;">
+    </div>
+    <div class="col-11 text-right header-text"
+         th:text="${#httpServletRequest.requestURI.contains('/orders/')?'Заказы':'Мои авто'}"></div>
 </div>
 
 <div class="m-3">
     <div th:insert="~{parts/car-list :: list(-1, 1)}"></div>
-    <div class="text-center text-secondary border-secondary border-top border-bottom">
+    <div th:if="!${#httpServletRequest.requestURI.contains('/orders/')}"
+         class="text-center text-secondary border-secondary border-top border-bottom">
         Продано
     </div>
     <div th:insert="~{parts/car-list :: list(1, 0)}"></div>

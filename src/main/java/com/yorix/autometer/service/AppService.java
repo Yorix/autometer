@@ -1,8 +1,9 @@
 package com.yorix.autometer.service;
 
 import com.yorix.autometer.config.AppProperties;
+import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.Note;
-import com.yorix.autometer.storage.NoteRepository;
+import com.yorix.autometer.storage.CarRepository;
 import com.yorix.autometer.storage.ParamRepository;
 import com.yorix.autometer.storage.SpareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,13 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public abstract class AppService {
     @Autowired
-    private NoteRepository noteRepository;
+    private CarRepository carRepository;
     @Autowired
     private SpareRepository spareRepository;
     @Autowired
@@ -31,7 +34,12 @@ public abstract class AppService {
     private MailService mailService;
 
     public double getBalance() {
-        double notesBalance = noteRepository.findAll().stream()
+        List<Car> cars = carRepository.findAllByOrdOrderByIdDesc(false);
+        List<Note> notes = new LinkedList<>();
+        for (Car car : cars)
+            notes.addAll(car.getNotes());
+
+        double notesBalance = notes.stream()
                 .mapToDouble(Note::getValue)
                 .sum();
         double sparesBalance = spareRepository.findAll().stream()

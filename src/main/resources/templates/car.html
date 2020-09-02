@@ -188,7 +188,9 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col">
-                        <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Выбор авто</button>
+                        <button type="button" class="btn btn-outline-light"
+                                th:onclick="|goto(${car.ord}?'../orders/':'../')|"><< Выбор авто
+                        </button>
                     </div>
                     <div class="col text-right">
                         <button type="button" class="btn btn-outline-light" onclick="goto('notes/')">Все записи >>

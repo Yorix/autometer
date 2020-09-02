@@ -7,6 +7,10 @@
 </head>
 <body>
 
+<div class="mx-5 text-right header-text">
+    Новое авто
+</div>
+
 <div class="container my-3">
     <div class="card bg-dark">
         <div class="card-header">
@@ -41,6 +45,7 @@
         <div class="card-body">
             <form id="form-add-car" action="/cars/" method="post" th:object="${car}">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <input type="hidden" th:field="*{ord}"/>
                 <div class="form-group row">
                     <div class="col">
                         <input id="input-make" type="text" class="form-control"

@@ -25,7 +25,20 @@ public class CarController {
     @GetMapping
     public ModelAndView getAll() {
         ModelAndView modelAndView = new ModelAndView("car-list");
-        List<CarViewDTO> cars = carService.readAll()
+        List<CarViewDTO> cars = carService.readAll(false)
+                .stream()
+                .map(CarViewDTO::new)
+                .collect(Collectors.toList());
+        modelAndView.addObject("budget", carService.getBudget());
+        modelAndView.addObject("balance", carService.getBalance());
+        modelAndView.addObject("cars", cars);
+        return modelAndView;
+    }
+
+    @GetMapping("orders/")
+    public ModelAndView getAllOrders() {
+        ModelAndView modelAndView = new ModelAndView("car-list");
+        List<CarViewDTO> cars = carService.readAll(true)
                 .stream()
                 .map(CarViewDTO::new)
                 .collect(Collectors.toList());
@@ -48,10 +61,21 @@ public class CarController {
 
     @GetMapping("new-car/")
     public ModelAndView newCarPage() {
+        return getNewCarModelAndView(false);
+    }
+
+    @GetMapping("orders/new-car/")
+    public ModelAndView newOrderPage() {
+        return getNewCarModelAndView(true);
+    }
+
+    private ModelAndView getNewCarModelAndView(boolean ord) {
         ModelAndView modelAndView = new ModelAndView("new-car");
+        Car car = new Car();
+        car.setOrd(ord);
         modelAndView.addObject("budget", carService.getBudget());
         modelAndView.addObject("balance", carService.getBalance());
-        modelAndView.addObject("car", new Car());
+        modelAndView.addObject("car", car);
         return modelAndView;
     }
 
