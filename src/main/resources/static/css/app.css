@@ -1,9 +1,12 @@
 @import "bootstrap/bootstrap.min.css";
 
 body {
-    background-blend-mode: color;
-    background: rgba(20, 20, 20, .7) url("/media/bg.jpg") no-repeat center fixed;
-    background-size: cover;
+    background-blend-mode: darken;
+    background: url("/media/bg.jpg") no-repeat center fixed,
+    url("/media/800px-Flag_of_the_United_States.svg.webp") no-repeat left 0 fixed,
+    url("/media/800px-Flag_of_Ukraine.svg.webp") no-repeat right 0 fixed
+    rgba(0, 0, 0, .7);
+    background-size: 100% 100%, 35% 35%, 35% 35%;
     padding: 100px 0;
     margin: auto;
     color: #ccc;
@@ -15,7 +18,7 @@ body {
 }
 
 body > div {
-    opacity: .97;
+    opacity: .95;
 }
 
 td {

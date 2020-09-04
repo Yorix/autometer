@@ -189,7 +189,7 @@
                 <div class="row">
                     <div class="col">
                         <button type="button" class="btn btn-outline-light"
-                                th:onclick="|goto(${roles.contains('ADMIN')||roles.contains('POWER')}?'/cars/':'/cars/orders/')|">
+                                th:onclick="|goto(${#authentication.name.equals(car.user.username)}?'/cars/':'/cars/orders/')|">
                             << Выбор авто
                         </button>
                     </div>

@@ -4,8 +4,10 @@ const inputMake = document.getElementById("input-make");
 const inputModel = document.getElementById("input-model");
 const inputYear = document.getElementById("input-year");
 const header = document.getElementById("header");
+const selectUser = document.getElementById("select-user");
 
 inputYear.value = new Date().getFullYear();
+selectUser.value = 2;
 
 inputMake.addEventListener("keyup", input);
 inputModel.addEventListener("keyup", input);
