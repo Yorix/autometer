@@ -7,7 +7,9 @@
 </head>
 <body>
 
-<div th:insert="~{parts/header-menu :: menu}"></div>
+<div class="mx-5 text-right header-text">
+    Новое авто
+</div>
 
 <div class="container my-3">
     <div class="card bg-dark">
@@ -28,7 +30,8 @@
                     </button>
                 </div>
                 <div class="col-2">
-                    <input disabled form="form-parse-car" type="submit" class="btn btn-outline-success" value="Загрузить >>"/>
+                    <input disabled form="form-parse-car" type="submit" class="btn btn-outline-success"
+                           value="Загрузить >>"/>
                 </div>
             </div>
         </div>
@@ -45,16 +48,25 @@
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                 <div class="form-group row">
                     <div class="col">
+                        <label for="input-make">Марка</label>
                         <input id="input-make" type="text" class="form-control"
                                placeholder="Марка" th:field="*{make}"/>
                     </div>
                     <div class="col">
+                        <label for="input-model">Модель</label>
                         <input id="input-model" type="text" class="form-control"
                                placeholder="Модель" th:field="*{model}"/>
                     </div>
                     <div class="col">
+                        <label for="input-year">Год выпуска</label>
                         <input id="input-year" type="number" min="1970" class="form-control"
                                placeholder="Год" th:field="*{year}"/>
+                    </div>
+                    <div class="col">
+                        <label for="select-user">Владелец</label>
+                        <select id="select-user" class="form-control" name="user">
+                            <option th:each="user:${users}" th:value="${user.id}" th:text="${user.username}"></option>
+                        </select>
                     </div>
                 </div>
             </form>
@@ -73,6 +85,8 @@
         </div>
     </div>
 </div>
+
+<div th:insert="~{parts/header-menu :: menu}"></div>
 
 <script src="/js/new-car.js"></script>
 <script src="/js/app.js"></script>

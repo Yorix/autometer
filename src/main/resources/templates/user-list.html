@@ -7,12 +7,14 @@
 </head>
 <body>
 
-<div th:insert="~{parts/header-menu :: menu}"></div>
+<div class="mx-5 text-right header-text">
+    Пользователи
+</div>
 
-<div class="container">
+<div class="container mt-3">
     <div class="card bg-dark">
         <div class="card-header">
-            <div class="header-text">Регистрация нового пользователя</div>
+            <h5>Регистрация нового пользователя</h5>
             <form method="post" action="/user/">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                 <div class="card-body form-group row">
@@ -56,6 +58,8 @@
         </div>
     </div>
 </div>
+
+<div th:insert="~{parts/header-menu :: menu}"></div>
 
 <script src="/js/app.js"></script>
 </body>

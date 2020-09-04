@@ -9,7 +9,7 @@
         <input type="hidden" name="location" th:value="${#httpServletRequest.requestURL}">
         <div class="card-body form-group row">
             <div class="col-lg-3 my-1">
-                <input id="input-note-date" type="date" class="form-control" th:field="*{date}"/>
+                <input id="input-date" type="date" class="form-control" th:field="*{date}"/>
             </div>
             <div class="col-lg-4 my-1">
                 <input type="text" class="form-control" placeholder="Запись" th:field="*{description}"/>
@@ -17,7 +17,9 @@
             <div class="col-lg-2 my-1">
                 <select id="select-negative" class="form-control">
                     <option>Расход</option>
-                    <option>Приход</option>
+                    <option th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
+                        Приход
+                    </option>
                 </select>
             </div>
             <div class="col-lg-3 my-1 input-group">
@@ -25,13 +27,11 @@
                        type="number" step="0.01" max="9999999" class="form-control"
                        placeholder="0.00" th:field="*{value}">
                 <div class="input-group-append">
-                    <input type="submit" class="btn btn-outline-success" onclick="noteSubmit()" value=">>">
+                    <input type="submit" class="btn btn-outline-success" onclick="clickSubmit()" value=">>">
                 </div>
             </div>
         </div>
     </form>
-
-    <script src="/js/notes.js"></script>
 </div>
 
 </body>

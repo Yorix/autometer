@@ -22,6 +22,7 @@ public class CarViewDTO {
     private final String starts;
     private final String carKeys;
     private final String currentImg;
+    private final User user;
     private final double spending;
     private final double income;
 
@@ -44,6 +45,7 @@ public class CarViewDTO {
         this.starts = car.getStarts();
         this.carKeys = car.getCarKeys();
         this.currentImg = car.getCurrentImg();
+        this.user = car.getUser();
         this.spending = getSpending(car);
         this.income = getIncome(car);
     }

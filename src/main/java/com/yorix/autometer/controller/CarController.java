@@ -3,23 +3,28 @@ package com.yorix.autometer.controller;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.CarViewDTO;
 import com.yorix.autometer.model.Note;
+import com.yorix.autometer.model.User;
 import com.yorix.autometer.service.CarService;
+import com.yorix.autometer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/cars/")
 public class CarController {
     private final CarService carService;
+    private final UserService userService;
 
     @Autowired
-    public CarController(CarService carService) {
+    public CarController(CarService carService, UserService userService) {
         this.carService = carService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -35,10 +40,25 @@ public class CarController {
         return modelAndView;
     }
 
+    @GetMapping("orders/")
+    public ModelAndView getAllOrders() {
+        ModelAndView modelAndView = new ModelAndView("car-list");
+        List<CarViewDTO> cars = carService.readAllExcept()
+                .stream()
+                .map(CarViewDTO::new)
+                .collect(Collectors.toList());
+        modelAndView.addObject("budget", carService.getBudget());
+        modelAndView.addObject("balance", carService.getBalance());
+        modelAndView.addObject("cars", cars);
+        return modelAndView;
+    }
+
     @GetMapping("{id}/")
     public ModelAndView get(@PathVariable("id") int id) {
-        CarViewDTO car = new CarViewDTO(carService.read(id));
         ModelAndView modelAndView = new ModelAndView("car");
+        CarViewDTO car = new CarViewDTO(carService.read(id));
+        Set<String> roles = car.getUser().getRoles().stream().map(Enum::name).collect(Collectors.toSet());
+        modelAndView.addObject("roles", roles);
         modelAndView.addObject("budget", carService.getBudget());
         modelAndView.addObject("balance", carService.getBalance());
         modelAndView.addObject("car", car);
@@ -49,9 +69,12 @@ public class CarController {
     @GetMapping("new-car/")
     public ModelAndView newCarPage() {
         ModelAndView modelAndView = new ModelAndView("new-car");
+        Car car = new Car();
+        List<User> users = userService.readAll();
         modelAndView.addObject("budget", carService.getBudget());
         modelAndView.addObject("balance", carService.getBalance());
-        modelAndView.addObject("car", new Car());
+        modelAndView.addObject("car", car);
+        modelAndView.addObject("users", users);
         return modelAndView;
     }
 

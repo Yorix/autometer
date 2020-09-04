@@ -1,9 +1,9 @@
-function clickChange() {
-    const changeBtn = document.getElementById("btn-change");
-    const submitBtn = document.getElementById("btn-submit");
-    const roInputs = document.getElementsByClassName("read-only-input");
+function clickChangeCar() {
+    const btnChange = document.getElementById("btn-change");
+    const btnSubmit = document.getElementById("btn-submit");
+    const inputsRO = document.getElementsByClassName("read-only-input");
 
-    changeBtn.style.display = "none";
-    submitBtn.style.display = "inline";
-    Array.from(roInputs).forEach(element => element.removeAttribute("readonly"));
+    btnChange.style.display = "none";
+    btnSubmit.style.display = "inline";
+    Array.from(inputsRO).forEach(element => element.removeAttribute("readonly"));
 }

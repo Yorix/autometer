@@ -7,32 +7,29 @@
 </head>
 <body>
 
-<div th:insert="~{parts/header-menu :: menu}"></div>
-
 <div class="container-fluid">
     <div class="card bg-dark">
         <form method="post" th:object="${car}">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
             <input type="hidden" name="_method" value="put"/>
-            <input type="hidden" name="id" th:value="*{id}"/>
             <div class="card-header">
                 <div class="row">
                     <div class="col-10 row">
-                        <div>
+                        <div class="col px-0">
                             <input type="text" name="make" th:value="*{make}" style="width: 100%"
                                    class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
                         </div>
-                        <div>
+                        <div class="col px-0">
                             <input type="text" name="model" th:value="*{model}"
                                    class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
                         </div>
-                        <div>
+                        <div class="col px-0">
                             <input type="number" min="1970" name="year" th:value="*{year}"
                                    class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
                         </div>
                     </div>
                     <div class="col-2 text-right" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
-                        <input id="btn-change" type="button" onclick="clickChange()"
+                        <input id="btn-change" type="button" onclick="clickChangeCar()"
                                class="btn btn-outline-warning" value="<< править"/>
                         <input id="btn-submit" type="submit"
                                class="btn btn-outline-success" style="display: none" value="сохранить >>"/>
@@ -57,7 +54,7 @@
                             <img th:src="|/img/*{currentImg}|" style="max-width: 100%; max-height: 370px;"/>
                         </a>
                     </div>
-                    <div class="col card bg-dark mx-1">
+                    <div class="col card bg-dark mx-1 px-0">
                         <div class="card-header">АВТОМОБИЛЬ</div>
                         <div class="card-body">
                             <table>
@@ -107,7 +104,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col card bg-dark mx-1">
+                    <div class="col card bg-dark mx-1 px-0">
                         <div class="card-header">ПРОИСШЕСТВИЕ</div>
                         <div class="card-body">
                             <table>
@@ -149,7 +146,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col card bg-dark mx-1">
+                    <div class="col card bg-dark mx-1 px-0">
                         <div class="card-header">ОБЩЕЕ</div>
                         <div class="card-body">
                             <table>
@@ -171,11 +168,11 @@
                                     <td>Расходы:</td>
                                     <td class="money" th:text="*{spending}"></td>
                                 </tr>
-                                <tr>
+                                <tr th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
                                     <td>Выручка:</td>
                                     <td class="money" th:text="*{income}"></td>
                                 </tr>
-                                <tr>
+                                <tr th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
                                     <td>Прибыль:</td>
                                     <td class="money" th:text="*{spending+income}"></td>
                                 </tr>
@@ -191,7 +188,10 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col">
-                        <button type="button" class="btn btn-outline-light" onclick="goto('../')"><< Выбор авто</button>
+                        <button type="button" class="btn btn-outline-light"
+                                th:onclick="|goto(${roles.contains('ADMIN')||roles.contains('POWER')}?'/cars/':'/cars/orders/')|">
+                            << Выбор авто
+                        </button>
                     </div>
                     <div class="col text-right">
                         <button type="button" class="btn btn-outline-light" onclick="goto('notes/')">Все записи >>
@@ -205,7 +205,10 @@
     <div th:insert="~{parts/new-note :: create}"></div>
 </div>
 
+<div th:insert="~{parts/header-menu :: menu}"></div>
+
 <script src="/js/app.js"></script>
 <script src="/js/car.js"></script>
+<script src="/js/notesAndSpares.js"></script>
 </body>
 </html>

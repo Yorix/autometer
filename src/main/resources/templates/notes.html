@@ -7,8 +7,6 @@
 </head>
 <body>
 
-<div th:insert="~{parts/header-menu :: menu}"></div>
-
 <div class="container">
     <div class="card bg-dark">
         <div class="card-header" th:object="${car}">
@@ -32,11 +30,11 @@
                             <td>Расходы:</td>
                             <td class="money" th:text="*{spending}"></td>
                         </tr>
-                        <tr>
+                        <tr th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
                             <td>Выручка:</td>
                             <td class="money" th:text="*{income}"></td>
                         </tr>
-                        <tr>
+                        <tr th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
                             <td>Прибыль:</td>
                             <td class="money" th:text="*{spending+income}"></td>
                         </tr>
@@ -99,8 +97,10 @@
     </div>
 </div>
 
+<div th:insert="~{parts/header-menu :: menu}"></div>
+
 <script src="/js/app.js"></script>
-<script src="/js/notes.js"></script>
+<script src="/js/notesAndSpares.js"></script>
 <script src="/js/modal.js"></script>
 </body>
 </html>
