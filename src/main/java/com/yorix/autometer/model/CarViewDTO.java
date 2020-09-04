@@ -5,7 +5,6 @@ import lombok.Getter;
 @Getter
 public class CarViewDTO {
     private final int id;
-    private final boolean ord;
     private final String make;
     private final String model;
     private final int year;
@@ -23,12 +22,12 @@ public class CarViewDTO {
     private final String starts;
     private final String carKeys;
     private final String currentImg;
+    private final User user;
     private final double spending;
     private final double income;
 
     public CarViewDTO(Car car) {
         this.id = car.getId();
-        this.ord = car.isOrd();
         this.make = car.getMake();
         this.model = car.getModel();
         this.year = car.getYear();
@@ -46,6 +45,7 @@ public class CarViewDTO {
         this.starts = car.getStarts();
         this.carKeys = car.getCarKeys();
         this.currentImg = car.getCurrentImg();
+        this.user = car.getUser();
         this.spending = getSpending(car);
         this.income = getIncome(car);
     }

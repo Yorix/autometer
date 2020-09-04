@@ -20,7 +20,8 @@
                         <div class="row">
                             <div class="col text-left money" th:text="${car.spending+car.income}"
                                  title="Баланс по машине"></div>
-                            <div class="col text-right money grey-white" title="+30% от расходов"
+                            <div th:if="!${#httpServletRequest.requestURI.contains('/orders/')}"
+                                 class="col text-right money grey-white" title="+30% от расходов"
                                  th:text="${car.spending*-1+car.spending*-0.3}">
                             </div>
                         </div>

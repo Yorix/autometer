@@ -15,8 +15,6 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false)
-    private boolean ord;
-    @Column(nullable = false)
     private String make;
     @Column(nullable = false)
     private String model;
@@ -41,4 +39,7 @@ public class Car {
     private List<Note> notes;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "car")
     private List<Img> imgs;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

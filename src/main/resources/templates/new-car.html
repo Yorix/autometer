@@ -30,7 +30,8 @@
                     </button>
                 </div>
                 <div class="col-2">
-                    <input disabled form="form-parse-car" type="submit" class="btn btn-outline-success" value="Загрузить >>"/>
+                    <input disabled form="form-parse-car" type="submit" class="btn btn-outline-success"
+                           value="Загрузить >>"/>
                 </div>
             </div>
         </div>
@@ -45,7 +46,6 @@
         <div class="card-body">
             <form id="form-add-car" action="/cars/" method="post" th:object="${car}">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <input type="hidden" th:field="*{ord}"/>
                 <div class="form-group row">
                     <div class="col">
                         <input id="input-make" type="text" class="form-control"

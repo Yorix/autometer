@@ -3,11 +3,13 @@ package com.yorix.autometer.service;
 import com.yorix.autometer.config.AppProperties;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.Note;
+import com.yorix.autometer.model.User;
 import com.yorix.autometer.storage.CarRepository;
 import com.yorix.autometer.storage.ParamRepository;
 import com.yorix.autometer.storage.SpareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -34,7 +36,8 @@ public abstract class AppService {
     private MailService mailService;
 
     public double getBalance() {
-        List<Car> cars = carRepository.findAllByOrdOrderByIdDesc(false);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Car> cars = carRepository.findAllByUserOrderByIdDesc(user);
         List<Note> notes = new LinkedList<>();
         for (Car car : cars)
             notes.addAll(car.getNotes());
@@ -84,5 +87,9 @@ public abstract class AppService {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+
+    public User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

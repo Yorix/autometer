@@ -1,6 +1,7 @@
 package com.yorix.autometer.service;
 
 import com.yorix.autometer.config.AppProperties;
+import com.yorix.autometer.errors.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -23,7 +24,7 @@ public class MailService {
         this.receiver = properties.getMailTo();
     }
 
-    public void send(File file) throws MessagingException {
+    void send(File file) throws MessagingException {
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -31,6 +32,11 @@ public class MailService {
         helper.setSubject("autometer_db: ".concat(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy.MM.dd HH:mm:ss"))));
         helper.setText("");
         helper.addAttachment(file.getName(), file);
-        sender.send(message);
+
+        try {
+            sender.send(message);
+        } catch (Exception e) {
+            throw new EmailException("Не удалось отправить бэкап.");
+        }
     }
 }

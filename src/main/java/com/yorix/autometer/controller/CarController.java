@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -25,10 +26,12 @@ public class CarController {
     @GetMapping
     public ModelAndView getAll() {
         ModelAndView modelAndView = new ModelAndView("car-list");
-        List<CarViewDTO> cars = carService.readAll(false)
+        List<CarViewDTO> cars = carService.readAll()
                 .stream()
                 .map(CarViewDTO::new)
                 .collect(Collectors.toList());
+        Set<String> roles = carService.getCurrentUser().getRoles().stream().map(Enum::name).collect(Collectors.toSet());
+        modelAndView.addObject("roles", roles);
         modelAndView.addObject("budget", carService.getBudget());
         modelAndView.addObject("balance", carService.getBalance());
         modelAndView.addObject("cars", cars);
@@ -38,7 +41,7 @@ public class CarController {
     @GetMapping("orders/")
     public ModelAndView getAllOrders() {
         ModelAndView modelAndView = new ModelAndView("car-list");
-        List<CarViewDTO> cars = carService.readAll(true)
+        List<CarViewDTO> cars = carService.readAllExcept()
                 .stream()
                 .map(CarViewDTO::new)
                 .collect(Collectors.toList());
@@ -50,8 +53,10 @@ public class CarController {
 
     @GetMapping("{id}/")
     public ModelAndView get(@PathVariable("id") int id) {
-        CarViewDTO car = new CarViewDTO(carService.read(id));
         ModelAndView modelAndView = new ModelAndView("car");
+        CarViewDTO car = new CarViewDTO(carService.read(id));
+        Set<String> roles = car.getUser().getRoles().stream().map(Enum::name).collect(Collectors.toSet());
+        modelAndView.addObject("roles", roles);
         modelAndView.addObject("budget", carService.getBudget());
         modelAndView.addObject("balance", carService.getBalance());
         modelAndView.addObject("car", car);
@@ -61,18 +66,8 @@ public class CarController {
 
     @GetMapping("new-car/")
     public ModelAndView newCarPage() {
-        return getNewCarModelAndView(false);
-    }
-
-    @GetMapping("orders/new-car/")
-    public ModelAndView newOrderPage() {
-        return getNewCarModelAndView(true);
-    }
-
-    private ModelAndView getNewCarModelAndView(boolean ord) {
         ModelAndView modelAndView = new ModelAndView("new-car");
         Car car = new Car();
-        car.setOrd(ord);
         modelAndView.addObject("budget", carService.getBudget());
         modelAndView.addObject("balance", carService.getBalance());
         modelAndView.addObject("car", car);

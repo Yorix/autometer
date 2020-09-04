@@ -25,15 +25,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/favicon.ico").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/", "/css/**", "/js/**", "/favicon.ico", "/media/**").permitAll()
                 .antMatchers(HttpMethod.POST).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
                 .antMatchers(HttpMethod.PUT).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
                 .antMatchers(HttpMethod.DELETE).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
-                .antMatchers("/user/*", "/cars/new-car/").hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
-                .antMatchers("/user/save/visit/").authenticated()
-                .anyRequest().authenticated()
+                .antMatchers("/cars/new-car/", "/cars/orders/").hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
+                .antMatchers("/img/*", "/user/save/visit/", "/cars/**", "/calculator/").authenticated()
+                .anyRequest().hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()

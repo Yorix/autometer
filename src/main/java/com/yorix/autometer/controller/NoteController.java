@@ -10,7 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/cars/{carId}/notes/")
@@ -26,8 +29,10 @@ public class NoteController {
 
     @GetMapping
     public ModelAndView getByCar(@PathVariable("carId") int carId) {
-        Car car = carService.read(carId);
         ModelAndView modelAndView = new ModelAndView("notes");
+        Car car = carService.read(carId);
+        Set<String> roles = car.getUser().getRoles().stream().map(Enum::name).collect(Collectors.toSet());
+        modelAndView.addObject("roles", roles);
         modelAndView.addObject("budget", noteService.getBudget());
         modelAndView.addObject("balance", noteService.getBalance());
         modelAndView.addObject("car", new CarViewDTO(car));

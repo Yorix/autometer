@@ -1,8 +1,10 @@
 package com.yorix.autometer.service;
 
 import com.yorix.autometer.model.Car;
+import com.yorix.autometer.model.User;
 import com.yorix.autometer.storage.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -23,11 +25,19 @@ public class CarService extends AppService {
         return carRepository.getOne(id);
     }
 
-    public List<Car> readAll(boolean ord) {
-        return carRepository.findAllByOrdOrderByIdDesc(ord);
+    public List<Car> readAll() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return carRepository.findAllByUserOrderByIdDesc(user);
+    }
+
+    public List<Car> readAllExcept() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return carRepository.findAllByUserNotLikeOrderByIdDesc(user);
     }
 
     public void create(Car car) {
+        User user = getCurrentUser();
+        car.setUser(user);
         car.setMake(car.getMake().replaceAll("\\s+", " "));
         car.setModel(car.getModel().replaceAll("\\s+", " "));
         car.setCurrentImg(getAppProperties().getDefaultImageFilename());

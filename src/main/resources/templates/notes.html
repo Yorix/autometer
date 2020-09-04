@@ -30,15 +30,15 @@
                             <td>Расходы:</td>
                             <td class="money" th:text="*{spending}"></td>
                         </tr>
-                        <tr>
+                        <tr th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
                             <td>Выручка:</td>
                             <td class="money" th:text="*{income}"></td>
                         </tr>
-                        <tr>
+                        <tr th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
                             <td>Прибыль:</td>
                             <td class="money" th:text="*{spending+income}"></td>
                         </tr>
-                        <tr>
+                        <tr th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
                             <td>+30% от расходов:</td>
                             <td class="money grey-white" th:text="*{spending*-1+spending*-0.3}"></td>
                         </tr>

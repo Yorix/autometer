@@ -23,8 +23,14 @@ td {
 }
 
 a, a:hover {
-    color: lightgray;
+    color: gray;
     text-decoration: none;
+}
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: #def;
 }
 
 .posMoney {
