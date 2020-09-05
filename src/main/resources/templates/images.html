@@ -60,6 +60,7 @@
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                             <input type="hidden" name="location" th:value="${#httpServletRequest.requestURL}"/>
                             <input type="hidden" name="currentImg" th:value="|${car.id}_${img.id}.jpg|"/>
+                            <input type="hidden" name="user" th:value="${car.user.id}">
                             <input type="submit" class="btn btn-outline-success"
                                    style="position: absolute; top: 5px; left: 5px;" value="&#10003;"/>
                         </form>

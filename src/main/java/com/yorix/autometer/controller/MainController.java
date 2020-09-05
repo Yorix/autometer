@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/")
 public class MainController {
     private final CurrencyParser currencyParser;
-    private AppProperties properties;
+    private final AppProperties properties;
 
     @Autowired
     public MainController(

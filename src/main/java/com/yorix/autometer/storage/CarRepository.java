@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Integer> {
     List<Car> findAllByUserOrderByIdDesc(User user);
+
     List<Car> findAllByUserNotLikeOrderByIdDesc(User user);
 }
