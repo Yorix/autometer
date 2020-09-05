@@ -1,6 +1,8 @@
 package com.yorix.autometer.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,6 +15,8 @@ import java.util.Set;
 
 @Entity
 @Data
+@EqualsAndHashCode(exclude = "cars")
+@ToString(exclude = "cars")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

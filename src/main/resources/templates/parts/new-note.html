@@ -17,7 +17,7 @@
             <div class="col-lg-2 my-1">
                 <select id="select-negative" class="form-control">
                     <option>Расход</option>
-                    <option th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
+                    <option th:if="${car.user.authorities.iterator().next().authority.equals('ADMIN')||car.user.authorities.iterator().next().authority.equals('POWER')}">
                         Приход
                     </option>
                 </select>

@@ -1,18 +1,15 @@
 package com.yorix.autometer.controller;
 
-import com.yorix.autometer.model.Car;
-import com.yorix.autometer.model.CarViewDTO;
-import com.yorix.autometer.model.Note;
-import com.yorix.autometer.model.User;
+import com.yorix.autometer.model.*;
 import com.yorix.autometer.service.CarService;
 import com.yorix.autometer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -53,16 +50,17 @@ public class CarController {
         return modelAndView;
     }
 
-    @GetMapping("{id}/")
-    public ModelAndView get(@PathVariable("id") int id) {
+    @GetMapping("{car}/")
+    public ModelAndView get(@PathVariable Car car) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!(currentUser.getRoles().contains(Role.ADMIN) || currentUser.getRoles().contains(Role.POWER)) && !car.getUser().equals(currentUser))
+            throw new RuntimeException();
         ModelAndView modelAndView = new ModelAndView("car");
-        CarViewDTO car = new CarViewDTO(carService.read(id));
-        Set<String> roles = car.getUser().getRoles().stream().map(Enum::name).collect(Collectors.toSet());
+        CarViewDTO carDTO = new CarViewDTO(car);
         List<User> users = userService.readAll();
-        modelAndView.addObject("roles", roles);
         modelAndView.addObject("budget", carService.getBudget());
         modelAndView.addObject("balance", carService.getBalance());
-        modelAndView.addObject("car", car);
+        modelAndView.addObject("car", carDTO);
         modelAndView.addObject("note", new Note());
         modelAndView.addObject("users", users);
         return modelAndView;
