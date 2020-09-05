@@ -91,6 +91,8 @@ public class CarService extends AppService {
             carFromDb.setStarts(newCar.getStarts());
         if (!StringUtils.isEmpty(newCar.getCarKeys()))
             carFromDb.setCarKeys(newCar.getCarKeys());
+        if (!StringUtils.isEmpty(newCar.getUser()))
+            carFromDb.setUser(newCar.getUser());
 
         carRepository.save(carFromDb);
     }

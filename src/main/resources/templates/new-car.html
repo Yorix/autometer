@@ -65,7 +65,8 @@
                     <div class="col">
                         <label for="select-user">Владелец</label>
                         <select id="select-user" class="form-control" name="user">
-                            <option th:each="user:${users}" th:value="${user.id}" th:text="${user.username}"></option>
+                            <option th:each="user:${users}" th:value="${user.id}" th:text="${user.username}"
+                                    th:selected="${user.username.equals('Вячеслав')}"></option>
                         </select>
                     </div>
                 </div>

@@ -58,11 +58,13 @@ public class CarController {
         ModelAndView modelAndView = new ModelAndView("car");
         CarViewDTO car = new CarViewDTO(carService.read(id));
         Set<String> roles = car.getUser().getRoles().stream().map(Enum::name).collect(Collectors.toSet());
+        List<User> users = userService.readAll();
         modelAndView.addObject("roles", roles);
         modelAndView.addObject("budget", carService.getBudget());
         modelAndView.addObject("balance", carService.getBalance());
         modelAndView.addObject("car", car);
         modelAndView.addObject("note", new Note());
+        modelAndView.addObject("users", users);
         return modelAndView;
     }
 
@@ -103,8 +105,10 @@ public class CarController {
     @PutMapping("{id}/")
     public String update(
             @PathVariable("id") int id,
+            @RequestParam User user,
             Car car
     ) {
+        car.setUser(user);
         carService.update(id, car);
         carService.saveData();
         return "redirect:";

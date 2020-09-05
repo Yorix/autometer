@@ -180,6 +180,15 @@
                                     <td>+30% от расходов:</td>
                                     <td class="money grey-white" th:text="*{spending*-1+spending*-0.3}"></td>
                                 </tr>
+                                <tr>
+                                    <td><label for="select-user">Владелец:</label></td>
+                                    <td>
+                                        <select id="select-user" name="user" class="form-control-sm bg-dark text-light read-only-input" disabled>
+                                            <option th:each="user:${users}" th:value="${user.id}" th:text="${user.username}"
+                                                    th:selected="${user.equals(car.user)}"></option>
+                                        </select>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
