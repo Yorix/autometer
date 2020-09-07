@@ -49,150 +49,162 @@
             </div>
             <div class="card-body bg-darkgray">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-xl">
                         <a href="img/">
                             <img th:src="|/img/*{currentImg}|" style="max-width: 100%; max-height: 370px;"/>
                         </a>
                     </div>
-                    <div class="col card bg-dark mx-1 px-0">
+                    <div class="col-xl card bg-dark mx-1 px-0">
                         <div class="card-header">АВТОМОБИЛЬ</div>
                         <div class="card-body">
-                            <table>
-                                <tr>
-                                    <td>Одометр, миль:</td>
-                                    <td>
-                                        <input type="number" id="odometer" name="odometer" th:value="*{odometer}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Двигатель:</td>
-                                    <td>
-                                        <input type="number" step=".1" id="engine" name="engine" th:value="*{engine}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Топливо:</td>
-                                    <td>
-                                        <input type="text" id="fuel" name="fuel" th:value="*{fuel}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Привод:</td>
-                                    <td>
-                                        <input type="text" id="driveLine" name="driveLine" th:value="*{driveLine}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Трансмиссия:</td>
-                                    <td>
-                                        <input type="text" id="transmission" name="transmission"
-                                               th:value="*{transmission}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Цвет:</td>
-                                    <td>
-                                        <input type="text" id="color" name="color" th:value="*{color}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                            </table>
+                            <div class="row selectable">
+                                <div class="col-7"><label for="odometer">Одометр, миль:</label></div>
+                                <div class="col-5">
+                                    <input type="number" id="odometer" name="odometer" th:value="*{odometer}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-7"><label for="engine">Двигатель:</label></div>
+                                <div class="col-5">
+                                    <input type="number" step=".1" id="engine" name="engine" th:value="*{engine}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-7"><label for="fuel">Топливо:</label></div>
+                                <div class="col-5">
+                                    <input type="text" id="fuel" name="fuel" th:value="*{fuel}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-7"><label for="driveLine">Привод:</label></div>
+                                <div class="col-5">
+                                    <input type="text" id="driveLine" name="driveLine" th:value="*{driveLine}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-7"><label for="transmission">Трансмиссия:</label></div>
+                                <div class="col-5">
+                                    <input type="text" id="transmission" name="transmission"
+                                           th:value="*{transmission}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-7"><label for="color">Цвет:</label></div>
+                                <div class="col-5">
+                                    <input type="text" id="color" name="color" th:value="*{color}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col card bg-dark mx-1 px-0">
+                    <div class="col-xl card bg-dark mx-1 px-0">
                         <div class="card-header">ПРОИСШЕСТВИЕ</div>
                         <div class="card-body">
-                            <table>
-                                <tr>
-                                    <td>Урон:</td>
-                                    <td>
-                                        <input type="text" id="loss" name="loss" th:value="*{loss}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Повреждение:</td>
-                                    <td>
-                                        <input type="text" id="damage" name="damage" th:value="*{damage}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Заводится и едет:</td>
-                                    <td>
-                                        <input type="text" id="runAndDrive" name="runAndDrive" th:value="*{runAndDrive}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Заводится:</td>
-                                    <td>
-                                        <input type="text" id="starts" name="starts" th:value="*{starts}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Ключи:</td>
-                                    <td>
-                                        <input type="text" id="carKeys" name="carKeys" th:value="*{carKeys}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                            </table>
+                            <div class="row selectable">
+                                <div class="col-7"><label for="loss">Урон:</label></div>
+                                <div class="col-5">
+                                    <input type="text" id="loss" name="loss" th:value="*{loss}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-7"><label for="damage">Повреждение:</label></div>
+                                <div class="col-5">
+                                    <input type="text" id="damage" name="damage" th:value="*{damage}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-7"><label for="runAndDrive">Заводится и едет:</label></div>
+                                <div class="col-5">
+                                    <input type="text" id="runAndDrive" name="runAndDrive" th:value="*{runAndDrive}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-7"><label for="starts">Заводится:</label></div>
+                                <div class="col-5">
+                                    <input type="text" id="starts" name="starts" th:value="*{starts}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-7"><label for="carKeys">Ключи:</label></div>
+                                <div class="col-5">
+                                    <input type="text" id="carKeys" name="carKeys" th:value="*{carKeys}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col card bg-dark mx-1 px-0">
+                    <div class="col-xl card bg-dark mx-1 px-0">
                         <div class="card-header">ОБЩЕЕ</div>
                         <div class="card-body">
-                            <table>
-                                <tr>
-                                    <td>Лот:</td>
-                                    <td>
-                                        <input type="number" id="lot" name="lot" th:value="*{lot}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>VIN:</td>
-                                    <td>
-                                        <input type="text" id="vin" name="vin" th:value="*{vin}"
-                                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Расходы:</td>
-                                    <td class="money" th:text="*{spending}"></td>
-                                </tr>
-                                <tr th:if="${car.user.authorities.iterator().next().authority.equals('ADMIN')||car.user.authorities.iterator().next().authority.equals('POWER')}">
-                                    <td>Выручка:</td>
-                                    <td class="money" th:text="*{income}"></td>
-                                </tr>
-                                <tr th:if="${car.user.authorities.iterator().next().authority.equals('ADMIN')||car.user.authorities.iterator().next().authority.equals('POWER')}">
-                                    <td>Прибыль:</td>
-                                    <td class="money" th:text="*{spending+income}"></td>
-                                </tr>
-                                <tr>
-                                    <td>+30% от расходов:</td>
-                                    <td class="money grey-white" th:text="*{spending*-1+spending*-0.3}"></td>
-                                </tr>
-                                <tr th:if="${#authentication.getAuthorities().iterator().next().authority.equals('POWER')||#authentication.getAuthorities().iterator().next().authority.equals('ADMIN')}">
-                                    <td><label for="select-user">Владелец:</label></td>
-                                    <td>
-                                        <select id="select-user" name="user"
-                                                class="form-control-sm bg-dark text-light read-only-input"
-                                                disabled>
-                                            <option th:each="user:${users}" th:value="${user.id}"
-                                                    th:text="${user.username}"
-                                                    th:selected="${user.equals(car.user)}"></option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
+                            <div class="row selectable">
+                                <div class="col-5"><label for="lot">Лот:</label></div>
+                                <div class="col-7">
+                                    <input type="number" id="lot" name="lot" th:value="*{lot}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-5"><label for="vin">VIN:</label></div>
+                                <div class="col-7">
+                                    <input type="text" id="vin" name="vin" th:value="*{vin}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-5"><label for="dateOfComing">Дата прибытия:</label></div>
+                                <div class="col-7">
+                                    <input type="date" id="dateOfComing" name="dateOfComing" th:value="*{dateOfComing}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-5"><label for="containerNumber">Номер контейнера:</label></div>
+                                <div class="col-7">
+                                    <input type="text" id="containerNumber" name="containerNumber"
+                                           th:value="*{containerNumber}"
+                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                                </div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-5">Расходы:</div>
+                                <div class="col-7 money" th:text="*{spending}"></div>
+                            </div>
+                            <div class="row selectable"
+                                 th:if="${car.user.authorities.iterator().next().authority.equals('ADMIN')||car.user.authorities.iterator().next().authority.equals('POWER')}">
+                                <div class="col-5">Выручка:</div>
+                                <div class="col-7 money" th:text="*{income}"></div>
+                            </div>
+                            <div class="row selectable"
+                                 th:if="${car.user.authorities.iterator().next().authority.equals('ADMIN')||car.user.authorities.iterator().next().authority.equals('POWER')}">
+                                <div class="col-5">Прибыль:</div>
+                                <div class="col-7 money" th:text="*{spending+income}"></div>
+                            </div>
+                            <div class="row selectable">
+                                <div class="col-5">+30% от расходов:</div>
+                                <div class="col-7 money grey-white" th:text="*{spending*-1+spending*-0.3}"></div>
+                            </div>
+                            <div class="row selectable"
+                                 th:if="${#authentication.getAuthorities().iterator().next().authority.equals('POWER')||#authentication.getAuthorities().iterator().next().authority.equals('ADMIN')}">
+                                <div class="col-5"><label for="select-user">Владелец:</label></div>
+                                <div class="col-7">
+                                    <select id="select-user" name="user"
+                                            class="form-control-sm bg-dark text-light read-only-input"
+                                            disabled>
+                                        <option th:each="user:${users}" th:value="${user.id}"
+                                                th:text="${user.username}"
+                                                th:selected="${user.equals(car.user)}"></option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

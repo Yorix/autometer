@@ -41,6 +41,10 @@ a.disabled {
     color: #fff;
 }
 
+input[type="text"], input[type="number"], input[type="date"] {
+    width: 100%;
+}
+
 .posMoney {
     color: #8f8 !important;
 }

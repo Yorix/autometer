@@ -2,6 +2,8 @@ package com.yorix.autometer.model;
 
 import lombok.Getter;
 
+import java.time.LocalDate;
+
 @Getter
 public class CarViewDTO {
     private final int id;
@@ -21,6 +23,8 @@ public class CarViewDTO {
     private final String runAndDrive;
     private final String starts;
     private final String carKeys;
+    private final LocalDate dateOfComing;
+    private final String containerNumber;
     private final String currentImg;
     private final User user;
     private final double spending;
@@ -44,6 +48,8 @@ public class CarViewDTO {
         this.runAndDrive = car.getRunAndDrive();
         this.starts = car.getStarts();
         this.carKeys = car.getCarKeys();
+        this.dateOfComing = car.getDateOfComing();
+        this.containerNumber = car.getContainerNumber();
         this.currentImg = car.getCurrentImg();
         this.user = car.getUser();
         this.spending = getSpending(car);

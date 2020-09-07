@@ -11,21 +11,13 @@ inputBuy ? inputBuy.value = "" : null;
 inputSale ? inputSale.value = "" : null;
 
 function clickChange(id) {
-    var inputDate = document.getElementById("input-date" + id);
-    var inputBuy = document.getElementById("input-buy" + id);
-    var inputSale = document.getElementById("input-sale" + id);
-    var inputDesc = document.getElementById("input-desc" + id);
-    var inputValue = document.getElementById("input-value" + id);
-
+    const inputsRO = document.getElementsByClassName("read-only-input");
     var BtnChange = document.getElementById("btn-change" + id);
     var btnSubmit = document.getElementById("btn-submit" + id);
 
-    inputDate.removeAttribute("readOnly");
-    inputDesc.removeAttribute("readOnly");
-    inputBuy ? inputBuy.removeAttribute("readOnly") : null;
-    inputSale ? inputSale.removeAttribute("readOnly") : null;
-    inputValue ? inputValue.removeAttribute("readOnly") : null;
-
+    Array.from(inputsRO).forEach(element => {
+        element.classList.remove("read-only-input");
+    element.removeAttribute("readonly")});
     BtnChange.style.display = "none";
     btnSubmit.style.display = "block";
 }
