@@ -2,8 +2,10 @@ package com.yorix.autometer.model;
 
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -33,6 +35,9 @@ public class Car {
     private String runAndDrive;
     private String starts;
     private String carKeys;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateOfComing;
+    private String containerNumber;
     @Column(name = "current_img", nullable = false)
     private String currentImg;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "car")

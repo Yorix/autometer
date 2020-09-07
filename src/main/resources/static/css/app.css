@@ -1,12 +1,12 @@
 @import "bootstrap/bootstrap.min.css";
 
 body {
-    background-blend-mode: darken;
-    background: url("/media/bg.jpg") no-repeat center fixed,
-    url("/media/800px-Flag_of_the_United_States.svg.webp") no-repeat left 0 fixed,
-    url("/media/800px-Flag_of_Ukraine.svg.webp") no-repeat right 0 fixed
-    rgba(0, 0, 0, .7);
-    background-size: 100% 100%, 35% 35%, 35% 35%;
+    background-blend-mode: soft-light;
+    background: url("/media/800px-Flag_of_the_United_States.svg.webp") no-repeat left 50px fixed,
+    url("/media/800px-Flag_of_Ukraine.svg.webp") no-repeat right 50px fixed,
+    url("/media/bg.jpg") no-repeat center fixed,
+    rgba(30, 30, 30, 1);
+    background-size: 35% 35%, 35% 35%, cover;
     padding: 100px 0;
     margin: auto;
     color: #ccc;
@@ -41,6 +41,10 @@ a.disabled {
     color: #fff;
 }
 
+input[type="text"], input[type="number"], input[type="date"] {
+    width: 100%;
+}
+
 .posMoney {
     color: #8f8 !important;
 }
@@ -51,14 +55,6 @@ a.disabled {
 
 .zerMoney {
     color: #ddd !important;
-}
-
-.pos-abs {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
 }
 
 .header-text {
@@ -81,22 +77,13 @@ a.disabled {
 
 .read-only-input {
     border: 0 solid transparent;
-    border-radius: 3px;
-    background: #343a40 !important;
+    background: transparent !important;
     outline: none;
-    height: 32px;
-    width: 100%;
     color: #f8f9fa;
-    /*font-size: 11px;*/
-    /*font-family: Tahoma;*/
 }
 
 .selectable:hover div {
-    background-color: #242a30;
-}
-
-.selectable:hover .read-only-input {
-    background: #242a30 !important;
+    background: #242a30; !important;
 }
 
 .modal-custom .modal-content {
