@@ -35,14 +35,12 @@ public class SpareController {
     @PostMapping
     public String create(Spare spare) {
         spareService.create(spare);
-        spareService.saveData();
         return "redirect:/spares/";
     }
 
     @PutMapping("{spareId}/")
     public String update(@PathVariable int spareId, Spare spare) {
         spareService.update(spareId, spare);
-        spareService.saveData();
         return "redirect:/spares/";
     }
 

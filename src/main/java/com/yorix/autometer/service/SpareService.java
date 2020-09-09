@@ -25,6 +25,7 @@ public class SpareService extends AppService {
 
     public void create(Spare spare) {
         spareRepository.save(spare);
+        saveData();
     }
 
     public void update(int spareId, Spare newSpare) {
@@ -41,6 +42,7 @@ public class SpareService extends AppService {
         spareFromDb.setSale(newSpareSale);
 
         spareRepository.save(spareFromDb);
+        saveData();
     }
 
     public void delete(int id) {

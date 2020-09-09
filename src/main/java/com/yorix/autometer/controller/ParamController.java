@@ -26,7 +26,6 @@ public class ParamController {
     @ResponseBody
     public void create(Param param) {
         paramService.create(param);
-        paramService.saveData();
     }
 
     @PutMapping("{name}/")
@@ -38,7 +37,6 @@ public class ParamController {
         val += paramService.getBudget();
         Param param = new Param(name, val);
         paramService.update(name, param);
-        paramService.saveData();
         return "redirect:" + location;
     }
 }

@@ -50,7 +50,6 @@ public class ImgController {
     public String create(@RequestParam("file") MultipartFile file, @PathVariable("carId") int carId) {
         Car car = carService.read(carId);
         imgService.create(file, car);
-        imgService.saveData();
         return String.format("redirect:/cars/%s/img/", carId);
     }
 
@@ -58,7 +57,6 @@ public class ImgController {
     public String delete(@PathVariable("carId") int carId, @RequestParam int id) {
         Car car = carService.read(carId);
         imgService.delete(id, car);
-        imgService.saveData();
         return String.format("redirect:/cars/%s/img/", carId);
     }
 }

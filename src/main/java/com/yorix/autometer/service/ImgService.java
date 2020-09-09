@@ -40,6 +40,8 @@ public class ImgService extends AppService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        saveData();
     }
 
     public void create(MultipartFile file, Car car) {
@@ -54,6 +56,8 @@ public class ImgService extends AppService {
         } catch (IOException e) {
             throw new StorageException("Ошибка загрузки файла " + file.getOriginalFilename(), e);
         }
+
+        saveData();
     }
 
     private Img saveImg(Car car) {
@@ -94,5 +98,6 @@ public class ImgService extends AppService {
                 .concat(".jpg"));
         file.delete();
         imgRepository.deleteById(id);
+        saveData();
     }
 }

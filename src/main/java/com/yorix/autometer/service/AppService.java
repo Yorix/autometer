@@ -36,7 +36,13 @@ public abstract class AppService {
     private MailService mailService;
 
     public double getBalance() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user;
+        try {
+            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            return 0;
+        }
+
         List<Car> cars = carRepository.findAllByUserOrderByIdDesc(user);
         List<Note> notes = new LinkedList<>();
         for (Car car : cars)
@@ -59,7 +65,7 @@ public abstract class AppService {
         return appProperties;
     }
 
-    public void saveData() {
+    void saveData() {
         String filename = appProperties.getDbBackupLocation() + "/autometer_"
                 + LocalDateTime.now().format(DateTimeFormatter.ofPattern(appProperties.getDbFilenameTimeFormat()))
                 + ".sql";

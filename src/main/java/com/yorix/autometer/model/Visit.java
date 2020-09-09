@@ -1,11 +1,13 @@
 package com.yorix.autometer.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "visit")
 @Data
 public class Visit {
     @Id

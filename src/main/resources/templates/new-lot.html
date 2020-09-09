@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Новый лот</title>
+    <link rel="stylesheet" href="/css/app.css"/>
+</head>
+<body>
+
+<div class="mx-5 text-right header-text">
+    Новый лот
+</div>
+
+<div class="container my-3">
+    <div class="card bg-dark">
+        <div class="card-header">
+            <h5 id="header">Добавить новый лот</h5>
+        </div>
+        <div class="card-body">
+            <form id="form-add-car" action="/auc/" method="post" th:object="${lot}">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label for="input-make">Марка:</label>
+                        <input id="input-make" type="text" class="form-control"
+                               placeholder="марка" th:field="*{make}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-model">Модель:</label>
+                        <input id="input-model" type="text" class="form-control"
+                               placeholder="модель" th:field="*{model}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-year">Год выпуска:</label>
+                        <input id="input-year" type="number" step="1" min="1970" class="form-control"
+                               placeholder="год" th:field="*{year}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-vin">VIN-код:</label>
+                        <input id="input-vin" type="text" class="form-control"
+                               placeholder="VIN" th:field="*{vin}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-odometer">Одометр:</label>
+                        <input id="input-odometer" type="number" step="1" class="form-control"
+                               placeholder="миль" th:field="*{odometer}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-engine">Двигатель:</label>
+                        <input id="input-engine" type="number" step=".1" class="form-control"
+                               placeholder="литров" th:field="*{engine}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-fuel">Топливо:</label>
+                        <input id="input-fuel" type="text" class="form-control"
+                               placeholder="топливо" th:field="*{fuel}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-drive-line">Привод:</label>
+                        <input id="input-drive-line" type="text" class="form-control"
+                               placeholder="привод" th:field="*{driveLine}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-transmission">Трансмиссия:</label>
+                        <input id="input-transmission" type="text" class="form-control"
+                               placeholder="трансмиссия" th:field="*{transmission}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-color">Цвет:</label>
+                        <input id="input-color" type="text" class="form-control"
+                               placeholder="цвет" th:field="*{color}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-loss">Урон:</label>
+                        <input id="input-loss" type="text" class="form-control"
+                               placeholder="урон" th:field="*{loss}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-damage">Повреждение:</label>
+                        <input id="input-damage" type="text" class="form-control"
+                               placeholder="повреждение" th:field="*{damage}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-run-and-drive">Заводится и едет:</label>
+                        <input id="input-run-and-drive" type="text" class="form-control"
+                               placeholder="заводится и едет" th:field="*{runAndDrive}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-starts">Заводится:</label>
+                        <input id="input-starts" type="text" class="form-control"
+                               placeholder="заводится" th:field="*{starts}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-car-keys">Ключи:</label>
+                        <input id="input-car-keys" type="text" class="form-control"
+                               placeholder="ключи" th:field="*{carKeys}"/>
+                    </div>
+                    <div class="col-4">
+                        <label for="input-current-bid">Начальная ставка:</label>
+                        <input id="input-current-bid" type="number" step=".01" class="form-control"
+                               placeholder="ставка" th:field="*{currentBid}"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-10">
+                    <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
+                        << Отмена
+                    </button>
+                </div>
+                <div class="col-2">
+                    <input id="btn-add-submit" type="button" class="btn btn-outline-success" value="Добавить >>"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="~{parts/header-menu :: menu}"></div>
+
+<script src="/js/new-car.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

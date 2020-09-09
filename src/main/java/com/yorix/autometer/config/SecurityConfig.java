@@ -26,12 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/css/**", "/js/**", "/favicon.ico", "/media/**").permitAll()
                 .antMatchers(HttpMethod.POST).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
                 .antMatchers(HttpMethod.PUT).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
                 .antMatchers(HttpMethod.DELETE).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
-                .antMatchers("/cars/new-car/", "/cars/orders/").hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
-                .antMatchers("/img/*", "/user/save/visit/", "/cars/**", "/calculator/").authenticated()
+                .antMatchers("/cars/new-car/", "/cars/orders/", "/auc/new-lot").hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
+                .antMatchers("/", "/css/**", "/js/**", "/favicon.ico", "/media/**", "/img/*", "/auc/**").permitAll()
+                .antMatchers("/user/save/visit/", "/cars/**", "/calculator/").authenticated()
                 .anyRequest().hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
                 .and()
                 .formLogin()

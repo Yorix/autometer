@@ -64,7 +64,6 @@ public class UserController {
         }
         if (modelAndView.getModel().size() == 0) {
             userService.create(user);
-            userService.saveData();
         }
         modelAndView.addObject("users", userService.readAll());
         modelAndView.addObject("budget", userService.getBudget());
@@ -90,7 +89,6 @@ public class UserController {
         }
         if (model.asMap().size() == 0) {
             userService.update(user, form);
-            userService.saveData();
             return "redirect:../";
         }
         model.addAttribute("user", user);
@@ -116,7 +114,6 @@ public class UserController {
             return "user";
         }
         userService.delete(user);
-        userService.saveData();
         return "redirect:../";
     }
 }

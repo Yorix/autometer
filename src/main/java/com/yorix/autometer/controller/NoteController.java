@@ -48,7 +48,6 @@ public class NoteController {
     ) {
         note.setCar(car);
         noteService.create(note);
-        noteService.saveData();
         return "redirect:" + location;
     }
 
@@ -59,14 +58,12 @@ public class NoteController {
             Note note
     ) {
         noteService.update(noteId, note);
-        noteService.saveData();
         return String.format("redirect:/cars/%s/notes/", carId);
     }
 
     @DeleteMapping("{noteId}/")
     public String delete(@PathVariable("carId") int carId, @PathVariable("noteId") int noteId) {
         noteService.deleteById(noteId);
-        noteService.saveData();
         return String.format("redirect:/cars/%s/notes/", carId);
     }
 }

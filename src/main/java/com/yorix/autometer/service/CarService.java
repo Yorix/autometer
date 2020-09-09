@@ -40,14 +40,17 @@ public class CarService extends AppService {
         car.setModel(car.getModel().replaceAll("\\s+", " "));
         car.setCurrentImg(getAppProperties().getDefaultImageFilename());
         carRepository.save(car);
+        saveData();
     }
 
     public void parse(String vinOrLot, Car car) throws Exception {
         carParser.parse(vinOrLot, car);
+        saveData();
     }
 
     public void delete(int id) {
         carRepository.deleteById(id);
+        saveData();
     }
 
     public void update(int id, Car newCar) {
@@ -99,5 +102,6 @@ public class CarService extends AppService {
             carFromDb.setUser(newCar.getUser());
 
         carRepository.save(carFromDb);
+        saveData();
     }
 }
