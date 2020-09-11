@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "visit")
 @Data
 public class Visit {
     @Id

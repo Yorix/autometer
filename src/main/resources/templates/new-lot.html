@@ -17,7 +17,7 @@
             <h5 id="header">Добавить новый лот</h5>
         </div>
         <div class="card-body">
-            <form id="form-add-car" action="/auc/" method="post" th:object="${lot}">
+            <form id="form-add-car" action="/auc" method="post" th:object="${lot}">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                 <div class="form-group row">
                     <div class="col-4">
@@ -105,12 +105,10 @@
         </div>
         <div class="card-footer">
             <div class="row">
-                <div class="col-10">
-                    <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
-                        << Отмена
-                    </button>
+                <div class="col">
+                    <a href="../" class="btn btn-outline-danger"><< Отмена</a>
                 </div>
-                <div class="col-2">
+                <div class="col text-right">
                     <input id="btn-add-submit" type="button" class="btn btn-outline-success" value="Добавить >>"/>
                 </div>
             </div>

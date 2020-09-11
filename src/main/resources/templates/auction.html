@@ -9,15 +9,14 @@
 
 <div class="mx-5 row">
     <div class="col-1">
-        <input sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
-               type="button" class="btn btn-outline-success" onclick="goto('/auc/new-lot')" value="&#10010;">
+        <a href="/auc/new-lot" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}" class="btn btn-outline-success">&#10010;</a>
     </div>
     <div class="col-11 text-right header-text">
         Аукцион
     </div>
 </div>
 
-<div class="row">
+<div class="m-3 row">
     <div class="container col-lg-4 my-3" th:each="lot:${lots}">
         <a th:href="|/auc/${lot.id}|" th:object="${lot}">
             <div class="card bg-dark selectable">
@@ -27,7 +26,14 @@
                 <div class="card-body text-center" style="height: 400px">
                     <img th:src="|/img/*{currentImg}|" style="max-width: 100%; max-height: 350px;">
                 </div>
-                <div class="card-footer"></div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col text-left money" th:text="${lot.currentBid}" title="Текущая ставка"></div>
+                        <div sec:authorize="${hasAnyAuthority('ADMIN', 'POWER')}" class="col text-right grey-white" title="Телефон последнего участника"
+                             th:text="${lot.userPhone}">
+                        </div>
+                    </div>
+                </div>
             </div>
         </a>
     </div>

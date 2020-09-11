@@ -7,17 +7,16 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "note")
 @Data
 public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "description")
+    @Column
     private String description;
-    @Column(name = "value", nullable = false)
+    @Column(nullable = false)
     private double value;
-    @Column(name = "date")
+    @Column()
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     @ManyToOne

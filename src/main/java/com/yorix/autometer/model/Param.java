@@ -8,9 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "param")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +18,6 @@ public class Param {
     @Id
     @Column(length = 50)
     private String name;
-    @Column(name = "value")
+    @Column(columnDefinition = "decimal(10,2)")
     private double value;
 }

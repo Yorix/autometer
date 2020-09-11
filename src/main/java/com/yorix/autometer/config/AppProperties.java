@@ -22,4 +22,5 @@ public class AppProperties {
     private String adminUsername;
     private String adminPassword;
     private String mailTo;
+    private long ipsClearTimeSec;
 }

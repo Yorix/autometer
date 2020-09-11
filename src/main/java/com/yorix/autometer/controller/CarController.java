@@ -4,6 +4,7 @@ import com.yorix.autometer.model.*;
 import com.yorix.autometer.service.CarService;
 import com.yorix.autometer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.servlet.MultipartProperties;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,15 +14,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/cars/")
+@RequestMapping("/car")
 public class CarController {
     private final CarService carService;
     private final UserService userService;
+    private final MultipartProperties multipartProperties;
 
     @Autowired
-    public CarController(CarService carService, UserService userService) {
+    public CarController(CarService carService, UserService userService, MultipartProperties multipartProperties) {
         this.carService = carService;
         this.userService = userService;
+        this.multipartProperties = multipartProperties;
     }
 
     @GetMapping
@@ -37,7 +40,7 @@ public class CarController {
         return modelAndView;
     }
 
-    @GetMapping("orders/")
+    @GetMapping("/order")
     public ModelAndView getAllOrders() {
         ModelAndView modelAndView = new ModelAndView("car-list");
         List<CarViewDTO> cars = carService.readAllExcept()
@@ -50,23 +53,25 @@ public class CarController {
         return modelAndView;
     }
 
-    @GetMapping("{car}/")
-    public ModelAndView get(@PathVariable Car car) {
+    @GetMapping("/{carFromDb}")
+    public ModelAndView get(@PathVariable Car carFromDb) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!(currentUser.getRoles().contains(Role.ADMIN) || currentUser.getRoles().contains(Role.POWER)) && !car.getUser().equals(currentUser))
+        if (!(currentUser.getRoles().contains(Role.ADMIN) || currentUser.getRoles().contains(Role.POWER)) && !carFromDb.getUser().equals(currentUser))
             throw new RuntimeException();
         ModelAndView modelAndView = new ModelAndView("car");
-        CarViewDTO carDTO = new CarViewDTO(car);
+        CarViewDTO carDTO = new CarViewDTO(carFromDb);
         List<User> users = userService.readAll();
+        long maxFileSize = multipartProperties.getMaxFileSize().toBytes();
         modelAndView.addObject("budget", carService.getBudget());
         modelAndView.addObject("balance", carService.getBalance());
         modelAndView.addObject("car", carDTO);
         modelAndView.addObject("note", new Note());
         modelAndView.addObject("users", users);
+        modelAndView.addObject("maxFileSize", maxFileSize);
         return modelAndView;
     }
 
-    @GetMapping("new-car/")
+    @GetMapping("/new-car")
     public ModelAndView newCarPage() {
         ModelAndView modelAndView = new ModelAndView("new-car");
         Car car = new Car();
@@ -81,25 +86,25 @@ public class CarController {
     @PostMapping
     public String create(Car car) {
         carService.create(car);
-        return String.format("redirect:/cars/%s/", car.getId());
+        return "redirect:/cars/" + car.getId();
     }
 
-    @PostMapping("parse/")
+    @PostMapping("/parse")
     public String createFromSided(@RequestParam String vinOrLot) throws Exception {
         Car car = new Car();
         carService.parse(vinOrLot, car);
-        return String.format("redirect:/cars/%s/", car.getId());
+        return "redirect:/cars/" + car.getId();
     }
 
-    @PostMapping("{id}/pull-info/")
+    @PostMapping("/{id}/pull-info")
     public String pullCarInfo(@RequestParam String vinOrLot, @PathVariable("id") Car car) throws Exception {
         carService.parse(vinOrLot, car);
-        return String.format("redirect:/cars/%s/", car.getId());
+        return "redirect:/cars/" + car.getId();
     }
 
-    @PutMapping("{id}/")
+    @PutMapping("/{id}")
     public String update(
-            @PathVariable("id") int id,
+            @PathVariable int id,
             @RequestParam User user,
             Car car
     ) {
@@ -108,7 +113,7 @@ public class CarController {
         return "redirect:";
     }
 
-    @DeleteMapping("{id}/")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         carService.delete(id);
     }

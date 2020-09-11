@@ -4,7 +4,7 @@
 <body>
 
 <div class="card bg-dark my-2" th:fragment="create" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
-    <form method="post" th:action="|/cars/${car.id}/notes/|" th:object="${note}">
+    <form method="post" th:action="|/car/${car.id}/note|" th:object="${note}">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}">
         <input type="hidden" name="location" th:value="${#httpServletRequest.requestURL}">
         <div class="card-body form-group row">

@@ -9,21 +9,20 @@
 <body>
 <div class="mx-5 row">
     <div class="col-1">
-        <input sec:authorize="hasAnyAuthority('POWER', 'ADMIN')"
-               type="button" class="btn btn-outline-success" onclick="goto('/cars/new-car/')" value="&#10010;">
+        <a href="/car/new-car" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')" class="btn btn-outline-success">&#10010;</a>
     </div>
     <div class="col-11 text-right header-text">
-        <a href="/cars/orders/" class="ml-3"
-           th:classappend="${#httpServletRequest.requestURI.equals('/cars/orders/')?'disabled':null}"
-           sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">Заказы</a>
-        <a href="/cars/" class="ml-3"
-           th:classappend="${#httpServletRequest.requestURI.equals('/cars/')?'disabled':null}">Мои авто</a>
+        <a href="/car/order" class="ml-3"
+           th:classappend="${#httpServletRequest.requestURI.equals('/car/order')?'disabled':null}"
+           sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">Заказы</a>
+        <a href="/car" class="ml-3"
+           th:classappend="${#httpServletRequest.requestURI.equals('/car')?'disabled':null}">Мои авто</a>
     </div>
 </div>
 
 <div class="m-3">
     <div th:insert="~{parts/car-list :: list(-1, 1)}"></div>
-    <div th:if="${#httpServletRequest.requestURI.equals('/cars/')}"
+    <div th:if="${#httpServletRequest.requestURI.equals('/car')}"
          class="text-center text-secondary border-secondary border-top border-bottom">
         Продано
     </div>

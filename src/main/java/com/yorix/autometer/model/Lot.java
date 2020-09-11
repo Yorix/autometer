@@ -1,13 +1,14 @@
 package com.yorix.autometer.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "lot")
 @Data
+@ToString(exclude = "imgs")
 public class Lot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +32,12 @@ public class Lot {
     private String runAndDrive;
     private String starts;
     private String carKeys;
-    @Column(name = "current_img", nullable = false)
+    @Column(nullable = false)
     private String currentImg;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "lot")
     private List<Img> imgs;
-    private String userEmail;
-    private double currentBid;
+    private String userPhone;
+    private int currentBid;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> ips;
 }

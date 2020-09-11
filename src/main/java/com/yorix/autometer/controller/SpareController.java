@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping("/spares/")
+@RequestMapping("/spare")
 public class SpareController {
     private final SpareService spareService;
 
@@ -35,18 +35,18 @@ public class SpareController {
     @PostMapping
     public String create(Spare spare) {
         spareService.create(spare);
-        return "redirect:/spares/";
+        return "redirect:/spare";
     }
 
-    @PutMapping("{spareId}/")
+    @PutMapping("/{spareId}")
     public String update(@PathVariable int spareId, Spare spare) {
         spareService.update(spareId, spare);
-        return "redirect:/spares/";
+        return "redirect:/spare";
     }
 
-    @DeleteMapping("{spareId}")
+    @DeleteMapping("/{spareId}")
     public String delete(@PathVariable int spareId) {
         spareService.delete(spareId);
-        return "redirect:/spares/";
+        return "redirect:/spare";
     }
 }

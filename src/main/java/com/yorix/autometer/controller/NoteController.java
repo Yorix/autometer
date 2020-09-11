@@ -3,7 +3,6 @@ package com.yorix.autometer.controller;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.CarViewDTO;
 import com.yorix.autometer.model.Note;
-import com.yorix.autometer.service.CarService;
 import com.yorix.autometer.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,21 +14,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/cars/{carId}/notes/")
+@RequestMapping("/car/{carId}/note")
 public class NoteController {
     private final NoteService noteService;
-    private final CarService carService;
 
     @Autowired
-    public NoteController(NoteService noteService, CarService carService) {
+    public NoteController(NoteService noteService) {
         this.noteService = noteService;
-        this.carService = carService;
     }
 
     @GetMapping
-    public ModelAndView getByCar(@PathVariable("carId") int carId) {
+    public ModelAndView getByCar(@PathVariable("carId") Car car) {
         ModelAndView modelAndView = new ModelAndView("notes");
-        Car car = carService.read(carId);
         Set<String> roles = car.getUser().getRoles().stream().map(Enum::name).collect(Collectors.toSet());
         modelAndView.addObject("roles", roles);
         modelAndView.addObject("budget", noteService.getBudget());
@@ -51,19 +47,19 @@ public class NoteController {
         return "redirect:" + location;
     }
 
-    @PutMapping("{noteId}/")
+    @PutMapping("/{noteId}")
     public String update(
             @PathVariable("carId") int carId,
             @PathVariable("noteId") int noteId,
             Note note
     ) {
         noteService.update(noteId, note);
-        return String.format("redirect:/cars/%s/notes/", carId);
+        return String.format("redirect:/car/%s/note", carId);
     }
 
-    @DeleteMapping("{noteId}/")
+    @DeleteMapping("/{noteId}")
     public String delete(@PathVariable("carId") int carId, @PathVariable("noteId") int noteId) {
         noteService.deleteById(noteId);
-        return String.format("redirect:/cars/%s/notes/", carId);
+        return String.format("redirect:/car/%s/note", carId);
     }
 }

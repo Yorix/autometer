@@ -1,6 +1,7 @@
 package com.yorix.autometer.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,9 +10,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "car")
 @Data
 @ToString(exclude = {"notes", "imgs"})
+@EqualsAndHashCode(exclude = {"notes", "imgs"})
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +39,7 @@ public class Car {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfComing;
     private String containerNumber;
-    @Column(name = "current_img", nullable = false)
+    @Column(nullable = false)
     private String currentImg;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "car")
     private List<Note> notes;

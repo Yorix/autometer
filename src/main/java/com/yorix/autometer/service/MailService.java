@@ -1,7 +1,6 @@
 package com.yorix.autometer.service;
 
 import com.yorix.autometer.config.AppProperties;
-import com.yorix.autometer.errors.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -33,10 +32,6 @@ public class MailService {
         helper.setText("");
         helper.addAttachment(file.getName(), file);
 
-        try {
-            sender.send(message);
-        } catch (Exception e) {
-            throw new EmailException("Не удалось отправить бэкап.");
-        }
+        sender.send(message);
     }
 }

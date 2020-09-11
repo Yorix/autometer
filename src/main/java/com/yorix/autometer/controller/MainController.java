@@ -26,7 +26,7 @@ public class MainController {
         this.properties = properties;
     }
 
-    @GetMapping("calculator/")
+    @GetMapping("/calculator")
     public ModelAndView calculator() {
         ModelAndView modelAndView = new ModelAndView("calculator");
         for (String currencyCode : properties.getCurrencyCodes()) {

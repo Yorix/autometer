@@ -26,17 +26,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
-                .antMatchers(HttpMethod.PUT).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
-                .antMatchers(HttpMethod.DELETE).hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
-                .antMatchers("/cars/new-car/", "/cars/orders/", "/auc/new-lot").hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
+                .antMatchers("/car/new-car", "/car/order", "/auc/new-lot").hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
                 .antMatchers("/", "/css/**", "/js/**", "/favicon.ico", "/media/**", "/img/*", "/auc/**").permitAll()
-                .antMatchers("/user/save/visit/", "/cars/**", "/calculator/").authenticated()
+                .antMatchers("/user/save/visit", "/car/**", "/calculator").authenticated()
                 .anyRequest().hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/user/save/visit/", true)
+                .defaultSuccessUrl("/user/save/visit", true)
                 .and()
                 .logout().permitAll();
     }

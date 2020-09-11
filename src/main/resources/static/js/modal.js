@@ -1,4 +1,4 @@
-var ModalApp = {};
+const ModalApp = {};
 ModalApp.ModalProcess = function (parameters) {
     this.id = parameters['id'] || 'modal';
     this.selector = parameters['selector'] || '';
@@ -33,7 +33,7 @@ ModalApp.ModalProcess.prototype.updateModal = function () {
 
 
 $(function () {
-    var modal = new ModalApp.ModalProcess({id: 'modal'});
+    const modal = new ModalApp.ModalProcess({id: 'modal'});
     modal.init();
     $('.modal-show').click(function () {
         modal.changeBody($(this).attr('data-content'));

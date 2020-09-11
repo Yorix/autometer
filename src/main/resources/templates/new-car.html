@@ -17,19 +17,17 @@
             <h5>Загрузить по VIN или номеру лота</h5>
         </div>
         <div class="card-body">
-            <form id="form-parse-car" action="/cars/parse/" method="post">
+            <form id="form-parse-car" action="/car/parse" method="post">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                 <input disabled type="text" name="vinOrLot" class="form-control" placeholder="VIN-код или номер лота"/>
             </form>
         </div>
         <div class="card-footer">
             <div class="row">
-                <div class="col-10">
-                    <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
-                        << Отмена
-                    </button>
+                <div class="col">
+                    <a href="../" class="btn btn-outline-danger"><< Отмена</a>
                 </div>
-                <div class="col-2">
+                <div class="col text-right">
                     <input disabled form="form-parse-car" type="submit" class="btn btn-outline-success"
                            value="Загрузить >>"/>
                 </div>
@@ -44,7 +42,7 @@
             <h5 id="header">Добавление вручную</h5>
         </div>
         <div class="card-body">
-            <form id="form-add-car" action="/cars/" method="post" th:object="${car}">
+            <form id="form-add-car" action="/car" method="post" th:object="${car}">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                 <div class="form-group row">
                     <div class="col">
@@ -74,12 +72,10 @@
         </div>
         <div class="card-footer">
             <div class="row">
-                <div class="col-10">
-                    <button type="button" class="btn btn-outline-danger" onclick="goto('../')">
-                        << Отмена
-                    </button>
+                <div class="col">
+                    <a href="../" class="btn btn-outline-danger"><< Отмена</a>
                 </div>
-                <div class="col-2">
+                <div class="col text-right">
                     <input id="btn-add-submit" type="button" class="btn btn-outline-success" value="Добавить >>"/>
                 </div>
             </div>

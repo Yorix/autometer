@@ -11,159 +11,232 @@
     Аукцион
 </div>
 
-<div class="card bg-dark">
-    <form method="post" th:object="${lot}">
+<div class="card bg-dark" th:object="${lot}">
+    <form id="changeLot" method="post" th:action="${lot.id}">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
         <input type="hidden" name="_method" value="put"/>
-        <div class="card-header py-0">
-            <div class="row">
-                <div class="col-10 row">
-                    <div class="col px-0">
-                        <input type="text" name="make" th:value="*{make}" style="width: 100%"
-                               class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
-                    </div>
-                    <div class="col px-0">
-                        <input type="text" name="model" th:value="*{model}"
-                               class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
-                    </div>
-                    <div class="col px-0">
-                        <input type="number" min="1970" name="year" th:value="*{year}"
-                               class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
-                    </div>
+    </form>
+    <div class="card-header py-0">
+        <div class="row">
+            <div class="col-10 row">
+                <div class="col px-0">
+                    <input form="changeLot" type="text" name="make" th:value="*{make}"
+                           class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
                 </div>
-                <div class="col-2 text-right py-3" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
-                    <input id="btn-change" type="button" onclick="clickChangeCar()"
-                           class="btn btn-outline-warning" value="<< править"/>
-                    <input id="btn-submit" type="submit"
-                           class="btn btn-outline-success" style="display: none" value="сохранить >>"/>
+                <div class="col px-0">
+                    <input form="changeLot" type="text" name="model" th:value="*{model}"
+                           class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
+                </div>
+                <div class="col px-0">
+                    <input form="changeLot" type="number" min="1970" name="year" th:value="*{year}"
+                           class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
                 </div>
             </div>
-        </div>
-        <div class="card-body bg-darkgray">
-            <div class="row">
-                <div class="col-xl">
-                    <a href="img/">
-                        <img th:src="|/img/*{currentImg}|" style="max-width: 100%; max-height: 370px;"/>
-                    </a>
-                </div>
-                <div class="col-xl card bg-dark mx-1 px-0">
-                    <div class="card-header">АВТОМОБИЛЬ</div>
-                    <div class="card-body">
-                        <div class="row selectable">
-                            <div class="col"><label for="odometer">Одометр, миль:</label></div>
-                            <div class="col">
-                                <input type="number" id="odometer" name="odometer" th:value="*{odometer}"
-                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                            </div>
-                        </div>
-                        <div class="row selectable">
-                            <div class="col"><label for="engine">Двигатель:</label></div>
-                            <div class="col">
-                                <input type="number" step=".1" id="engine" name="engine" th:value="*{engine}"
-                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                            </div>
-                        </div>
-                        <div class="row selectable">
-                            <div class="col"><label for="fuel">Топливо:</label></div>
-                            <div class="col">
-                                <input type="text" id="fuel" name="fuel" th:value="*{fuel}"
-                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                            </div>
-                        </div>
-                        <div class="row selectable">
-                            <div class="col"><label for="driveLine">Привод:</label></div>
-                            <div class="col">
-                                <input type="text" id="driveLine" name="driveLine" th:value="*{driveLine}"
-                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                            </div>
-                        </div>
-                        <div class="row selectable">
-                            <div class="col"><label for="transmission">Трансмиссия:</label></div>
-                            <div class="col">
-                                <input type="text" id="transmission" name="transmission"
-                                       th:value="*{transmission}"
-                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                            </div>
-                        </div>
-                        <div class="row selectable">
-                            <div class="col"><label for="color">Цвет:</label></div>
-                            <div class="col">
-                                <input type="text" id="color" name="color" th:value="*{color}"
-                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                            </div>
-                            <div class="row selectable">
-                                <div class="col"><label for="vin">VIN:</label></div>
-                                <div class="col">
-                                    <input type="text" id="vin" name="vin" th:value="*{vin}"
-                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl card bg-dark mx-1 px-0">
-                    <div class="card-header">ПРОИСШЕСТВИЕ</div>
-                    <div class="card-body">
-                        <div class="row selectable">
-                            <div class="col"><label for="loss">Урон:</label></div>
-                            <div class="col">
-                                <input type="text" id="loss" name="loss" th:value="*{loss}"
-                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                            </div>
-                        </div>
-                        <div class="row selectable">
-                            <div class="col"><label for="damage">Повреждение:</label></div>
-                            <div class="col">
-                                <input type="text" id="damage" name="damage" th:value="*{damage}"
-                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                            </div>
-                        </div>
-                        <div class="row selectable">
-                            <div class="col"><label for="runAndDrive">Заводится и едет:</label></div>
-                            <div class="col">
-                                <input type="text" id="runAndDrive" name="runAndDrive" th:value="*{runAndDrive}"
-                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                            </div>
-                        </div>
-                        <div class="row selectable">
-                            <div class="col"><label for="starts">Заводится:</label></div>
-                            <div class="col">
-                                <input type="text" id="starts" name="starts" th:value="*{starts}"
-                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                            </div>
-                        </div>
-                        <div class="row selectable">
-                            <div class="col"><label for="carKeys">Ключи:</label></div>
-                            <div class="col">
-                                <input type="text" id="carKeys" name="carKeys" th:value="*{carKeys}"
-                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-2 text-right py-3" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+                <input form="changeLot" id="btn-change" type="button" onclick="clickChangeCar()"
+                       class="btn btn-outline-warning" value="<< править"/>
+                <input form="changeLot" id="btn-submit" type="submit"
+                       class="btn btn-outline-success" style="display: none" value="сохранить >>"/>
             </div>
         </div>
-        <div class="card-footer">
-            <div class="row">
-                <form method="post">
-                    <div class="col">
-                        <label for="step">Шаг аукциона</label>
+    </div>
+    <div class="card-body bg-darkgray">
+        <div class="row">
+            <div id="carousel" class="col-xl carousel slide" data-interval="false">
+                <div class="carousel-inner img-wrapper" role="listbox">
+                    <div class="carousel-item active img-inner" th:if="${lot.currentImg.equals('0_0.png')}">
+                        <img class="d-block" src="/img/0_0.png" alt="#" style="width: 100%"/>
                     </div>
-                    <div class="col">
-                        <input type="number" id="step"/>
+                    <div th:each="img:${lot.imgs}" class="carousel-item img-inner"
+                         th:classappend="${lot.currentImg.contains('lot' + img.lot.id + '_' + img.id + '.') ? 'active' : ''}">
+                        <a href="#" class="modal-show"
+                           th:data-content="'<img class=\'modal-img\' src=\'/img/lot'+${lot.id}+'_'+${img.id}+'.jpg\'/>'">
+                            <img class="d-block" th:src="|/img/lot${lot.id}_${img.id}.jpg|" src="#"
+                                 alt="#" title="Увеличить" style="width: 100%"/>
+                        </a>
+                        <form method="post" th:action="|/auc/${lot.id}|"
+                              sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
+                            <input type="hidden" name="_method" value="put"/>
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                            <input type="hidden" name="currentImg" th:value="|lot${lot.id}_${img.id}.jpg|"/>
+                            <input type="submit" class="btn btn-outline-success"
+                                   style="position: absolute; top: 5px; left: 12%;" value="&#10003;"/>
+                        </form>
+                        <form method="post" th:action="|/auc/${lot.id}/img|"
+                              sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+                            <input type="hidden" name="_method" value="delete"/>
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                            <input type="hidden" name="id" th:value="${img.id}"/>
+                            <input type="submit" class="btn btn-outline-danger"
+                                   style="position: absolute; bottom: 5px; right: 12%;" value="&#10008;"/>
+                        </form>
                     </div>
-                    <div class="col">
-                        <input type="submit" class="btn btn-success" value="Повысить ставку"/>
+                </div>
+                <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+                <form id="form-send-file" method="post" th:action="|/auc/${lot.id}/img|"
+                      enctype="multipart/form-data" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
+                    <div class="mt-3 input-group">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                        <input id="input-file" name="file" type="file" class="custom-file"/>
+                        <div class="input-group-append">
+                            <input type="button" class="btn btn-outline-success"
+                                   th:onclick="|sendFile('${maxFileSize}')|" value=">>">
+                        </div>
                     </div>
                 </form>
             </div>
+            <div class="col-xl card bg-dark mx-1 px-0">
+                <div class="card-header">АВТОМОБИЛЬ</div>
+                <div class="card-body">
+                    <div class="row selectable">
+                        <div class="col"><label for="vin">VIN:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="text" id="vin" name="vin" th:value="*{vin}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="odometer">Одометр, миль:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="number" id="odometer" name="odometer" th:value="*{odometer}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="engine">Двигатель:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="number" step=".1" id="engine" name="engine"
+                                   th:value="*{engine}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="fuel">Топливо:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="text" id="fuel" name="fuel" th:value="*{fuel}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="driveLine">Привод:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="text" id="driveLine" name="driveLine" th:value="*{driveLine}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="transmission">Трансмиссия:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="text" id="transmission" name="transmission"
+                                   th:value="*{transmission}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="color">Цвет:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="text" id="color" name="color" th:value="*{color}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl card bg-dark mx-1 px-0">
+                <div class="card-header">ПРОИСШЕСТВИЕ</div>
+                <div class="card-body">
+                    <div class="row selectable">
+                        <div class="col"><label for="loss">Урон:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="text" id="loss" name="loss" th:value="*{loss}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="damage">Повреждение:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="text" id="damage" name="damage" th:value="*{damage}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="runAndDrive">Заводится и едет:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="text" id="runAndDrive" name="runAndDrive"
+                                   th:value="*{runAndDrive}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="starts">Заводится:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="text" id="starts" name="starts" th:value="*{starts}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="carKeys">Ключи:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="text" id="carKeys" name="carKeys" th:value="*{carKeys}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl card bg-dark mx-1 px-0">
+                <form id="bid" method="post" th:action="|/auc/${lot.id}/bid|">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                    <input type="hidden" name="_method" value="put"/>
+                </form>
+                <div class="card-header">СТАВКА</div>
+                <div class="card-body">
+                    <div class="row selectable">
+                        <div class="col"><label for="current-bid">Текущая ставка:</label></div>
+                        <div class="col">
+                            <input form="changeLot" type="number" step="1" id="current-bid" name="currentBid"
+                                   th:value="${lot.currentBid}"
+                                   class="form-control-sm bg-dark text-light read-only-input" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="step">Шаг аукциона:</label></div>
+                        <div class="col">
+                            <input form="bid" type="number" step="1" id="step" name="step" value="150"
+                                   class="form-control-sm bg-transparent border-0 text-light" readonly/>
+                        </div>
+                    </div>
+                    <div class="row selectable">
+                        <div class="col"><label for="userPhone">Номер телефона:<br/>099 999 9999</label></div>
+                        <div class="col">
+                            <input form="bid" type="tel" pattern="[0-9]{3}[ -]?[0-9]{3}[ -]?[0-9]{2}[ -]?[0-9]{2}"
+                                   id="userPhone"
+                                   name="userPhone" required class="form-control-sm bg-dark text-light w-100"/>
+                        </div>
+                    </div>
+                    <div class="row p-3">
+                        <input form="bid" type="submit" class="btn btn-success" value="Повысить ставку"/>
+                    </div>
+                    <div class="row selectable" sec:authorize="${hasAnyAuthority('ADMIN', 'POWER')}">
+                        <div class="col"><label for="userPhone">Телефон последнего участника:</label></div>
+                        <div class="col" th:text="${lot.userPhone}"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
+    <div class="card-footer"></div>
 </div>
 
 <div th:insert="~{parts/header-menu :: menu}"></div>
 
-<script src="/js/calculator.js"></script>
+<script src="/js/car.js"></script>
 <script src="/js/app.js"></script>
+<script src="/js/modal.js"></script>
 </body>
 </html>

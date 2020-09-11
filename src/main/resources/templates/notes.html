@@ -15,13 +15,13 @@
                     <div class="mb-5">
                         <span class="header-text" th:text="|*{make} *{model} *{year}|"></span>
                     </div>
-                    <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад"/>
+                    <a th:href="|/car/*{id}|" class="btn btn-outline-light"><< Назад</a>
                 </div>
                 <div class="col-lg-4">
                     <a href="#" class="modal-show"
                        th:data-content="'<img class=\'modal-img\' src=\'/img/'+*{currentImg}+'\'/>'">
                         <img th:src="|/img/*{currentImg}|" style="max-height: 170px;" src="#" alt="#"
-                             title="Текущее изображение"/>
+                             title="Увеличить"/>
                     </a>
                 </div>
                 <div class="col-lg-4">
@@ -53,7 +53,7 @@
             <div class="card px-3 bg-dark selectable" th:each="note:${notes}">
                 <div class="row">
                     <div class="col-11">
-                        <form method="post" th:action="|/cars/${car.id}/notes/${note.id}/|" th:object="${note}">
+                        <form method="post" th:action="|/car/${car.id}/note/${note.id}|" th:object="${note}">
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                             <input type="hidden" name="_method" value="put"/>
                             <div class="row">
@@ -72,7 +72,7 @@
                                            class="bg-dark text-light read-only-input money"
                                            placeholder="0.00" name="value" th:value="*{value}" readonly/>
                                 </div>
-                                <div class="col-1" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+                                <div class="col-1" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
                                     <input th:id="|btn-change-*{id}|" type="button"
                                            th:onclick="|clickChange(${note.id})|"
                                            class="btn btn-outline-warning btn-sm" value="<<"/>
@@ -82,8 +82,8 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-1" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
-                        <form method="post" th:action="|/cars/${car.id}/notes/${note.id}/|">
+                    <div class="col-1" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
+                        <form method="post" th:action="|/car/${car.id}/note/${note.id}|">
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                             <input type="hidden" name="_method" value="delete"/>
                             <input type="submit" class="btn btn-outline-danger btn-sm" value="&#10008;"/>
@@ -93,7 +93,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад"/>
+            <a th:href="|/car/${car.id}|" class="btn btn-outline-light"><< Назад</a>
         </div>
     </div>
 </div>

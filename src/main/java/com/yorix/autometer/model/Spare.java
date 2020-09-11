@@ -7,23 +7,22 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "spare")
 @Data
 public class Spare {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "description")
+    @Column
     private String description;
 
-    @Column(name = "buy", nullable = false)
+    @Column(nullable = false)
     private double buy;
 
-    @Column(name = "sale", nullable = false)
+    @Column(nullable = false)
     private double sale;
 
-    @Column(name = "date")
+    @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 }

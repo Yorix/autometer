@@ -1,9 +1,11 @@
 package com.yorix.autometer.config;
 
 import com.yorix.autometer.errors.StorageException;
+import com.yorix.autometer.model.Lot;
 import com.yorix.autometer.model.Param;
 import com.yorix.autometer.model.Role;
 import com.yorix.autometer.model.User;
+import com.yorix.autometer.service.AuctionService;
 import com.yorix.autometer.service.UserService;
 import com.yorix.autometer.storage.ParamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @Component
 public class Start {
@@ -24,8 +29,10 @@ public class Start {
     private final String imgStorageLocation;
     private final ParamRepository paramRepository;
     private final UserService userService;
+    private final AuctionService auctionService;
     private final String adminUsername;
     private final String adminPassword;
+    private final long ipsClearTimeSec;
     @Value("${app.default-image-full-filename}")
     private Resource defaultImage;
 
@@ -33,14 +40,17 @@ public class Start {
     public Start(
             AppProperties properties,
             ParamRepository paramRepository,
-            UserService userService
+            UserService userService,
+            AuctionService auctionService
     ) {
         dbBackupLocation = properties.getDbBackupLocation();
         imgStorageLocation = properties.getImageStorageLocation();
         adminUsername = properties.getAdminUsername();
         adminPassword = properties.getAdminPassword();
+        ipsClearTimeSec = properties.getIpsClearTimeSec();
         this.paramRepository = paramRepository;
         this.userService = userService;
+        this.auctionService = auctionService;
     }
 
     @PostConstruct
@@ -62,6 +72,7 @@ public class Start {
                 .orElseGet(() -> paramRepository.save(new Param("budget", 0)));
 
         createFirstUser();
+        startCleanIpsSchedule();
     }
 
     private void createFirstUser() {
@@ -72,5 +83,18 @@ public class Start {
             admin.setRoles(Collections.singleton(Role.ADMIN));
             userService.create(admin);
         }
+    }
+
+    private void startCleanIpsSchedule() {
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                List<Lot> lots = auctionService.readAll();
+                lots.forEach(auctionService::clearIps);
+            }
+        };
+
+        Timer timer = new Timer(true);
+        timer.scheduleAtFixedRate(timerTask, 0,  ipsClearTimeSec * 1000);
     }
 }

@@ -1,8 +1,8 @@
-var inputDate = document.getElementById("input-date");
-var inputBuy = document.getElementById("input-buy");
-var inputSale = document.getElementById("input-sale");
-var selectNegative = document.getElementById("select-negative");
-var inputNoteValue = document.getElementById("input-note-value");
+const inputDate = document.getElementById("input-date");
+const inputBuy = document.getElementById("input-buy");
+const inputSale = document.getElementById("input-sale");
+const selectNegative = document.getElementById("select-negative");
+const inputNoteValue = document.getElementById("input-note-value");
 
 inputDate.valueAsDate = new Date();
 inputNoteValue ? inputNoteValue.value = "" : null;

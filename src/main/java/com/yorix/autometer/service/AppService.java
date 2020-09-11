@@ -1,6 +1,7 @@
 package com.yorix.autometer.service;
 
 import com.yorix.autometer.config.AppProperties;
+import com.yorix.autometer.errors.EmailException;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.Note;
 import com.yorix.autometer.model.User;
@@ -90,8 +91,8 @@ public abstract class AppService {
 
         try {
             mailService.send(new File(filename));
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new EmailException("Не удалось отправить бэкап.");
         }
     }
 }

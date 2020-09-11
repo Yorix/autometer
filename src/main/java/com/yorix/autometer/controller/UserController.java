@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/user/")
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
 
@@ -33,9 +33,8 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("{id}/")
-    public ModelAndView get(@PathVariable("id") int id) {
-        User user = userService.getUser(id);
+    @GetMapping("/{id}")
+    public ModelAndView get(@PathVariable("id") User user) {
         ModelAndView modelAndView = new ModelAndView("user");
         modelAndView.addObject("user", user);
         modelAndView.addObject("roles", Role.values());
@@ -44,7 +43,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("save/visit/")
+    @GetMapping("/save/visit")
     public String saveVisit(@AuthenticationPrincipal User user) {
         userService.saveVisit(user);
         return "redirect:/";
@@ -71,7 +70,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @PutMapping("{id}/")
+    @PutMapping("/{id}")
     public String update(
             @AuthenticationPrincipal User activeUser,
             @PathVariable("id") User user,
@@ -95,10 +94,10 @@ public class UserController {
         model.addAttribute("roles", Role.values());
         model.addAttribute("budget", userService.getBudget());
         model.addAttribute("balance", userService.getBalance());
-        return "user";
+        return "redirect:/user/" + user.getId();
     }
 
-    @DeleteMapping("{id}/")
+    @DeleteMapping("/{id}")
     public String delete(
             @PathVariable("id") User user,
             @AuthenticationPrincipal User activeUser,

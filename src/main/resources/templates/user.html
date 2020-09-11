@@ -14,7 +14,7 @@
         <div class="card-header row mx-1">
             <div th:text="${user.username}" class="col header-text"></div>
             <div class="col text-right">
-                <form method="post" th:action="|/user/${user.id}/|">
+                <form method="post" th:action="|/user/${user.id}|">
                     <input type="hidden" name="_method" value="delete"/>
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                     <input type="submit" class="btn btn-outline-danger" value="&#10008;"/>
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <form method="post" th:action="|/user/${user.id}/|">
+        <form method="post" th:action="|/user/${user.id}|">
             <input type="hidden" name="_method" value="put"/>
             <input type="hidden" name="_csrf" th:name="${_csrf.token}"/>
 
@@ -53,7 +53,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col">
-                        <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад"/>
+                        <a href="../" class="btn btn-outline-light"><< Назад</a>
                     </div>
                     <div class="col text-right">
                         <input type="submit" class="btn btn-outline-success" value="Подтвердить >>"/>

@@ -15,7 +15,7 @@
     <div class="card bg-dark">
         <div class="card-header">
             <div class="card bg-dark my-2" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
-                <form method="post" action="/spares/" th:object="${spare}">
+                <form method="post" action="/spare" th:object="${spare}">
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                     <div class="card-body form-group row">
                         <div class="col-lg-3 my-1">
@@ -49,7 +49,7 @@
             <div class="card px-3 bg-dark selectable" th:each="spare:${spares}">
                 <div class="row">
                     <div class="col-11">
-                        <form method="post" th:action="|/spares/${spare.id}/|" th:object="${spare}">
+                        <form method="post" th:action="|/spare/${spare.id}|" th:object="${spare}">
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                             <input type="hidden" name="_method" value="put"/>
                             <div class="row">
@@ -75,7 +75,7 @@
                                            class="bg-dark text-light read-only-input money"
                                            name="sale" th:value="*{sale}" readonly/>
                                 </div>
-                                <div class="col-1" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+                                <div class="col-1" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
                                     <input th:id="|btn-change-*{id}|" type="button"
                                            th:onclick="|clickChange(*{id})|"
                                            class="btn btn-outline-warning btn-sm" value="<<"/>
@@ -86,8 +86,8 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-1" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
-                        <form method="post" th:action="|/spares/${spare.id}/|">
+                    <div class="col-1" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
+                        <form method="post" th:action="|/spare/${spare.id}|">
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                             <input type="hidden" name="_method" value="delete"/>
                             <input type="submit" class="btn btn-outline-danger btn-sm" value="&#10008;"/>
@@ -97,7 +97,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <input type="button" class="btn btn-outline-light" onclick="goto('../')" value="<< Назад"/>
+            <a href="../" class="btn btn-outline-light"><< Назад</a>
         </div>
     </div>
 </div>

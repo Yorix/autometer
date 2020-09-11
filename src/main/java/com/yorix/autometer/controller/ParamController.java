@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/params/")
+@RequestMapping("/param")
 public class ParamController {
     private final ParamService paramService;
 
@@ -16,7 +16,7 @@ public class ParamController {
         this.paramService = paramService;
     }
 
-    @GetMapping("{name}/")
+    @GetMapping("/{name}")
     @ResponseBody
     public double get(@PathVariable("name") String name) {
         return paramService.read(name);
@@ -28,7 +28,7 @@ public class ParamController {
         paramService.create(param);
     }
 
-    @PutMapping("{name}/")
+    @PutMapping("/{name}")
     public String update(
             @PathVariable("name") String name,
             @RequestParam(name = "paramValue") double val,
