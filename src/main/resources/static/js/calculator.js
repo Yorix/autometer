@@ -3,6 +3,7 @@ const volumeInput = document.getElementById("input-volume");
 const additionalSumInput = document.getElementById("input-additional-sum");
 const usdInput = document.getElementById("input-usd");
 const eurInput = document.getElementById("input-eur");
+const currentYear = new Date().getFullYear();
 
 const dutyDiv = document.getElementById("div-duty");
 const exciseDiv = document.getElementById("div-excise");
@@ -14,11 +15,11 @@ for (let i = 0; i < allInputs.length; i++) {
     allInputs[i].addEventListener("input", calculate);
 }
 
+yearOfIssueInput.value = currentYear;
+
 function calculate() {
-    if (yearOfIssueInput.value === "")
-        yearOfIssueInput.value = 2019;
-    if (yearOfIssueInput.value > new Date().getFullYear())
-        yearOfIssueInput.value = 2019;
+    if (yearOfIssueInput.value === "" || yearOfIssueInput.value > currentYear)
+        yearOfIssueInput.value = currentYear;
     let age = new Date().getFullYear() - yearOfIssueInput.value - 1;
     if (age < 1) age = 1;
 

@@ -6,21 +6,29 @@
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
-<div class="container row mx-auto">
-    <div class="col-6 mx-auto">
-        <div class="card bg-dark my-5">
-            <div th:if="${param.error}" class="alert-danger p-1 m-2">Ошибка в имени или пароле.</div>
-            <div th:if="${param.logout}" class="alert-info p-1 m-2">Вы вышли.</div>
-            <form action="/login" method="post" class="form-inline">
-                <label>
-                    <input type="text" name="username" class="form-control m-2" placeholder="Имя"/>
-                </label>
-                <label>
-                    <input type="password" name="password" class="form-control m-2" placeholder="Пароль"/>
-                </label>
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <input type="submit" class="btn btn-outline-success m-2" value="Войти"/>
-            </form>
+<div class="m-5 row">
+    <div class="container col-lg-6">
+        <div class="card bg-dark">
+            <div class="card-body">
+                <div th:if="${param.error}" class="alert-danger p-1">Ошибка в имени или пароле.</div>
+                <div th:if="${param.logout}" class="alert-info p-1">Вы вышли.</div>
+                <form action="/login" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                    <div class="row">
+                        <div class="col-5">
+                            <label for="username">Имя</label>
+                            <input id="username" type="text" name="username" class="form-control" autofocus/>
+                        </div>
+                        <div class="col-5">
+                            <label for="password">Пароль</label>
+                            <input id="password" type="password" name="password" class="form-control"/>
+                        </div>
+                        <div class="col-2 align-self-end">
+                            <input type="submit" class="btn btn-outline-success" value="Войти"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

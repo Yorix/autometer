@@ -10,60 +10,59 @@
 <div class="mx-5 text-right header-text">
     Калькулятор
 </div>
+<div class="card bg-dark w-75 mx-auto mt-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-2 px-1">
+                <label for="input-year-of-issue">Год&nbsp;выпуска</label>
+                <input id="input-year-of-issue" type="number" min="1970" class="form-control"/>
+            </div>
+            <div class="col-md-2 px-1">
+                <label for="input-volume">Объём</label>
+                <input id="input-volume" type="number" step="0.001" min="0" max="20" class="form-control">
+            </div>
+            <div class="col-md-2 px-1">
+                <label for="input-additional-sum">Сумма&nbsp;начисления</label>
+                <input id="input-additional-sum" type="number" step="0.01" min="0" max="9999999"
+                       class="form-control" oninput="cuttingDecimalPlaces(this)"/>
+            </div>
+            <div class="col-md-2 px-1">
 
-<div class="container mt-3">
-    <div class="card bg-dark">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-lg">
-                    <label>Год выпуска
-                        <input id="input-year-of-issue" type="number" min="1970" max="2019" value="2019" class="form-control"/>
-                    </label>
-                    <label>Объём
-                        <input id="input-volume" type="number" step="0.001" min="0" max="20"
-                               class="form-control" placeholder="0.000">
-                    </label>
-                    <label>Сумма начисления
-                        <input id="input-additional-sum" type="number" step="0.01" min="0" max="9999999"
-                               class="form-control" placeholder="0.00"
-                               oninput="cuttingDecimalPlaces(this)"/>
-                    </label>
-                </div>
-                <div class="col-lg">
-                    <label>Доллар
-                        <input id="input-usd" type="number" step="0.01" min="0" max="999"
-                               class="form-control" placeholder="0.00" th:value="${usd}"/>
-                    </label>
-                    <label>Евро
-                        <input id="input-eur" type="number" step="0.01" min="0" max="999"
-                               class="form-control" placeholder="0.00" th:value="${eur}"/>
-                    </label>
-                </div>
+            </div>
+            <div class="col-md-2 px-1">
+                <label for="input-usd">Доллар</label>
+                <input id="input-usd" type="number" step="0.01" min="0" max="999"
+                       class="form-control" th:value="${usd}"/>
+            </div>
+            <div class="col-md-2 px-1">
+                <label for="input-eur">Евро</label>
+                <input id="input-eur" type="number" step="0.01" min="0" max="999"
+                       class="form-control" th:value="${eur}"/>
             </div>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-2">Пошлина</div>
-                <div id="div-duty" class="col-2 money"></div>
-            </div>
-            <div class="row">
-                <div class="col-2">Акциз</div>
-                <div id="div-excise" class="col-2 money"></div>
-            </div>
-            <div class="row">
-                <div class="col-2">НДС</div>
-                <div id="div-vat" class="col-2 money"></div>
-            </div>
-            <div class="row">
-                <div class="col-2">Всего</div>
-                <div id="div-total" class="col-2 money"></div>
-            </div>
+    </div>
+    <div class="card-body">
+        <div class="row selectable">
+            <div class="col text-right">Пошлина</div>
+            <div id="div-duty" class="col money"></div>
         </div>
-        <div class="card-footer">
-            <button type="button" class="btn btn-outline-light" onclick="window.history.back();">
-                << Назад
-            </button>
+        <div class="row selectable">
+            <div class="col text-right">Акциз</div>
+            <div id="div-excise" class="col money"></div>
         </div>
+        <div class="row selectable">
+            <div class="col text-right">НДС</div>
+            <div id="div-vat" class="col money"></div>
+        </div>
+        <div class="row selectable">
+            <div class="col text-right">Всего</div>
+            <div id="div-total" class="col money"></div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-outline-light" onclick="window.history.back();">
+            << Назад
+        </button>
     </div>
 </div>
 

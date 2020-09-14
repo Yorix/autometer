@@ -15,26 +15,29 @@
     <div class="card bg-dark">
         <div class="card-header">
             <h5>Регистрация нового пользователя</h5>
-            <form method="post" action="/user">
+            <form method="post">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <div class="card-body form-group row">
-                    <div class="col-5">
-                        <input name="username" type="text" placeholder="Имя пользователя" class="form-control"
+                <div class="form-group row">
+                    <div class="col-md-5">
+                        <label for="username">Имя пользователя</label>
+                        <input id="username" name="username" type="text" class="form-control"
                                th:classappend="(${userExistsError}or${usernameError})?'is-invalid':''"/>
                         <div class="invalid-feedback" th:if="${userExistsError}" th:text="${userExistsError}"></div>
                         <div class="invalid-feedback" th:if="${usernameError}" th:text="${usernameError}"></div>
                     </div>
-                    <div class="col-3">
-                        <input name="password" type="password" placeholder="Пароль" class="form-control"
+                    <div class="col-md-3">
+                        <label for="password">Пароль</label>
+                        <input id="password" name="password" type="password" class="form-control"
                                th:classappend="(${passConfirmError}or${passwordError})?'is-invalid':''"/>
                         <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
                     </div>
-                    <div class="col-3">
-                        <input name="passwordConfirm" type="password" placeholder="Повторите пароль"
-                               class="form-control" th:classappend="${passConfirmError}?'is-invalid'"/>
+                    <div class="col-md-3">
+                        <label for="passwordConfirm">Повторите&nbsp;пароль</label>
+                        <input id="passwordConfirm" name="passwordConfirm" type="password" class="form-control"
+                               th:classappend="${passConfirmError}?'is-invalid'"/>
                         <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
                     </div>
-                    <div class="col-1">
+                    <div class="col-md-1 align-self-end">
                         <input type="submit" class="btn btn-outline-success" value=">>"/>
                     </div>
                 </div>

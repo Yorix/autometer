@@ -55,13 +55,13 @@
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                 <input type="hidden" name="location" th:value="${#httpServletRequest.requestURI}">
 
-                <span>Баланс: </span>
+                <label for="input-budget">Баланс: </label>
                 <span class="money" th:text="${budget+balance}"></span>
                 <input id="btn-add-to-budget" type="button" onclick="editBudget();"
                        class="btn btn-outline-success btn-sm" value="&#10010;">
-                <div class="input-group">
+                <div class="input-group input-group-sm">
                     <input id="input-budget" type="number" name="paramValue" step="0.01" min="0" max="9999999"
-                           class="form-control-sm" style="display: none" placeholder="0.00"
+                           class="form-control" style="display: none"
                            oninput="cuttingDecimalPlaces(this)"/>
                     <div class="input-group-append">
                         <input id="btn-submit-budget" type="submit" onclick="submitBudget()"

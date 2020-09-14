@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;

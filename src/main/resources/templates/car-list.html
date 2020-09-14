@@ -9,7 +9,7 @@
 <body>
 <div class="mx-5 row">
     <div class="col-1">
-        <a href="/car/new-car" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')" class="btn btn-outline-success">&#10010;</a>
+        <a href="/car/new-car" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}" class="btn btn-outline-success">&#10010;</a>
     </div>
     <div class="col-11 text-right header-text">
         <a href="/car/order" class="ml-3"

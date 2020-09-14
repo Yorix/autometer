@@ -9,23 +9,21 @@
             <a th:href="|/car/${car.id}|">
                 <div class="card bg-dark selectable">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col" th:text="|${car.make} ${car.model} ${car.year}|"></div>
-                            <div class="col text-right"
+                        <div class="float-row">
+                            <div th:text="|${car.make} ${car.model} ${car.year}|"></div>
+                            <span class="text-right"
                                  th:if="${#httpServletRequest.requestURI.equals('/car/order')}"
-                                 th:text="${car.user.username}"></div>
+                                 th:text="${car.user.username}"></span>
                         </div>
                     </div>
                     <div class="card-body text-center img-wrapper" style="padding-top: 50%;">
-                        <img th:src="|/img/${car.currentImg}|"
-                             th:if="${car.currentImg}"
-                             class="img-inner">
+                        <img th:src="|/img/${car.currentImg}|" class="img-inner" src="#" alt="#"/>
                     </div>
                     <div class="card-footer">
                         <div class="row">
                             <div class="col text-left money" th:text="${car.spending+car.income}"
                                  title="Баланс по машине"></div>
-                            <div class="col text-right money grey-white" title="+30% от расходов"
+                            <div class="col text-right money gray-white" title="+30% от расходов"
                                  th:text="${car.spending*-1+car.spending*-0.3}">
                             </div>
                         </div>

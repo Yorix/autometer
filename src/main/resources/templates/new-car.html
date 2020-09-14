@@ -11,35 +11,35 @@
     Новое авто
 </div>
 
-<div class="container my-3">
-    <div class="card bg-dark">
-        <div class="card-header">
-            <h5>Загрузить по VIN или номеру лота</h5>
-        </div>
-        <div class="card-body">
-            <form id="form-parse-car" action="/car/parse" method="post">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <input disabled type="text" name="vinOrLot" class="form-control" placeholder="VIN-код или номер лота"/>
-            </form>
-        </div>
-        <div class="card-footer">
-            <div class="row">
-                <div class="col">
-                    <a href="../" class="btn btn-outline-danger"><< Отмена</a>
-                </div>
-                <div class="col text-right">
-                    <input disabled form="form-parse-car" type="submit" class="btn btn-outline-success"
-                           value="Загрузить >>"/>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div class="container my-3">-->
+<!--    <div class="card bg-dark">-->
+<!--        <div class="card-header">-->
+<!--            <h5>Загрузить по VIN или номеру лота</h5>-->
+<!--        </div>-->
+<!--        <div class="card-body">-->
+<!--            <form id="form-parse-car" action="/car/parse" method="post">-->
+<!--                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>-->
+<!--                <input disabled type="text" name="vinOrLot" class="form-control" placeholder="VIN-код или номер лота"/>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        <div class="card-footer">-->
+<!--            <div class="row">-->
+<!--                <div class="col">-->
+<!--                    <a href="../" class="btn btn-outline-danger"><< Отмена</a>-->
+<!--                </div>-->
+<!--                <div class="col text-right">-->
+<!--                    <input disabled form="form-parse-car" type="submit" class="btn btn-outline-success"-->
+<!--                           value="Загрузить >>"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <div class="container my-3">
     <div class="card bg-dark">
         <div class="card-header">
-            <h5 id="header">Добавление вручную</h5>
+            <h5 id="header">Марка, модель, год выпуска</h5>
         </div>
         <div class="card-body">
             <form id="form-add-car" action="/car" method="post" th:object="${car}">
@@ -47,18 +47,15 @@
                 <div class="form-group row">
                     <div class="col">
                         <label for="input-make">Марка</label>
-                        <input id="input-make" type="text" class="form-control"
-                               placeholder="Марка" th:field="*{make}"/>
+                        <input id="input-make" type="text" class="form-control" th:field="*{make}"/>
                     </div>
                     <div class="col">
                         <label for="input-model">Модель</label>
-                        <input id="input-model" type="text" class="form-control"
-                               placeholder="Модель" th:field="*{model}"/>
+                        <input id="input-model" type="text" class="form-control" th:field="*{model}"/>
                     </div>
                     <div class="col">
                         <label for="input-year">Год выпуска</label>
-                        <input id="input-year" type="number" min="1970" class="form-control"
-                               placeholder="Год" th:field="*{year}"/>
+                        <input id="input-year" type="number" min="1970" class="form-control" th:field="*{year}"/>
                     </div>
                     <div class="col">
                         <label for="select-user">Владелец</label>

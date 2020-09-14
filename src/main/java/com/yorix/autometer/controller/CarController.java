@@ -86,20 +86,20 @@ public class CarController {
     @PostMapping
     public String create(Car car) {
         carService.create(car);
-        return "redirect:/cars/" + car.getId();
+        return "redirect:/car/" + car.getId();
     }
 
     @PostMapping("/parse")
     public String createFromSided(@RequestParam String vinOrLot) throws Exception {
         Car car = new Car();
         carService.parse(vinOrLot, car);
-        return "redirect:/cars/" + car.getId();
+        return "redirect:/car/" + car.getId();
     }
 
     @PostMapping("/{id}/pull-info")
     public String pullCarInfo(@RequestParam String vinOrLot, @PathVariable("id") Car car) throws Exception {
         carService.parse(vinOrLot, car);
-        return "redirect:/cars/" + car.getId();
+        return "redirect:/car/" + car.getId();
     }
 
     @PutMapping("/{id}")

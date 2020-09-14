@@ -77,6 +77,7 @@ public class AuctionService extends AppService {
         lotFromDb.setCurrentBid(newLot.getCurrentBid());
 
         auctionRepository.save(lotFromDb);
+        saveData();
     }
 
     public boolean checkIp(int lotId, String clientIp) {

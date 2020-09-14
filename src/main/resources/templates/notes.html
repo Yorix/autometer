@@ -40,7 +40,7 @@
                         </tr>
                         <tr>
                             <td>+30% от расходов:</td>
-                            <td class="money grey-white" th:text="*{spending*-1+spending*-0.3}"></td>
+                            <td class="money gray-white" th:text="*{spending*-1+spending*-0.3}"></td>
                         </tr>
                     </table>
                 </div>
@@ -67,10 +67,10 @@
                                            class="bg-dark text-light read-only-input" readonly/>
                                 </div>
                                 <div class="col-2">
-                                    <input th:id="|input-value-*{id}|" oninput="cuttingDecimalPlaces(this)" type="number"
-                                           step="0.01" min="-9999999" max="9999999"
-                                           class="bg-dark text-light read-only-input money"
-                                           placeholder="0.00" name="value" th:value="*{value}" readonly/>
+                                    <input th:id="|input-value-*{id}|" oninput="cuttingDecimalPlaces(this)"
+                                           type="number" step="0.01" min="-9999999" max="9999999"
+                                           class="bg-dark text-light read-only-input money" name="value"
+                                           th:value="*{value}" readonly/>
                                 </div>
                                 <div class="col-1" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
                                     <input th:id="|btn-change-*{id}|" type="button"

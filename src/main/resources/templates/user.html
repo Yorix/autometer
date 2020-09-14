@@ -29,13 +29,14 @@
             <div class="card-body px-5">
                 <div class="row mb-3">
                     <div class="col">
-                        <input type="password" name="password" class="form-control" placeholder="Пароль"
+                        <label for="password">Пароль</label>
+                        <input id="password" type="password" name="password" class="form-control"
                                th:classappend="(${passwordError}or${passConfirmError})?'is-invalid':''"/>
                         <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
                     </div>
                     <div class="col">
-                        <input type="password" name="passwordConfirm" class="form-control"
-                               placeholder="Повторите пароль"
+                        <label for="passwordConfirm">Повторите пароль</label>
+                        <input id="passwordConfirm" type="password" name="passwordConfirm" class="form-control"
                                th:classappend="${passConfirmError}?'is-invalid'"/>
                         <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
                     </div>
