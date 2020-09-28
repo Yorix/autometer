@@ -80,6 +80,11 @@ public class AuctionService extends AppService {
         saveData();
     }
 
+    public void delete(int id) {
+        auctionRepository.deleteById(id);
+        saveData();
+    }
+
     public boolean checkIp(int lotId, String clientIp) {
         Lot lot = auctionRepository.getOne(lotId);
         if (lot.getIps().contains(clientIp))

@@ -12,31 +12,32 @@
 </div>
 
 <div class="card bg-dark" th:object="${lot}">
-    <form id="changeLot" method="post" th:action="${lot.id}">
+    <form id="changeLot" method="post">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
         <input type="hidden" name="_method" value="put"/>
     </form>
+    <form id="deleteLot" method="post">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+        <input type="hidden" name="_method" value="delete"/>
+    </form>
     <div class="card-header py-0">
         <div class="row">
-            <div class="col-10 row">
-                <div class="col px-0">
-                    <input form="changeLot" type="text" name="make" th:value="*{make}"
-                           class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
-                </div>
-                <div class="col px-0">
-                    <input form="changeLot" type="text" name="model" th:value="*{model}"
-                           class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
-                </div>
-                <div class="col px-0">
-                    <input form="changeLot" type="number" min="1970" name="year" th:value="*{year}"
-                           class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
-                </div>
+            <div class="col-9 d-flex align-items-center justify-content-between">
+                <input form="changeLot" type="text" name="make" th:value="*{make}"
+                       class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
+                <input form="changeLot" type="text" name="model" th:value="*{model}"
+                       class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
+                <input form="changeLot" type="number" min="1970" name="year" th:value="*{year}"
+                       class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
             </div>
-            <div class="col-2 text-right py-3" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
+            <div class="col-3 d-flex align-items-center justify-content-end flex-wrap"
+                 sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
                 <input form="changeLot" id="btn-change" type="button" onclick="clickChangeCar()"
-                       class="btn btn-outline-warning" value="<< править"/>
+                       class="btn btn-outline-warning" style="display: inline-block" value="<< править"/>
                 <input form="changeLot" id="btn-submit" type="submit"
                        class="btn btn-outline-success" style="display: none" value="сохранить >>"/>
+                <input form="deleteLot" id="btn-delete" type="button" th:onclick="clickDeleteCar()"
+                       class="btn btn-outline-danger ml-2" style="display: inline-block" value="&#10008; удалить"/>
             </div>
         </div>
     </div>
@@ -199,7 +200,8 @@
                             <div class="input-group-prepend">
                                 <label for="userPhone" class="p-1 m-0">+380</label>
                             </div>
-                            <input form="bid" type="tel" pattern="\d{2}[ -]?(\d{3}[ -]?\d{2}[ -]?\d{2}||\d{2}[ -]?\d{2}[ -]?\d{3})"
+                            <input form="bid" type="tel"
+                                   pattern="\d{2}[ -]?(\d{3}[ -]?\d{2}[ -]?\d{2}||\d{2}[ -]?\d{2}[ -]?\d{3})"
                                    id="userPhone" name="userPhone" placeholder="YY XXX XXXX"
                                    class="form-control fc-sm bg-dark text-light text-left"
                                    required/>
@@ -210,7 +212,8 @@
                     </div>
                     <div class="float-row selectable" sec:authorize="${hasAnyAuthority('ADMIN', 'POWER')}">
                         <div>Телефон последнего участника:</div>
-                        <span th:text="'+380&nbsp;'+${lot.userPhone.replaceAll('\s', '&nbsp;').replaceAll('-', '&#8209;')}"></span>
+                        <span th:if="${lot.userPhone}"
+                              th:text="'+380&nbsp;'+${lot.userPhone.replaceAll('\s', '&nbsp;').replaceAll('-', '&#8209;')}"></span>
                     </div>
                 </div>
             </div>

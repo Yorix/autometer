@@ -4,12 +4,20 @@ function clickChangeCar() {
     const inputsRO = document.getElementsByClassName("read-only-input");
 
     btnChange.style.display = "none";
-    btnSubmit.style.display = "inline";
-    Array.from(inputsRO).forEach(element => {
-        element.classList.remove("read-only-input");
-        element.removeAttribute("readonly");
-        element.removeAttribute("disabled");
+    btnSubmit.style.display = "inline-block";
+    Array.from(inputsRO).forEach(function (item) {
+        item.classList.remove("read-only-input");
+        item.removeAttribute("readonly");
+        item.removeAttribute("disabled");
     });
+}
+
+function clickDeleteCar() {
+    const send = confirm("Вы действительно хотите удалить машину?");
+    if (send) {
+        const form = document.getElementById("deleteLot");
+        form.submit();
+    }
 }
 
 function sendFile(maxFileSize) {

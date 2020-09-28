@@ -78,4 +78,10 @@ public class AuctionController {
         auctionService.update(lot.getId(), lot);
         return "redirect:/auc/" + lot.getId();
     }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable int id) {
+        auctionService.delete(id);
+        return "redirect:/auc";
+    }
 }

@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col text-left money" th:text="${lot.currentBid}" title="Текущая ставка"></div>
                         <div sec:authorize="${hasAnyAuthority('ADMIN', 'POWER')}" class="col text-right gray-white" title="Телефон последнего участника"
-                             th:text="'+380&nbsp;'+${lot.userPhone.replaceAll('\s', '&nbsp;').replaceAll('-', '&#8209;')}">
+                             th:if="${lot.userPhone}" th:text="'+380&nbsp;'+${lot.userPhone.replaceAll('\s', '&nbsp;').replaceAll('-', '&#8209;')}">
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,6 @@
 
 <div th:insert="~{parts/header-menu :: menu}"></div>
 
-<script src="/js/calculator.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>

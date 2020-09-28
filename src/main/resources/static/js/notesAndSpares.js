@@ -13,18 +13,19 @@ inputSale ? inputSale.value = "" : null;
 function clickChange(id) {
     const inputsRO = document.getElementsByClassName("read-only-input");
     const inputsROId = [];
-    Array.from(inputsRO).forEach(element => {
-        if (element.id.includes("-".concat(id))) {
-            inputsROId.push(element);
-        }
-    })
+    Array.from(inputsRO).forEach(function (item) {
+        if (item.id.split("-").pop() === id.toString())
+            inputsROId.push(item);
+    });
+
     const BtnChange = document.getElementById("btn-change-".concat(id));
     const btnSubmit = document.getElementById("btn-submit-".concat(id));
 
-    inputsROId.forEach(element => {
-        element.classList.remove("read-only-input");
-        element.removeAttribute("readonly")
+    inputsROId.forEach(function (item) {
+        item.classList.remove("read-only-input");
+        item.removeAttribute("readonly")
     });
+
     BtnChange.style.display = "none";
     btnSubmit.style.display = "block";
 }
