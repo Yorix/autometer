@@ -5,9 +5,9 @@
     <title>Вход</title>
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
-<body>
-<div class="m-5 row">
-    <div class="container col-lg-6">
+<body class="login">
+<div class="vh-100 d-flex justify-content-center align-items-center">
+    <div class="w-50 mx-auto">
         <div class="card bg-dark">
             <div class="card-body">
                 <div th:if="${param.error}" class="alert-danger p-1">Ошибка в имени или пароле.</div>
@@ -15,15 +15,15 @@
                 <form action="/login" method="post">
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                     <div class="row">
-                        <div class="col-5">
+                        <div class="col-md-5">
                             <label for="username">Имя</label>
                             <input id="username" type="text" name="username" class="form-control" autofocus/>
                         </div>
-                        <div class="col-5">
+                        <div class="col-md-5">
                             <label for="password">Пароль</label>
                             <input id="password" type="password" name="password" class="form-control"/>
                         </div>
-                        <div class="col-2 align-self-end">
+                        <div class="col-lg-2 align-self-end">
                             <input type="submit" class="btn btn-outline-success" value="Войти"/>
                         </div>
                     </div>
