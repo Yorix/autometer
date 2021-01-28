@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.util.List;
+
 @Controller
 public class ImgController {
     private final ImgService imgService;
@@ -23,9 +26,13 @@ public class ImgController {
         return imgService.read(id);
     }
 
-    @PostMapping("/car/{car}/img")
-    public String create(@RequestParam("file") MultipartFile file, @PathVariable Car car) {
-        imgService.create(file, car);
+    @PostMapping("/car/{car}/{album}/img")
+    public String create(
+            @RequestParam("file") MultipartFile file,
+            @PathVariable Car car,
+            @PathVariable String album
+    ) {
+        imgService.create(file, car, album);
         return "redirect:/car/" + car.getId();
     }
 
@@ -36,8 +43,8 @@ public class ImgController {
     }
 
     @DeleteMapping("/car/{car}/img")
-    public String delete(@PathVariable Car car, @RequestParam int id) {
-        imgService.delete(id, car);
+    public String delete(@PathVariable Car car, @RequestParam Img img) {
+        imgService.delete(img, car);
         return "redirect:/car/" + car.getId();
     }
 

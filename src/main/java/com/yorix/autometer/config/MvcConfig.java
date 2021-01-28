@@ -28,7 +28,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/img/*")
+                .addResourceHandler("/img/**")
                 .addResourceLocations("file:/".concat(storage).concat(File.separator));
         registry
                 .addResourceHandler("/favicon.ico")

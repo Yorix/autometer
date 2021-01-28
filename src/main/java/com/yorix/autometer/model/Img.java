@@ -18,4 +18,7 @@ public class Img {
     @ManyToOne
     @JoinColumn(name = "lot_id")
     private Lot lot;
+
+    @Column(nullable = false)
+    private String album;
 }

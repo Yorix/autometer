@@ -20,9 +20,9 @@ function clickDeleteCar() {
     }
 }
 
-function sendFile(maxFileSize) {
-    const form = document.getElementById("form-send-file");
-    const fileInput = document.getElementById("input-file");
+function sendFile(maxFileSize, album) {
+    const form = document.getElementById("form-send-file" + album);
+    const fileInput = document.getElementById("input-file" + album);
 
     if (fileInput.files.length > 0) {
         const fileSize = fileInput.files[0].size;

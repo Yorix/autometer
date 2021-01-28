@@ -39,60 +39,21 @@
         </div>
         <div class="card-body bg-darkgray">
             <div class="row">
-                <div id="carousel" class="col-xl carousel slide" data-interval="false">
-                    <div class="carousel-inner img-wrapper" role="listbox">
-                        <div class="carousel-item active img-inner" th:if="${car.currentImg.equals('0_0.png')}">
-                            <img class="d-block" src="/img/0_0.png" alt="#" style="width: 100%"/>
-                        </div>
-                        <div th:each="img:${car.imgs}" class="carousel-item img-inner"
-                             th:classappend="${car.currentImg.contains(img.car.id + '_' + img.id + '.') ? 'active' : ''}">
-                            <a href="#" class="modal-show"
-                               th:data-content="'<img class=\'modal-img\' src=\'/img/'+${car.id}+'_'+${img.id}+'.jpg\'/>'">
-                                <img class="d-block" th:src="|/img/${car.id}_${img.id}.jpg|" src="#"
-                                     alt="#" title="Увеличить" style="width: 100%"/>
-                            </a>
-                            <form method="post" th:action="|/car/${car.id}|"
-                                  sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
-                                <input type="hidden" name="_method" value="put"/>
-                                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                                <input type="hidden" name="location"
-                                       th:value="${#httpServletRequest.requestURL}"/>
-                                <input type="hidden" name="currentImg" th:value="|${car.id}_${img.id}.jpg|"/>
-                                <input type="hidden" name="user" th:value="${car.user.id}">
-                                <input type="submit" class="btn btn-outline-success"
-                                       style="position: absolute; top: 5px; left: 12%;" value="&#10003;"/>
-                            </form>
-                            <form method="post" th:action="|/car/${car.id}/img|"
-                                  sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
-                                <input type="hidden" name="_method" value="delete"/>
-                                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                                <input type="hidden" name="id" th:value="${img.id}"/>
-                                <input type="submit" class="btn btn-outline-danger"
-                                       style="position: absolute; bottom: 5px; right: 12%;" value="&#10008;"/>
-                            </form>
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                    <form id="form-send-file" method="post" th:action="|/car/*{id}/img|"
-                          enctype="multipart/form-data" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
-                        <div class="mt-3 input-group">
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                            <input id="input-file" name="file" type="file" class="custom-file"/>
-                            <div class="input-group-append">
-                                <input type="button" class="btn btn-outline-success"
-                                       th:onclick="|sendFile('${maxFileSize}')|" value=">>">
-                            </div>
-                        </div>
-                    </form>
+                <div class="col-xl card bg-dark m-1 p-0">
+                    <div class="text-center card-header">Аукцион</div>
+                    <div th:insert="~{parts/carousel :: album('1')}"></div>
                 </div>
-                <div class="col-xl card bg-dark mx-1 px-0">
+                <div class="col-xl card bg-dark m-1 p-0">
+                    <div class="text-center card-header">США</div>
+                    <div th:insert="~{parts/carousel :: album('2')}" class="card-body m-0 p-0"></div>
+                </div>
+                <div class="col-xl card bg-dark m-1 p-0">
+                    <div class="text-center card-header">Одесса</div>
+                    <div th:insert="~{parts/carousel :: album('3')}" class="card-body m-0 p-0"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl card bg-dark m-1 p-0">
                     <div class="card-header">АВТОМОБИЛЬ</div>
                     <div class="card-body">
                         <div class="float-row selectable">
@@ -129,7 +90,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl card bg-dark mx-1 px-0">
+                <div class="col-xl card bg-dark m-1 p-0">
                     <div class="card-header">ПРОИСШЕСТВИЕ</div>
                     <div class="card-body">
                         <div class="float-row selectable">
@@ -160,7 +121,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl card bg-dark mx-1 px-0">
+                <div class="col-xl card bg-dark m-1 p-0">
                     <div class="card-header">ОБЩЕЕ</div>
                     <div class="card-body">
                         <div class="float-row selectable">

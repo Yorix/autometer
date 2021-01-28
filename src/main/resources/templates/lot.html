@@ -51,8 +51,8 @@
                     <div th:each="img:${lot.imgs}" class="carousel-item img-inner"
                          th:classappend="${lot.currentImg.contains('lot' + img.lot.id + '_' + img.id + '.') ? 'active' : ''}">
                         <a href="#" class="modal-show"
-                           th:data-content="'<img class=\'modal-img\' src=\'/img/lot'+${lot.id}+'_'+${img.id}+'.jpg\'/>'">
-                            <img class="d-block" th:src="|/img/lot${lot.id}_${img.id}.jpg|" src="#"
+                           th:data-content="'<img class=\'modal-img\' src=\'/img/lot/lot'+${lot.id}+'_'+${img.id}+'.jpg\'/>'">
+                            <img class="d-block" th:src="|/img/lot/lot${lot.id}_${img.id}.jpg|" src="#"
                                  alt="#" title="Увеличить" style="width: 100%"/>
                         </a>
                         <form method="post" th:action="|/auc/${lot.id}|"

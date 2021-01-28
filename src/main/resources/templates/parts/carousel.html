@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<div th:fragment="album(album)">
+    <div th:id="|carousel${album}|" class="carousel slide card-body m-0 p-0" data-interval="false">
+        <div class="carousel-inner" role="listbox">
+            <div class="carousel-item" th:each="img:${car.imgs.?[album.equals(#root.album)]}"
+                 th:classappend="${imgStat.first}?active">
+                <a href="#" class="modal-show img-wrapper"
+                   th:data-content="'<img class=\'modal-img\' src=\'/img/car/'+${car.id}+'/'+${album}+'/'+${img.id}+'.jpg\'/>'">
+                    <img class="d-block img-inner" th:src="|/img/car/${car.id}/${album}/${img.id}.jpg|" src="#"
+                         alt="#" title="Увеличить"/>
+                </a>
+                <form method="post" th:action="|/car/${car.id}|"
+                      sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
+                    <input type="hidden" name="_method" value="put"/>
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                    <input type="hidden" name="location"
+                           th:value="${#httpServletRequest.requestURL}"/>
+                    <input type="hidden" name="currentImg" th:value="|car/${car.id}/${album}/${img.id}.jpg|"/>
+                    <input type="hidden" name="user" th:value="${car.user.id}">
+                    <input type="submit" class="btn btn-outline-success"
+                           style="position: absolute; top: 5px; left: 14%;" value="&#10003;"/>
+                </form>
+                <form method="post" th:action="|/car/${car.id}/img|"
+                      sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                    <input type="hidden" name="img" th:value="${img.id}"/>
+                    <input type="submit" class="btn btn-outline-danger"
+                           style="position: absolute; bottom: 5px; right: 14%;" value="&#10008;"/>
+                </form>
+            </div>
+        </div>
+        <a class="carousel-control-prev" th:href="|#carousel${album}|" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" th:href="|#carousel${album}|" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <form th:id="|form-send-file${album}|" method="post" th:action="|/car/*{id}/${album}/img|"
+          enctype="multipart/form-data" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
+        <div class="input-group card-footer">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <input th:id="|input-file${album}|" name="file" type="file" class="custom-file"/>
+            <div class="input-group-append">
+                <input type="button" class="btn btn-outline-success"
+                       th:data1="${maxFileSize}" th:data2="${album}"
+                       th:onclick="sendFile(this.getAttribute('data1'), this.getAttribute('data2'))" value=">>">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

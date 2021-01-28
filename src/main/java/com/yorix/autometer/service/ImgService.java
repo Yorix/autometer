@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class ImgService extends AppService {
@@ -32,30 +34,16 @@ public class ImgService extends AppService {
         this.auctionRepository = auctionRepository;
     }
 
-    public void create(String imgUrl, Car car) {
-        Img img = saveImg(car);
-        String filepath = getFilepath(car, img);
-
-        File file = new File(filepath);
-        try {
-            URL url = new URL(imgUrl);
-            BufferedImage image = ImageIO.read(url);
-            ImageIO.write(image, "jpg", file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        saveData();
-    }
-
-    public void create(MultipartFile file, Car car) {
+    public void create(MultipartFile file, Car car, String album) {
         if (StringUtils.isEmpty(file.getOriginalFilename()))
             throw new StorageException("Файл не выбран.");
 
-        Img img = saveImg(car);
-        String filepath = getFilepath(car, img);
+        Img img = saveImg(car, album);
+        String filepath = getFilepath(car, album, img);
 
         try {
+            File dir = new File(filepath).getParentFile();
+            dir.mkdirs();
             file.transferTo(new File(filepath));
         } catch (IOException e) {
             throw new StorageException("Ошибка загрузки файла " + file.getOriginalFilename(), e);
@@ -80,9 +68,10 @@ public class ImgService extends AppService {
         saveData();
     }
 
-    private Img saveImg(Car car) {
+    private Img saveImg(Car car, String album) {
         Img img = new Img();
         img.setCar(car);
+        img.setAlbum(album);
         imgRepository.save(img);
         return img;
     }
@@ -94,11 +83,15 @@ public class ImgService extends AppService {
         return img;
     }
 
-    private String getFilepath(Car car, Img img) {
+    private String getFilepath(Car car, String album, Img img) {
         return getAppProperties().getImageStorageLocation()
                 .concat(File.separator)
+                .concat("car")
+                .concat(File.separator)
                 .concat(Integer.toString(car.getId()))
-                .concat("_")
+                .concat(File.separator)
+                .concat(album)
+                .concat(File.separator)
                 .concat(Integer.toString(img.getId()))
                 .concat(".jpg");
     }
@@ -107,8 +100,9 @@ public class ImgService extends AppService {
         return getAppProperties().getImageStorageLocation()
                 .concat(File.separator)
                 .concat("lot")
+                .concat(File.separator)
                 .concat(Integer.toString(lot.getId()))
-                .concat("_")
+                .concat(File.separator)
                 .concat(Integer.toString(img.getId()))
                 .concat(".jpg");
     }
@@ -121,20 +115,27 @@ public class ImgService extends AppService {
         return imgRepository.readAllByCar(car);
     }
 
-    public void delete(int id, Car car) {
-        if (id == Integer.parseInt(car.getCurrentImg().replaceAll("^\\d+_|.jpg$|.png$", ""))) {
+    public void delete(Img img, Car car) {
+        Pattern pattern = Pattern.compile("(?<=\\/)(\\d+)(?=\\.)");
+        Matcher matcher = pattern.matcher(car.getCurrentImg());
+
+        if (matcher.find() && img.getId() == Integer.parseInt(matcher.group())) {
             car.setCurrentImg(getAppProperties().getDefaultImageFilename());
             carRepository.save(car);
         }
 
         File file = new File(getAppProperties().getImageStorageLocation()
                 .concat(File.separator)
+                .concat("car")
+                .concat(File.separator)
                 .concat(Integer.toString(car.getId()))
-                .concat("_")
-                .concat(Integer.toString(id))
+                .concat(File.separator)
+                .concat(img.getAlbum())
+                .concat(File.separator)
+                .concat(Integer.toString(img.getId()))
                 .concat(".jpg"));
         file.delete();
-        imgRepository.deleteById(id);
+        imgRepository.delete(img);
         saveData();
     }
 
