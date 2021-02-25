@@ -4,6 +4,7 @@ import com.yorix.autometer.model.Role;
 import com.yorix.autometer.model.User;
 import com.yorix.autometer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAdjuster;
 import java.util.Map;
 
 @Controller
@@ -43,10 +47,26 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/save/visit")
+    @GetMapping("/save-visit")
     public String saveVisit(@AuthenticationPrincipal User user) {
         userService.saveVisit(user);
         return "redirect:/";
+    }
+
+    @GetMapping("/get-visits")
+    public ModelAndView getVisits(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to
+    ) {
+        if (from == null) from = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        if (to == null) to = LocalDateTime.now();
+        ModelAndView modelAndView = new ModelAndView("visits");
+        modelAndView.addObject("visits", userService.getVisits(from, to));
+        modelAndView.addObject("from", from.withSecond(0).withNano(0));
+        modelAndView.addObject("to", to.withSecond(0).withNano(0));
+        modelAndView.addObject("budget", userService.getBudget());
+        modelAndView.addObject("balance", userService.getBalance());
+        return modelAndView;
     }
 
     @PostMapping

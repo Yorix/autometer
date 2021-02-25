@@ -26,13 +26,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/car/new-car", "/car/order", "/auc/new-lot").hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
+                .antMatchers("/user/save-visit", "/car/**", "/calculator").authenticated()
                 .antMatchers("/", "/css/**", "/js/**", "/favicon.ico", "/media/**", "/img/**", "/auc/**").permitAll()
-                .antMatchers("/user/save/visit", "/car/**", "/calculator").authenticated()
                 .anyRequest().hasAnyAuthority(Role.POWER.name(), Role.ADMIN.name())
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/user/save/visit", true)
+                .defaultSuccessUrl("/user/save-visit", true)
                 .and()
                 .logout().permitAll();
     }

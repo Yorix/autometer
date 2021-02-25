@@ -2,6 +2,7 @@ package com.yorix.autometer.model;
 
 import lombok.Data;
 import lombok.ToString;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @Entity
 @Data
 @ToString(exclude = "imgs")
+@EqualsAndHashCode(exclude = "imgs")
 public class Lot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

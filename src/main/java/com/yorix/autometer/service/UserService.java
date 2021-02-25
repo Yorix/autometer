@@ -80,4 +80,8 @@ public class UserService extends AppService implements UserDetailsService {
         visit.setUser(user);
         visitRepository.save(visit);
     }
+
+    public List<Visit> getVisits(LocalDateTime from, LocalDateTime to) {
+        return visitRepository.findAllByTimeBetweenOrderByTimeDesc(from, to);
+    }
 }
