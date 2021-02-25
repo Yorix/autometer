@@ -14,8 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAdjuster;
 import java.util.Map;
 
 @Controller
@@ -100,7 +98,8 @@ public class UserController {
         String password = form.get("password");
         String passwordConfirm = form.get("passwordConfirm");
         if (!activeUser.getRoles().contains(Role.ADMIN) &&
-                (user.getRoles().contains(Role.ADMIN) || user.getRoles().contains(Role.POWER) && activeUser.getId() != user.getId())) {
+                (user.getRoles().contains(Role.ADMIN) || user.getRoles().contains(Role.POWER)) &&
+                activeUser.getId() != user.getId()) {
             model.addAttribute("accessError", "Недостаточно полномочий.");
         }
         if (!password.equals(passwordConfirm)) {
@@ -114,7 +113,7 @@ public class UserController {
         model.addAttribute("roles", Role.values());
         model.addAttribute("budget", userService.getBudget());
         model.addAttribute("balance", userService.getBalance());
-        return "redirect:/user/" + user.getId();
+        return "user";
     }
 
     @DeleteMapping("/{id}")
