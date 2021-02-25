@@ -7,28 +7,26 @@
 </head>
 <body class="login">
 <div class="vh-100 d-flex justify-content-center align-items-center">
-    <div class="w-50 mx-auto">
-        <div class="card bg-dark">
-            <div class="card-body">
-                <div th:if="${param.error}" class="alert-danger p-1">Ошибка в имени или пароле.</div>
-                <div th:if="${param.logout}" class="alert-info p-1">Вы вышли.</div>
-                <form action="/login" method="post">
-                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <label for="username">Имя</label>
-                            <input id="username" type="text" name="username" class="form-control" autofocus/>
-                        </div>
-                        <div class="col-md-5">
-                            <label for="password">Пароль</label>
-                            <input id="password" type="password" name="password" class="form-control"/>
-                        </div>
-                        <div class="col-lg-2 align-self-end">
-                            <input type="submit" class="btn btn-outline-success" value="Войти"/>
-                        </div>
+    <div class="card bg-dark w-50 mx-auto">
+        <div class="card-body">
+            <div th:if="${param.error}" class="alert-danger p-1">Ошибка в имени или пароле.</div>
+            <div th:if="${param.logout}" class="alert-info p-1">Вы вышли.</div>
+            <form action="/login" method="post">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="username">Имя</label>
+                        <input id="username" type="text" name="username" class="form-control" autofocus/>
                     </div>
-                </form>
-            </div>
+                    <div class="col-md-5">
+                        <label for="password">Пароль</label>
+                        <input id="password" type="password" name="password" class="form-control"/>
+                    </div>
+                    <div class="col-lg-2 align-self-end">
+                        <input type="submit" class="btn btn-outline-success" value="Войти"/>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

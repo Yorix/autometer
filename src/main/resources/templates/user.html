@@ -8,61 +8,58 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="card bg-dark">
+<div class="card bg-dark w-75 mx-auto">
+    <div class="card-header row mx-1">
+        <div th:text="${user.username}" class="col header-text"></div>
+        <div class="col text-right">
+            <form method="post" th:action="|/user/${user.id}|">
+                <input type="hidden" name="_method" value="delete"/>
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <input type="submit" class="btn btn-outline-danger" value="&#10008;"/>
+            </form>
+        </div>
+    </div>
 
-        <div class="card-header row mx-1">
-            <div th:text="${user.username}" class="col header-text"></div>
-            <div class="col text-right">
-                <form method="post" th:action="|/user/${user.id}|">
-                    <input type="hidden" name="_method" value="delete"/>
-                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                    <input type="submit" class="btn btn-outline-danger" value="&#10008;"/>
-                </form>
+    <form method="post" th:action="|/user/${user.id}|">
+        <input type="hidden" name="_method" value="put"/>
+        <input type="hidden" name="_csrf" th:name="${_csrf.token}"/>
+
+        <div class="card-body px-5">
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="password">Пароль</label>
+                    <input id="password" type="password" name="password" class="form-control"
+                           th:classappend="(${passwordError}or${passConfirmError})?'is-invalid':''"/>
+                    <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
+                </div>
+                <div class="col">
+                    <label for="passwordConfirm">Повторите пароль</label>
+                    <input id="passwordConfirm" type="password" name="passwordConfirm" class="form-control"
+                           th:classappend="${passConfirmError}?'is-invalid'"/>
+                    <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
+                </div>
             </div>
+            <div th:each="role:${roles}" sec:authorize="hasAuthority('ADMIN')">
+                <label>
+                    <input type="checkbox" th:name="${role.name()}"
+                           th:checked="${#lists.contains(user.roles, role)}"/>
+                    <span th:text="${role}"></span>
+                </label>
+            </div>
+            <div class="alert-danger" th:if="${accessError}" th:text="${accessError}"></div>
         </div>
 
-        <form method="post" th:action="|/user/${user.id}|">
-            <input type="hidden" name="_method" value="put"/>
-            <input type="hidden" name="_csrf" th:name="${_csrf.token}"/>
-
-            <div class="card-body px-5">
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="password">Пароль</label>
-                        <input id="password" type="password" name="password" class="form-control"
-                               th:classappend="(${passwordError}or${passConfirmError})?'is-invalid':''"/>
-                        <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
-                    </div>
-                    <div class="col">
-                        <label for="passwordConfirm">Повторите пароль</label>
-                        <input id="passwordConfirm" type="password" name="passwordConfirm" class="form-control"
-                               th:classappend="${passConfirmError}?'is-invalid'"/>
-                        <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
-                    </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col">
+                    <a href="/user" class="btn btn-outline-light"><< Назад</a>
                 </div>
-                <div th:each="role:${roles}" sec:authorize="hasAuthority('ADMIN')">
-                    <label>
-                        <input type="checkbox" th:name="${role.name()}"
-                               th:checked="${#lists.contains(user.roles, role)}"/>
-                        <span th:text="${role}"></span>
-                    </label>
-                </div>
-                <div class="alert-danger" th:if="${accessError}" th:text="${accessError}"></div>
-            </div>
-
-            <div class="card-footer">
-                <div class="row">
-                    <div class="col">
-                        <a href="/user" class="btn btn-outline-light"><< Назад</a>
-                    </div>
-                    <div class="col text-right">
-                        <input type="submit" class="btn btn-outline-success" value="Подтвердить >>"/>
-                    </div>
+                <div class="col text-right">
+                    <input type="submit" class="btn btn-outline-success" value="Подтвердить >>"/>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
 <div th:insert="~{parts/header-menu :: menu}"></div>

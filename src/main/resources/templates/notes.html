@@ -7,94 +7,96 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="card bg-dark">
-        <div class="card-header" th:object="${car}">
+<div class="mx-5 mb-3 text-right header-text">
+    Баланс
+</div>
+
+<div class="card bg-dark w-75 mx-auto">
+    <div class="card-header" th:object="${car}">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="mb-5">
+                    <span class="header-text" th:text="|*{make} *{model} *{year}|"></span>
+                </div>
+                <a th:href="|/car/*{id}|" class="btn btn-outline-light"><< Назад</a>
+            </div>
+            <div class="col-lg-4">
+                <a href="#" class="modal-show"
+                   th:data-content="'<img class=\'modal-img\' src=\'/img/'+*{currentImg}+'\'/>'">
+                    <img th:src="|/img/*{currentImg}|" style="max-height: 170px;" src="#" alt="#"
+                         title="Увеличить"/>
+                </a>
+            </div>
+            <div class="col-lg-4">
+                <table>
+                    <tr>
+                        <td>Расходы:</td>
+                        <td class="money" th:text="*{spending}"></td>
+                    </tr>
+                    <tr th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
+                        <td>Выручка:</td>
+                        <td class="money" th:text="*{income}"></td>
+                    </tr>
+                    <tr th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
+                        <td>Прибыль:</td>
+                        <td class="money" th:text="*{spending+income}"></td>
+                    </tr>
+                    <tr>
+                        <td>+30% от расходов:</td>
+                        <td class="money gray-white" th:text="*{spending*-1+spending*-0.3}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div th:insert="~{parts/new-note :: create}"></div>
+
+        <div th:each="note:${notes}" class="card px-3 bg-dark selectable">
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="mb-5">
-                        <span class="header-text" th:text="|*{make} *{model} *{year}|"></span>
-                    </div>
-                    <a th:href="|/car/*{id}|" class="btn btn-outline-light"><< Назад</a>
-                </div>
-                <div class="col-lg-4">
-                    <a href="#" class="modal-show"
-                       th:data-content="'<img class=\'modal-img\' src=\'/img/'+*{currentImg}+'\'/>'">
-                        <img th:src="|/img/*{currentImg}|" style="max-height: 170px;" src="#" alt="#"
-                             title="Увеличить"/>
-                    </a>
-                </div>
-                <div class="col-lg-4">
-                    <table>
-                        <tr>
-                            <td>Расходы:</td>
-                            <td class="money" th:text="*{spending}"></td>
-                        </tr>
-                        <tr th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
-                            <td>Выручка:</td>
-                            <td class="money" th:text="*{income}"></td>
-                        </tr>
-                        <tr th:if="${roles.contains('ADMIN')||roles.contains('POWER')}">
-                            <td>Прибыль:</td>
-                            <td class="money" th:text="*{spending+income}"></td>
-                        </tr>
-                        <tr>
-                            <td>+30% от расходов:</td>
-                            <td class="money gray-white" th:text="*{spending*-1+spending*-0.3}"></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-
-            <div th:insert="~{parts/new-note :: create}"></div>
-
-            <div class="card px-3 bg-dark selectable" th:each="note:${notes}">
-                <div class="row">
-                    <div class="col-11">
-                        <form method="post" th:action="|/car/${car.id}/note/${note.id}|" th:object="${note}">
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                            <input type="hidden" name="_method" value="put"/>
-                            <div class="row">
-                                <div class="col-3">
-                                    <input type="date" th:id="|input-date-*{id}|" name="date" th:value="*{date}"
-                                           class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                                </div>
-                                <div class="col-6">
-                                    <input type="text" th:id="|input-desc-*{id}|" name="description"
-                                           th:value="*{description}"
-                                           class="bg-dark text-light read-only-input" readonly/>
-                                </div>
-                                <div class="col-2">
-                                    <input th:id="|input-value-*{id}|" oninput="cuttingDecimalPlaces(this)"
-                                           type="number" step="0.01" min="-9999999" max="9999999"
-                                           class="bg-dark text-light read-only-input money" name="value"
-                                           th:value="*{value}" readonly/>
-                                </div>
-                                <div class="col-1" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
-                                    <input th:id="|btn-change-*{id}|" type="button"
-                                           th:onclick="|clickChange(${note.id})|"
-                                           class="btn btn-outline-warning btn-sm" value="<<"/>
-                                    <input th:id="|btn-submit-*{id}|" type="submit"
-                                           class="btn btn-outline-success btn-sm" style="display: none" value=">>"/>
-                                </div>
+                <div class="col-11">
+                    <form method="post" th:action="|/car/${car.id}/note/${note.id}|" th:object="${note}">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                        <input type="hidden" name="_method" value="put"/>
+                        <div class="row">
+                            <div class="col-3">
+                                <input type="date" th:id="|input-date-*{id}|" name="date" th:value="*{date}"
+                                       class="form-control-sm bg-dark text-light read-only-input" readonly/>
                             </div>
-                        </form>
-                    </div>
-                    <div class="col-1" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
-                        <form method="post" th:action="|/car/${car.id}/note/${note.id}|">
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                            <input type="hidden" name="_method" value="delete"/>
-                            <input type="submit" class="btn btn-outline-danger btn-sm" value="&#10008;"/>
-                        </form>
-                    </div>
+                            <div class="col-6">
+                                <input type="text" th:id="|input-desc-*{id}|" name="description"
+                                       th:value="*{description}"
+                                       class="bg-dark text-light read-only-input" readonly/>
+                            </div>
+                            <div class="col-2">
+                                <input th:id="|input-value-*{id}|" oninput="cuttingDecimalPlaces(this)"
+                                       type="number" step="0.01" min="-9999999" max="9999999"
+                                       class="bg-dark text-light read-only-input money" name="value"
+                                       th:value="*{value}" readonly/>
+                            </div>
+                            <div class="col-1" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
+                                <input th:id="|btn-change-*{id}|" type="button"
+                                       th:onclick="|clickChange(${note.id})|"
+                                       class="btn btn-outline-warning btn-sm" value="<<"/>
+                                <input th:id="|btn-submit-*{id}|" type="submit"
+                                       class="btn btn-outline-success btn-sm" style="display: none" value=">>"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-1" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
+                    <form method="post" th:action="|/car/${car.id}/note/${note.id}|">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="submit" class="btn btn-outline-danger btn-sm" value="&#10008;"/>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="card-footer">
-            <a th:href="|/car/${car.id}|" class="btn btn-outline-light"><< Назад</a>
-        </div>
+    </div>
+    <div class="card-footer">
+        <a th:href="|/car/${car.id}|" class="btn btn-outline-light"><< Назад</a>
     </div>
 </div>
 

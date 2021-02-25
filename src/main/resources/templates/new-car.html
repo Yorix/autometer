@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div class="mx-5 text-right header-text">
+<div class="mx-5 mb-3 text-right header-text">
     Новое авто
 </div>
 
@@ -36,45 +36,43 @@
 <!--    </div>-->
 <!--</div>-->
 
-<div class="container my-3">
-    <div class="card bg-dark">
-        <div class="card-header">
-            <h5 id="header">Марка, модель, год выпуска</h5>
-        </div>
-        <div class="card-body">
-            <form id="form-add-car" action="/car" method="post" th:object="${car}">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <div class="form-group row">
-                    <div class="col">
-                        <label for="input-make">Марка</label>
-                        <input id="input-make" type="text" class="form-control" th:field="*{make}"/>
-                    </div>
-                    <div class="col">
-                        <label for="input-model">Модель</label>
-                        <input id="input-model" type="text" class="form-control" th:field="*{model}"/>
-                    </div>
-                    <div class="col">
-                        <label for="input-year">Год выпуска</label>
-                        <input id="input-year" type="number" min="1970" class="form-control" th:field="*{year}"/>
-                    </div>
-                    <div class="col">
-                        <label for="select-user">Владелец</label>
-                        <select id="select-user" class="form-control" name="user">
-                            <option th:each="user:${users}" th:value="${user.id}" th:text="${user.username}"
-                                    th:selected="${user.username.equals('Вячеслав')}"></option>
-                        </select>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="card-footer">
-            <div class="row">
+<div class="card bg-dark w-75 mx-auto">
+    <div class="card-header">
+        <h5 id="header">Марка, модель, год выпуска</h5>
+    </div>
+    <div class="card-body">
+        <form id="form-add-car" action="/car" method="post" th:object="${car}">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <div class="form-group row">
                 <div class="col">
-                    <a href="../" class="btn btn-outline-danger"><< Отмена</a>
+                    <label for="input-make">Марка</label>
+                    <input id="input-make" type="text" class="form-control" th:field="*{make}"/>
                 </div>
-                <div class="col text-right">
-                    <input id="btn-add-submit" type="button" class="btn btn-outline-success" value="Добавить >>"/>
+                <div class="col">
+                    <label for="input-model">Модель</label>
+                    <input id="input-model" type="text" class="form-control" th:field="*{model}"/>
                 </div>
+                <div class="col">
+                    <label for="input-year">Год выпуска</label>
+                    <input id="input-year" type="number" min="1970" class="form-control" th:field="*{year}"/>
+                </div>
+                <div class="col">
+                    <label for="select-user">Владелец</label>
+                    <select id="select-user" class="form-control" name="user">
+                        <option th:each="user:${users}" th:value="${user.id}" th:text="${user.username}"
+                                th:selected="${user.username.equals('Вячеслав')}"></option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col">
+                <a href="../" class="btn btn-outline-danger"><< Отмена</a>
+            </div>
+            <div class="col text-right">
+                <input id="btn-add-submit" type="button" class="btn btn-outline-success" value="Добавить >>"/>
             </div>
         </div>
     </div>
