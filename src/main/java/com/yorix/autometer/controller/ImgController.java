@@ -9,9 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
-import java.util.List;
-
 @Controller
 public class ImgController {
     private final ImgService imgService;
@@ -32,13 +29,13 @@ public class ImgController {
             @PathVariable Car car,
             @PathVariable String album
     ) {
-        imgService.create(file, car, album);
+        imgService.create(car, album, file);
         return "redirect:/car/" + car.getId();
     }
 
     @PostMapping("/auc/{lotId}/img")
     public String createLotImg(@RequestParam("file") MultipartFile file, @PathVariable("lotId") Lot lot) {
-        imgService.create(file, lot);
+        imgService.create(lot, file);
         return "redirect:/auc/" + lot.getId();
     }
 

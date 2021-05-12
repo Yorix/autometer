@@ -13,12 +13,10 @@ import java.util.List;
 @Service
 public class CarService extends AppService {
     private final CarRepository carRepository;
-    private final CarParser carParser;
 
     @Autowired
-    public CarService(CarRepository carRepository, CarParser carParser) {
+    public CarService(CarRepository carRepository) {
         this.carRepository = carRepository;
-        this.carParser = carParser;
     }
 
     public Car read(int id) {
@@ -38,13 +36,8 @@ public class CarService extends AppService {
     public void create(Car car) {
         car.setMake(car.getMake().replaceAll("\\s+", " "));
         car.setModel(car.getModel().replaceAll("\\s+", " "));
-        car.setCurrentImg(getAppProperties().getDefaultImageFilename());
+        car.setCurrentImg(getAppProperties().getDefaultCarImageFilename());
         carRepository.save(car);
-        saveData();
-    }
-
-    public void parse(String vinOrLot, Car car) throws Exception {
-        carParser.parse(vinOrLot, car);
         saveData();
     }
 

@@ -4,19 +4,16 @@ import com.yorix.autometer.errors.StorageException;
 import com.yorix.autometer.model.Car;
 import com.yorix.autometer.model.Img;
 import com.yorix.autometer.model.Lot;
+import com.yorix.autometer.storage.AuctionRepository;
 import com.yorix.autometer.storage.CarRepository;
 import com.yorix.autometer.storage.ImgRepository;
-import com.yorix.autometer.storage.AuctionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +31,7 @@ public class ImgService extends AppService {
         this.auctionRepository = auctionRepository;
     }
 
-    public void create(MultipartFile file, Car car, String album) {
+    public void create(Car car, String album, MultipartFile file) {
         if (StringUtils.isEmpty(file.getOriginalFilename()))
             throw new StorageException("Файл не выбран.");
 
@@ -52,7 +49,7 @@ public class ImgService extends AppService {
         saveData();
     }
 
-    public void create(MultipartFile file, Lot lot) {
+    public void create(Lot lot, MultipartFile file) {
         if (StringUtils.isEmpty(file.getOriginalFilename()))
             throw new StorageException("Файл не выбран.");
 
@@ -60,6 +57,8 @@ public class ImgService extends AppService {
         String filepath = getFilepath(lot, img);
 
         try {
+            File dir = new File(filepath).getParentFile();
+            dir.mkdirs();
             file.transferTo(new File(filepath));
         } catch (IOException e) {
             throw new StorageException("Ошибка загрузки файла " + file.getOriginalFilename(), e);
@@ -85,7 +84,6 @@ public class ImgService extends AppService {
 
     private String getFilepath(Car car, String album, Img img) {
         return getAppProperties().getImageStorageLocation()
-                .concat(File.separator)
                 .concat("car")
                 .concat(File.separator)
                 .concat(Integer.toString(car.getId()))
@@ -98,7 +96,6 @@ public class ImgService extends AppService {
 
     private String getFilepath(Lot lot, Img img) {
         return getAppProperties().getImageStorageLocation()
-                .concat(File.separator)
                 .concat("lot")
                 .concat(File.separator)
                 .concat(Integer.toString(lot.getId()))
@@ -120,12 +117,11 @@ public class ImgService extends AppService {
         Matcher matcher = pattern.matcher(car.getCurrentImg());
 
         if (matcher.find() && img.getId() == Integer.parseInt(matcher.group())) {
-            car.setCurrentImg(getAppProperties().getDefaultImageFilename());
+            car.setCurrentImg(getAppProperties().getDefaultCarImageFilename());
             carRepository.save(car);
         }
 
         File file = new File(getAppProperties().getImageStorageLocation()
-                .concat(File.separator)
                 .concat("car")
                 .concat(File.separator)
                 .concat(Integer.toString(car.getId()))
@@ -140,16 +136,16 @@ public class ImgService extends AppService {
     }
 
     public void delete(int id, Lot lot) {
-        if (id == Integer.parseInt(lot.getCurrentImg().replaceAll("^lot\\d+_|.jpg$|.png$", ""))) {
-            lot.setCurrentImg(getAppProperties().getDefaultImageFilename());
+        if (id == Integer.parseInt(lot.getCurrentImg().replaceAll("^lot/\\d+/|.jpg$|.png$", ""))) {
+            lot.setCurrentImg(getAppProperties().getDefaultCarImageFilename());
             auctionRepository.save(lot);
         }
 
         File file = new File(getAppProperties().getImageStorageLocation()
-                .concat(File.separator)
                 .concat("lot")
+                .concat(File.separator)
                 .concat(Integer.toString(lot.getId()))
-                .concat("_")
+                .concat(File.separator)
                 .concat(Integer.toString(id))
                 .concat(".jpg"));
         file.delete();

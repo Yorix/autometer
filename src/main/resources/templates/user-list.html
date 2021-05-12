@@ -6,62 +6,67 @@
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
-
-<div class="mx-5 mb-3 text-right header-text">
-    Пользователи
-</div>
-
-<div class="card bg-dark w-75 mx-auto">
-    <div class="card-header">
-        <h5>Регистрация нового пользователя</h5>
-        <form method="post">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-            <div class="form-group row">
-                <div class="col-md-5">
-                    <label for="username">Имя пользователя</label>
-                    <input id="username" name="username" type="text" class="form-control"
-                           th:classappend="(${userExistsError}or${usernameError})?'is-invalid':''"/>
-                    <div class="invalid-feedback" th:if="${userExistsError}" th:text="${userExistsError}"></div>
-                    <div class="invalid-feedback" th:if="${usernameError}" th:text="${usernameError}"></div>
-                </div>
-                <div class="col-md-3">
-                    <label for="password">Пароль</label>
-                    <input id="password" name="password" type="password" class="form-control"
-                           th:classappend="(${passConfirmError}or${passwordError})?'is-invalid':''"/>
-                    <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
-                </div>
-                <div class="col-md-3">
-                    <label for="passwordConfirm">Повторите&nbsp;пароль</label>
-                    <input id="passwordConfirm" name="passwordConfirm" type="password" class="form-control"
-                           th:classappend="${passConfirmError}?'is-invalid'"/>
-                    <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
-                </div>
-                <div class="col-md-1 align-self-end">
-                    <input type="submit" class="btn btn-outline-success" value=">>"/>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="card-body">
-        <a href="/user/get-visits?from=&to=" class="btn btn-outline-light">Активность</a>
-        <div class="card px-3 bg-dark selectable" th:each="user:${users}">
-            <a href="#" th:href="|/user/${user.id}|">
-                <div class="row">
-                    <div class="col-4" th:text="${user.username}"></div>
-                    <div class="col-8">
-                        <span th:each="role:${user.roles}" th:text="${role}" class="mr-4"></span>
-                    </div>
-                </div>
-            </a>
+<div class="w-75">
+    <div class="tabs">
+        <div class="tab">
+            <h2>Пользователи</h2>
         </div>
     </div>
-    <div class="card-footer">
-        <a href="../" class="btn btn-outline-light"><< Назад</a>
-    </div>
-</div>
+    <main class="card">
+        <div class="card-header">
+            <div>
+                <h3>Регистрация нового пользователя</h3>
+                <form method="post" class="row collapsing">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                    <div class="f4 bot">
+                        <div class="alert-danger" th:if="${userExistsError}" th:text="${userExistsError}"></div>
+                        <div class="alert-danger" th:if="${usernameError}" th:text="${usernameError}"></div>
+                        <label for="username">Имя пользователя</label>
+                        <input id="username" name="username" type="text"
+                               th:classappend="(${userExistsError}or${usernameError})?'is-invalid':''"/>
+                    </div>
+                    <div class="f4 bot">
+                        <div class="alert-danger" th:if="${passwordError}" th:text="${passwordError}"></div>
+                        <label for="password">Пароль</label>
+                        <input id="password" name="password" type="password" class="form-control"
+                               th:classappend="(${passConfirmError}or${passwordError})?'is-invalid':''"/>
+                    </div>
+                    <div class="f4 bot">
+                        <div class="alert-danger" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
+                        <label for="passwordConfirm">Повторите&nbsp;пароль</label>
+                        <input id="passwordConfirm" name="passwordConfirm" type="password" class="form-control"
+                               th:classappend="${passConfirmError}?'is-invalid'"/>
+                    </div>
+                    <div class="f1 bot">
+                        <input type="submit" class="btn outline green" value=">>"/>
+                    </div>
+                </form>
+            </div>
+            <div class="right top">
+                <a href="/user/get-visits?from=&to=" class="btn outline">Активность</a>
+            </div>
+        </div>
 
-<div th:insert="~{parts/header-menu :: menu}"></div>
+        <div class="card-body">
+            <div class="card selectable" th:each="user:${users}">
+                <a class="row" href="#" th:href="|/user/${user.id}|">
+                    <div class="f1">
+                        <img th:src="|/img/${user.currentImg}|" src="#" alt="Фото" title="Фото"
+                             style="max-width: 100%; max-height: 100px;"/>
+                    </div>
+                    <div class="f4">
+                        <div th:text="${user.username}" class="u"></div>
+                        <div th:each="role:${user.roles}" th:text="${role}"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="../" class="btn outline"><< Назад</a>
+        </div>
+    </main>
+</div>
+<nav th:insert="~{parts/header-menu :: menu}"></nav>
 
 <script src="/js/app.js"></script>
 </body>

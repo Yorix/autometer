@@ -19,6 +19,9 @@ public class Img {
     @JoinColumn(name = "lot_id")
     private Lot lot;
 
-    @Column(nullable = false)
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private String album;
 }

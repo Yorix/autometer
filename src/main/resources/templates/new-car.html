@@ -6,79 +6,52 @@
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
-
-<div class="mx-5 mb-3 text-right header-text">
-    Новое авто
-</div>
-
-<!--<div class="container my-3">-->
-<!--    <div class="card bg-dark">-->
-<!--        <div class="card-header">-->
-<!--            <h5>Загрузить по VIN или номеру лота</h5>-->
-<!--        </div>-->
-<!--        <div class="card-body">-->
-<!--            <form id="form-parse-car" action="/car/parse" method="post">-->
-<!--                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>-->
-<!--                <input disabled type="text" name="vinOrLot" class="form-control" placeholder="VIN-код или номер лота"/>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--        <div class="card-footer">-->
-<!--            <div class="row">-->
-<!--                <div class="col">-->
-<!--                    <a href="../" class="btn btn-outline-danger"><< Отмена</a>-->
-<!--                </div>-->
-<!--                <div class="col text-right">-->
-<!--                    <input disabled form="form-parse-car" type="submit" class="btn btn-outline-success"-->
-<!--                           value="Загрузить >>"/>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<div class="card bg-dark w-75 mx-auto">
-    <div class="card-header">
-        <h5 id="header">Марка, модель, год выпуска</h5>
+<div class="w-75">
+    <div class="tabs">
+        <a class="tab" href="/car/new-car"
+           th:classappend="${#httpServletRequest.requestURI.equals('/car/new-car')?'disabled active':null}">
+            <h2>Новое авто</h2>
+        </a>
+        <a class="tab" href="/auc/new-lot"
+           th:classappend="${#httpServletRequest.requestURI.equals('/auc/new-lot')?'disabled active':null}">
+            <h2>Новый лот</h2>
+        </a>
     </div>
-    <div class="card-body">
-        <form id="form-add-car" action="/car" method="post" th:object="${car}">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-            <div class="form-group row">
-                <div class="col">
-                    <label for="input-make">Марка</label>
-                    <input id="input-make" type="text" class="form-control" th:field="*{make}"/>
+    <main class="card">
+        <div class="card-header">
+            <h3 id="header">Марка, модель, год выпуска</h3>
+        </div>
+        <div class="card-body">
+            <form class="row collapsing p-1" id="form-add-car" action="/car" method="post" th:object="${car}">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <div class="f2">
+                    <label for="input-make">Марка:</label>
+                    <input id="input-make" type="text" th:field="*{make}"/>
                 </div>
-                <div class="col">
-                    <label for="input-model">Модель</label>
-                    <input id="input-model" type="text" class="form-control" th:field="*{model}"/>
+                <div class="f2">
+                    <label for="input-model">Модель:</label>
+                    <input id="input-model" type="text" th:field="*{model}"/>
                 </div>
-                <div class="col">
-                    <label for="input-year">Год выпуска</label>
-                    <input id="input-year" type="number" min="1970" class="form-control" th:field="*{year}"/>
+                <div class="f1">
+                    <label for="input-year">Год&nbsp;выпуска:</label>
+                    <input id="input-year" type="number" min="1970" th:field="*{year}"/>
                 </div>
-                <div class="col">
-                    <label for="select-user">Владелец</label>
-                    <select id="select-user" class="form-control" name="user">
+                <div class="f1">
+                    <label for="select-user">Владелец:</label>
+                    <select id="select-user" name="user">
                         <option th:each="user:${users}" th:value="${user.id}" th:text="${user.username}"
                                 th:selected="${user.username.equals('Вячеслав')}"></option>
                     </select>
                 </div>
-            </div>
-        </form>
-    </div>
-    <div class="card-footer">
-        <div class="row">
-            <div class="col">
-                <a href="../" class="btn btn-outline-danger"><< Отмена</a>
-            </div>
-            <div class="col text-right">
-                <input id="btn-add-submit" type="button" class="btn btn-outline-success" value="Добавить >>"/>
-            </div>
+            </form>
         </div>
-    </div>
+        <div class="card-footer">
+            <a href="../" class="btn outline red"><< Отмена</a>
+            <input id="btn-add-submit" type="button" class="btn outline green right" value="Добавить >>"/>
+        </div>
+    </main>
 </div>
-
-<div th:insert="~{parts/header-menu :: menu}"></div>
+<nav th:insert="~{parts/header-menu :: menu}"></nav>
 
 <script src="/js/new-car.js"></script>
 <script src="/js/app.js"></script>

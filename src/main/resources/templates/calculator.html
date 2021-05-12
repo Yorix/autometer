@@ -6,67 +6,61 @@
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
-
-<div class="mx-5 mb-3 text-right header-text">
-    Калькулятор
-</div>
-<div class="card bg-dark w-75 mx-auto">
-    <div class="card-header">
-        <div class="row">
-            <div class="col-md-2 px-1">
+<div class="w-75">
+    <div class="tabs">
+        <div class="tab">
+            <h2>Калькулятор</h2>
+        </div>
+    </div>
+    <main class="card">
+        <div class="card-header row collapsing">
+            <div class="f1">
                 <label for="input-year-of-issue">Год&nbsp;выпуска</label>
-                <input id="input-year-of-issue" type="number" min="1970" class="form-control"/>
+                <input id="input-year-of-issue" type="number" min="1970"/>
             </div>
-            <div class="col-md-2 px-1">
+            <div class="f1">
                 <label for="input-volume">Объём</label>
-                <input id="input-volume" type="number" step="0.001" min="0" max="20" class="form-control">
+                <input id="input-volume" type="number" step="0.001" min="0" max="20">
             </div>
-            <div class="col-md-2 px-1">
+            <div class="f1">
                 <label for="input-additional-sum">Сумма&nbsp;начисления</label>
                 <input id="input-additional-sum" type="number" step="0.01" min="0" max="9999999"
-                       class="form-control" oninput="cuttingDecimalPlaces(this)"/>
+                       oninput="cuttingDecimalPlaces(this)"/>
             </div>
-            <div class="col-md-2 px-1">
-
-            </div>
-            <div class="col-md-2 px-1">
+            <div class="f1"></div>
+            <div class="f1">
                 <label for="input-usd">Доллар</label>
-                <input id="input-usd" type="number" step="0.01" min="0" max="999"
-                       class="form-control" th:value="${usd}"/>
+                <input id="input-usd" type="number" step="0.01" min="0" max="999" th:value="${usd}"/>
             </div>
-            <div class="col-md-2 px-1">
+            <div class="f1">
                 <label for="input-eur">Евро</label>
-                <input id="input-eur" type="number" step="0.01" min="0" max="999"
-                       class="form-control" th:value="${eur}"/>
+                <input id="input-eur" type="number" step="0.01" min="0" max="999" th:value="${eur}"/>
             </div>
         </div>
-    </div>
-    <div class="card-body">
-        <div class="row selectable">
-            <div class="col text-right">Пошлина</div>
-            <div id="div-duty" class="col money"></div>
+        <div class="card-body">
+            <div class="half selectable">
+                <div class="right">Пошлина:</div>
+                <div id="div-duty" class="money"></div>
+            </div>
+            <div class="half selectable">
+                <div class="right">Акциз:</div>
+                <div id="div-excise" class="money"></div>
+            </div>
+            <div class="half selectable">
+                <div class="right">НДС:</div>
+                <div id="div-vat" class="money"></div>
+            </div>
+            <div class="half selectable">
+                <div class="right">Всего:</div>
+                <div id="div-total" class="money"></div>
+            </div>
         </div>
-        <div class="row selectable">
-            <div class="col text-right">Акциз</div>
-            <div id="div-excise" class="col money"></div>
+        <div class="card-footer">
+            <input type="button" class="btn outline" onclick="window.history.back();" value="<< Назад"/>
         </div>
-        <div class="row selectable">
-            <div class="col text-right">НДС</div>
-            <div id="div-vat" class="col money"></div>
-        </div>
-        <div class="row selectable">
-            <div class="col text-right">Всего</div>
-            <div id="div-total" class="col money"></div>
-        </div>
-    </div>
-    <div class="card-footer">
-        <button type="button" class="btn btn-outline-light" onclick="window.history.back();">
-            << Назад
-        </button>
-    </div>
+    </main>
 </div>
-
-<div th:insert="~{parts/header-menu :: menu}"></div>
+<nav th:insert="~{parts/header-menu :: menu}"></nav>
 
 <script src="/js/calculator.js"></script>
 <script src="/js/app.js"></script>

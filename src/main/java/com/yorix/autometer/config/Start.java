@@ -9,14 +9,14 @@ import com.yorix.autometer.service.AuctionService;
 import com.yorix.autometer.service.UserService;
 import com.yorix.autometer.storage.ParamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
@@ -33,8 +33,9 @@ public class Start {
     private final String adminUsername;
     private final String adminPassword;
     private final long ipsClearTimeSec;
-    @Value("${app.default-image-full-filename}")
-    private Resource defaultImage;
+    private final String defaultCar;
+    private final String defaultUser;
+    private final String providerPath;
 
     @Autowired
     public Start(
@@ -48,6 +49,9 @@ public class Start {
         adminUsername = properties.getAdminUsername();
         adminPassword = properties.getAdminPassword();
         ipsClearTimeSec = properties.getIpsClearTimeSec();
+        defaultCar = properties.getDefaultCarImageFilename();
+        defaultUser = properties.getDefaultUserImageFilename();
+        providerPath = properties.getProviderPath();
         this.paramRepository = paramRepository;
         this.userService = userService;
         this.auctionService = auctionService;
@@ -55,15 +59,24 @@ public class Start {
 
     @PostConstruct
     public void init() throws IOException {
-        Path storageLocation = Paths.get(imgStorageLocation);
-        Path outputFilepath = storageLocation.resolve(defaultImage.getFilename());
-
         Files.createDirectories(Paths.get(dbBackupLocation));
-        Files.createDirectories(storageLocation);
+        Files.createDirectories(Paths.get(imgStorageLocation));
 
-        try (InputStream is = new BufferedInputStream(defaultImage.getInputStream());
-             OutputStream os = new BufferedOutputStream(Files.newOutputStream(outputFilepath))) {
-            os.write(is.readAllBytes());
+        ApplicationContext context = new ClassPathXmlApplicationContext();
+        Resource carResource = context.getResource(providerPath.concat(defaultCar));
+        Resource userResource = context.getResource(providerPath.concat(defaultUser));
+
+        InputStream defaultCarIs = carResource.getInputStream();
+        InputStream defaultUserIs = userResource.getInputStream();
+        OutputStream defaultCarOs = new FileOutputStream(imgStorageLocation.concat(defaultCar));
+        OutputStream defaultUserOs = new FileOutputStream(imgStorageLocation.concat(defaultUser));
+
+        try (InputStream carIs = new BufferedInputStream(defaultCarIs);
+             InputStream userIs = new BufferedInputStream(defaultUserIs);
+             OutputStream carOs = new BufferedOutputStream(defaultCarOs);
+             OutputStream userOs = new BufferedOutputStream(defaultUserOs)) {
+            carOs.write(carIs.readAllBytes());
+            userOs.write(userIs.readAllBytes());
         } catch (IOException e) {
             throw new StorageException("Could not copy default image", e);
         }
@@ -95,6 +108,6 @@ public class Start {
         };
 
         Timer timer = new Timer(true);
-        timer.scheduleAtFixedRate(timerTask, 0,  ipsClearTimeSec * 1000);
+        timer.scheduleAtFixedRate(timerTask, 0, ipsClearTimeSec * 1000);
     }
 }

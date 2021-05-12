@@ -21,16 +21,22 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     @NotBlank(message = "Имя пользователя не может быть пустым.")
     private String username;
+    @Column(nullable = false)
     @NotEmpty(message = "Пароль не может быть пустым.")
     private String password;
+    @Column(nullable = false)
+    private String currentImg;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private List<Car> cars;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Visit> visits;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

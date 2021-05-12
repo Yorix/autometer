@@ -1,8 +1,8 @@
 package com.yorix.autometer.model;
 
 import lombok.Data;
-import lombok.ToString;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;

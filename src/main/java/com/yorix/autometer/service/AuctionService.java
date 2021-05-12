@@ -28,7 +28,7 @@ public class AuctionService extends AppService {
     public void create(Lot lot) {
         lot.setMake(lot.getMake().replaceAll("\\s+", " "));
         lot.setModel(lot.getModel().replaceAll("\\s+", " "));
-        lot.setCurrentImg(getAppProperties().getDefaultImageFilename());
+        lot.setCurrentImg(getAppProperties().getDefaultCarImageFilename());
         auctionRepository.save(lot);
         saveData();
     }

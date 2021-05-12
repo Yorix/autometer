@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Страница пользователя</title>
@@ -8,61 +7,76 @@
 </head>
 <body>
 
-<div class="card bg-dark w-75 mx-auto">
-    <div class="card-header row mx-1">
-        <div th:text="${user.username}" class="col header-text"></div>
-        <div class="col text-right">
-            <form method="post" th:action="|/user/${user.id}|">
-                <input type="hidden" name="_method" value="delete"/>
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <input type="submit" class="btn btn-outline-danger" value="&#10008;"/>
+<div class="tabs">
+    <div class="tab">
+        <h2>Кабинет</h2>
+    </div>
+</div>
+<main class="card">
+    <div class="card-header">
+        <h2 th:text="${user.username}"></h2>
+        <form method="post" th:action="|/user/${user.id}|" sec:authorize="hasAnyAuthority('ADMIN', 'POWER')"
+              onsubmit="return confirm('Вместе с пользователем будут удалены все его авто и их записи. УДАЛИТЬ?')">
+            <input type="hidden" name="_method" value="delete"/>
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <input type="submit" class="btn outline red" value="&#10008;"/>
+        </form>
+    </div>
+
+    <div class="card-body list-grid">
+        <div class="card">
+            <div class="card-header">
+                Фото пользователя
+            </div>
+            <div id="modal" class="modal" onclick="location.href='#close'">
+                <img th:src="|/img/${user.currentImg}|" src="#" alt="#" title="Скрыть"/>
+            </div>
+            <div class="card-body slider">
+                <a href="#modal">
+                    <img th:src="|/img/${user.currentImg}|" src="#" alt="#" title="Увеличить"/>
+                </a>
+            </div>
+                <input form="user" id="input-file" name="file" type="file"/>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                Смена пароля
+            </div>
+            <form id="user" method="post" th:action="|/user/${user.id}|" enctype="multipart/form-data">
+                <input type="hidden" name="_method" value="put"/>
+                <input type="hidden" name="_csrf" th:name="${_csrf.token}"/>
+                <div class="half">
+                    <label for="password" class="right">Пароль:</label>
+                    <input id="password" type="password" name="password"
+                           th:classappend="(${passwordError}or${passConfirmError})?'is-invalid':''"/>
+                    <div class="alert-danger" th:if="${passwordError}" th:text="${passwordError}"></div>
+                </div>
+                <div class="half">
+                    <label for="passwordConfirm" class="right">Повторите пароль:</label>
+                    <input id="passwordConfirm" type="password" name="passwordConfirm"
+                           th:classappend="${passConfirmError}?'is-invalid'"/>
+                    <div class="alert-danger" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
+                </div>
             </form>
+            <div class="card">
+                <div th:each="role:${roles}" sec:authorize="hasAuthority('ADMIN')">
+                    <input form="user" id="role" type="checkbox" th:name="${role.name()}"
+                           th:checked="${#lists.contains(user.roles, role)}"/>
+                    <label for="role" th:text="${role}"></label>
+                </div>
+            </div>
         </div>
     </div>
 
-    <form method="post" th:action="|/user/${user.id}|">
-        <input type="hidden" name="_method" value="put"/>
-        <input type="hidden" name="_csrf" th:name="${_csrf.token}"/>
+    <div class="card-footer">
+        <a href="/user" class="btn outline"><< Назад</a>
+        <div class="alert-danger" th:if="${accessError}" th:text="${accessError}"></div>
+        <input form="user" type="submit" class="btn outline green" value="Подтвердить >>"/>
+    </div>
+</main>
 
-        <div class="card-body px-5">
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="password">Пароль</label>
-                    <input id="password" type="password" name="password" class="form-control"
-                           th:classappend="(${passwordError}or${passConfirmError})?'is-invalid':''"/>
-                    <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
-                </div>
-                <div class="col">
-                    <label for="passwordConfirm">Повторите пароль</label>
-                    <input id="passwordConfirm" type="password" name="passwordConfirm" class="form-control"
-                           th:classappend="${passConfirmError}?'is-invalid'"/>
-                    <div class="invalid-feedback" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
-                </div>
-            </div>
-            <div th:each="role:${roles}" sec:authorize="hasAuthority('ADMIN')">
-                <label>
-                    <input type="checkbox" th:name="${role.name()}"
-                           th:checked="${#lists.contains(user.roles, role)}"/>
-                    <span th:text="${role}"></span>
-                </label>
-            </div>
-            <div class="alert-danger" th:if="${accessError}" th:text="${accessError}"></div>
-        </div>
-
-        <div class="card-footer">
-            <div class="row">
-                <div class="col">
-                    <a href="/user" class="btn btn-outline-light"><< Назад</a>
-                </div>
-                <div class="col text-right">
-                    <input type="submit" class="btn btn-outline-success" value="Подтвердить >>"/>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
-<div th:insert="~{parts/header-menu :: menu}"></div>
+<nav th:insert="~{parts/header-menu :: menu}"></nav>
 
 <script src="/js/app.js"></script>
 </body>

@@ -6,103 +6,99 @@
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
-
-<div class="mx-5 mb-3 text-right header-text">
-    Новый лот
-</div>
-
-<div class="card bg-dark w-75 mx-auto">
-    <div class="card-header">
-        <h5 id="header">Добавить новый лот</h5>
+<div class="w-75">
+    <div class="tabs">
+        <a class="tab" href="/car/new-car"
+           th:classappend="${#httpServletRequest.requestURI.equals('/car/new-car')?'disabled active':null}">
+            <h2>Новое авто</h2>
+        </a>
+        <a class="tab" href="/auc/new-lot"
+           th:classappend="${#httpServletRequest.requestURI.equals('/auc/new-lot')?'disabled active':null}">
+            <h2>Новый лот</h2>
+        </a>
     </div>
-    <div class="card-body">
-        <form id="form-add-car" action="/auc" method="post" th:object="${lot}">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label for="input-make">Марка:</label>
-                    <input id="input-make" type="text" class="form-control" th:field="*{make}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-model">Модель:</label>
-                    <input id="input-model" type="text" class="form-control" th:field="*{model}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-year">Год выпуска:</label>
-                    <input id="input-year" type="number" step="1" min="1970" class="form-control"
-                           th:field="*{year}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-vin">VIN-код:</label>
-                    <input id="input-vin" type="text" class="form-control" th:field="*{vin}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-odometer">Одометр:</label>
-                    <input id="input-odometer" type="number" step="1" class="form-control"
-                           placeholder="миль" th:field="*{odometer}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-engine">Двигатель:</label>
-                    <input id="input-engine" type="number" step=".1" class="form-control"
-                           placeholder="литров" th:field="*{engine}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-fuel">Топливо:</label>
-                    <input id="input-fuel" type="text" class="form-control" th:field="*{fuel}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-drive-line">Привод:</label>
-                    <input id="input-drive-line" type="text" class="form-control" th:field="*{driveLine}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-transmission">Трансмиссия:</label>
-                    <input id="input-transmission" type="text" class="form-control" th:field="*{transmission}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-color">Цвет:</label>
-                    <input id="input-color" type="text" class="form-control" th:field="*{color}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-loss">Урон:</label>
-                    <input id="input-loss" type="text" class="form-control" th:field="*{loss}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-damage">Повреждение:</label>
-                    <input id="input-damage" type="text" class="form-control" th:field="*{damage}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-run-and-drive">Заводится и едет:</label>
-                    <input id="input-run-and-drive" type="text" class="form-control" th:field="*{runAndDrive}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-starts">Заводится:</label>
-                    <input id="input-starts" type="text" class="form-control" th:field="*{starts}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-car-keys">Ключи:</label>
-                    <input id="input-car-keys" type="text" class="form-control" th:field="*{carKeys}"/>
-                </div>
-                <div class="col-4">
-                    <label for="input-current-bid">Начальная ставка:</label>
-                    <input id="input-current-bid" type="number" step=".01" class="form-control"
-                           th:field="*{currentBid}"/>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="card-footer">
-        <div class="row">
-            <div class="col">
-                <a href="../" class="btn btn-outline-danger"><< Отмена</a>
-            </div>
-            <div class="col text-right">
-                <input id="btn-add-submit" type="button" class="btn btn-outline-success" value="Добавить >>"/>
-            </div>
+    <main class="card">
+        <div class="card-header">
+            <h3 id="header">Добавить новый лот</h3>
         </div>
-    </div>
+        <div class="card-body">
+            <form class="list-grid" id="form-add-car" action="/auc" method="post" th:object="${lot}">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <div>
+                    <label for="input-make">Марка:</label>
+                    <input class="w-100" id="input-make" type="text" th:field="*{make}"/>
+                </div>
+                <div>
+                    <label for="input-model">Модель:</label>
+                    <input class="w-100" id="input-model" type="text" th:field="*{model}"/>
+                </div>
+                <div>
+                    <label for="input-year">Год выпуска:</label>
+                    <input class="w-100" id="input-year" type="number" step="1" min="1970" th:field="*{year}"/>
+                </div>
+                <div>
+                    <label for="input-vin">VIN-код:</label>
+                    <input class="w-100" id="input-vin" type="text" th:field="*{vin}"/>
+                </div>
+                <div>
+                    <label for="input-odometer">Одометр:</label>
+                    <input class="w-100" id="input-odometer" type="number" step="1" placeholder="миль"
+                           th:field="*{odometer}"/>
+                </div>
+                <div>
+                    <label for="input-engine">Двигатель:</label>
+                    <input class="w-100" id="input-engine" type="number" step=".1" placeholder="литров"
+                           th:field="*{engine}"/>
+                </div>
+                <div>
+                    <label for="input-fuel">Топливо:</label>
+                    <input class="w-100" id="input-fuel" type="text" th:field="*{fuel}"/>
+                </div>
+                <div>
+                    <label for="input-drive-line">Привод:</label>
+                    <input class="w-100" id="input-drive-line" type="text" th:field="*{driveLine}"/>
+                </div>
+                <div>
+                    <label for="input-transmission">Трансмиссия:</label>
+                    <input class="w-100" id="input-transmission" type="text" th:field="*{transmission}"/>
+                </div>
+                <div>
+                    <label for="input-color">Цвет:</label>
+                    <input class="w-100" id="input-color" type="text" th:field="*{color}"/>
+                </div>
+                <div>
+                    <label for="input-loss">Урон:</label>
+                    <input class="w-100" id="input-loss" type="text" th:field="*{loss}"/>
+                </div>
+                <div>
+                    <label for="input-damage">Повреждение:</label>
+                    <input class="w-100" id="input-damage" type="text" th:field="*{damage}"/>
+                </div>
+                <div>
+                    <label for="input-run-and-drive">Заводится и едет:</label>
+                    <input class="w-100" id="input-run-and-drive" type="text" th:field="*{runAndDrive}"/>
+                </div>
+                <div>
+                    <label for="input-starts">Заводится:</label>
+                    <input class="w-100" id="input-starts" type="text" th:field="*{starts}"/>
+                </div>
+                <div>
+                    <label for="input-car-keys">Ключи:</label>
+                    <input class="w-100" id="input-car-keys" type="text" th:field="*{carKeys}"/>
+                </div>
+                <div>
+                    <label for="input-current-bid">Начальная ставка:</label>
+                    <input class="w-100" id="input-current-bid" type="number" step=".01" th:field="*{currentBid}"/>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <a href="../" class="btn outline red"><< Отмена</a>
+            <input id="btn-add-submit" type="button" class="btn outline green right" value="Добавить >>"/>
+        </div>
+    </main>
 </div>
-
-<div th:insert="~{parts/header-menu :: menu}"></div>
+<nav th:insert="~{parts/header-menu :: menu}"></nav>
 
 <script src="/js/new-car.js"></script>
 <script src="/js/app.js"></script>

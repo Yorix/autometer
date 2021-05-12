@@ -6,43 +6,44 @@
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
-
-<div class="mx-5 mb-3 text-right header-text">
-    Посещения
-</div>
-
-<div class="card bg-dark w-50 mx-auto">
-    <div class="card-header">
-        <h5>Активность пользователей</h5>
-        <form>
-            <label>от
-                <input type="datetime-local" name="from" th:value="${from}" class="form-control-sm bg-dark text-light">
-            </label>
-            <label>до
-                <input type="datetime-local" name="to" th:value="${to}" class="form-control-sm bg-dark text-light">
-            </label>
-            <input type="submit" value="показать" class="btn btn-sm btn-outline-light">
-        </form>
-    </div>
-
-    <div class="card-body">
-        <div class="card px-3 bg-dark selectable" th:each="visit:${visits}">
-            <div class="float-row">
-                <div th:text="${#temporals.format(visit.time, 'dd.MM.yyyy HH:mm:ss')}"></div>
-                <span>
-                    <a href="#" th:href="|/user/${visit.user.id}|">
-                        <div th:text="${visit.user.username}"></div>
-                    </a>
-                </span>
-            </div>
+<div class="w-75">
+    <div class="tabs">
+        <div class="tab">
+            <h2>Посещения</h2>
         </div>
     </div>
-    <div class="card-footer">
-        <a href="../" class="btn btn-outline-light"><< Назад</a>
-    </div>
-</div>
+    <main class="card">
+        <div class="card-header">
+            <div>
+                <h3>Активность пользователей</h3>
+                <a href="/user" class="btn outline"><< Назад</a>
+            </div>
+            <form>
+                <label>от
+                    <input type="datetime-local" name="from" th:value="${from}"
+                           class="form-control-sm bg-dark text-light">
+                </label>
+                <label>до
+                    <input type="datetime-local" name="to" th:value="${to}" class="form-control-sm bg-dark text-light">
+                </label>
+                <input type="submit" value="показать" class="btn outline">
+            </form>
+        </div>
 
-<div th:insert="~{parts/header-menu :: menu}"></div>
+        <div class="card-body">
+            <div class="card selectable" th:each="visit:${visits}">
+                <div class="row">
+                    <div class="f1" th:text="${#temporals.format(visit.time, 'dd.MM.yyyy HH:mm:ss')}"></div>
+                    <a class="f4" href="#" th:href="|/user/${visit.user.id}|" th:text="${visit.user.username}"></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="/user" class="btn outline"><< Назад</a>
+        </div>
+    </main>
+</div>
+<nav th:insert="~{parts/header-menu :: menu}"></nav>
 
 <script src="/js/app.js"></script>
 </body>

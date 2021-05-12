@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface ImgRepository extends JpaRepository<Img, Integer> {
     List<Img> readAllByCar(Car car);
-
-    void deleteAllByCar(Car car);
 }

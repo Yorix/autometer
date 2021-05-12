@@ -66,7 +66,7 @@ public abstract class AppService {
     }
 
     void saveData() {
-        String filename = appProperties.getDbBackupLocation() + "/autometer_"
+        String filename = appProperties.getDbBackupLocation() + "autometer_"
                 + LocalDateTime.now().format(DateTimeFormatter.ofPattern(appProperties.getDbFilenameTimeFormat()))
                 + ".sql";
         String[] command = {

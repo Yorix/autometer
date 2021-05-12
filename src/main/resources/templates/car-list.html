@@ -1,35 +1,41 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Список автомобилей</title>
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
-<div class="mx-5 row">
-    <div class="col-1">
-        <a href="/car/new-car" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}" class="btn btn-outline-success">&#10010;</a>
-    </div>
-    <div class="col-11 text-right header-text">
-        <a href="/car/order" class="ml-3"
-           th:classappend="${#httpServletRequest.requestURI.equals('/car/order')?'disabled':null}"
-           sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">Заказы</a>
-        <a href="/car" class="ml-3"
-           th:classappend="${#httpServletRequest.requestURI.equals('/car')?'disabled':null}">Мои авто</a>
+
+<div class="tabs">
+    <a class="tab" href="/car"
+       th:classappend="${#httpServletRequest.requestURI.equals('/car')?'disabled active':null}">
+        <h2>Мои авто</h2>
+    </a>
+    <a class="tab" href="/car/order"
+       th:classappend="${#httpServletRequest.requestURI.equals('/car/order')?'disabled active':null}"
+       sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+        <h2>Заказы</h2>
+    </a>
+    <div>
+        <a class="btn green outline" href="/car/new-car" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+            <b>+</b>
+        </a>
     </div>
 </div>
-
-<div class="m-3">
-    <div th:insert="~{parts/car-list :: list(-1, 1)}"></div>
-    <div th:if="${#httpServletRequest.requestURI.equals('/car')}"
-         class="text-center text-secondary border-secondary border-top border-bottom">
-        Продано
+<main>
+    <div class="list-grid">
+        <div th:each="car:${cars.?[income==0]}" th:insert="~{parts/car-card :: car}"></div>
     </div>
-    <div th:insert="~{parts/car-list :: list(1, 0)}"></div>
-</div>
+    <div th:if="${#httpServletRequest.requestURI.equals('/car')}" class="sold"
+         sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">Продано
+    </div>
+    <div class="list-grid">
+        <div th:each="car:${cars.?[income>0]}" th:insert="~{parts/car-card :: car}"></div>
+    </div>
+</main>
 
-<div th:insert="~{parts/header-menu :: menu}"></div>
+<nav th:insert="~{parts/header-menu :: menu}"></nav>
 
 <script src="/js/app.js"></script>
 </body>

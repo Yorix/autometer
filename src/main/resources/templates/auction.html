@@ -7,39 +7,37 @@
 </head>
 <body>
 
-<div class="mx-5 row">
-    <div class="col-1">
-        <a href="/auc/new-lot" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}" class="btn btn-outline-success">&#10010;</a>
+<div class="tabs">
+    <div class="tab">
+        <h2>Аукцион</h2>
     </div>
-    <div class="col-11 text-right header-text">
-        Аукцион
+    <div>
+        <a class="btn green outline" href="/auc/new-lot"
+           sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+            <b>+</b>
+        </a>
     </div>
 </div>
-
-<div class="m-3 row">
-    <div class="container col-lg-4 my-3" th:each="lot:${lots}">
-        <a th:href="|/auc/${lot.id}|" th:object="${lot}">
-            <div class="card bg-dark selectable">
-                <div class="card-header">
-                    <div th:text="|*{make} *{model} *{year}|"></div>
-                </div>
-                <div class="card-body text-center img-wrapper" style="padding-top: 50%;">
-                    <img th:src="|/img/lot/*{currentImg}|" class="img-inner" src="#" alt="#">
-                </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col text-left money" th:text="${lot.currentBid}" title="Текущая ставка"></div>
-                        <div sec:authorize="${hasAnyAuthority('ADMIN', 'POWER')}" class="col text-right gray-white" title="Телефон последнего участника"
-                             th:if="${lot.userPhone}" th:text="'+380&nbsp;'+${lot.userPhone.replaceAll('\s', '&nbsp;').replaceAll('-', '&#8209;')}">
-                        </div>
-                    </div>
+<main>
+    <div class="list-grid">
+        <a class="card selectable" th:each="lot:${lots}" th:href="|/auc/${lot.id}|" th:object="${lot}">
+            <div class="card-header" th:text="|*{make} *{model} *{year}|"></div>
+            <div class="card-body h-center img-wrapper">
+                <img th:src="|/img/*{currentImg}|" class="img-inner" src="#" alt="#">
+            </div>
+            <div class="card-footer row jc-sb">
+                <div class="money" th:text="*{currentBid}" title="Текущая ставка"></div>
+                <div sec:authorize="hasAnyAuthority('ADMIN', 'POWER')" class="right gray-white"
+                     title="Телефон последнего участника"
+                     th:if="*{userPhone}"
+                     th:text="'+380&nbsp;'+*{userPhone.replaceAll('\s', '&nbsp;').replaceAll('-', '&#8209;')}">
                 </div>
             </div>
         </a>
     </div>
-</div>
+</main>
 
-<div th:insert="~{parts/header-menu :: menu}"></div>
+<nav th:insert="~{parts/header-menu :: menu}"></nav>
 
 <script src="/js/app.js"></script>
 </body>

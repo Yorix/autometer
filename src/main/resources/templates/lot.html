@@ -7,224 +7,193 @@
 </head>
 <body>
 
-<div class="mx-5 text-right header-text">
-    Аукцион
+<div class="tabs">
+    <div class="tab">
+        <h2>Аукцион</h2>
+    </div>
 </div>
-
-<div class="card bg-dark" th:object="${lot}">
-    <form id="changeLot" method="post">
-        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-        <input type="hidden" name="_method" value="put"/>
-    </form>
-    <form id="deleteLot" method="post">
-        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-        <input type="hidden" name="_method" value="delete"/>
-    </form>
-    <div class="card-header py-0">
-        <div class="row">
-            <div class="col-9 d-flex align-items-center justify-content-between">
-                <input form="changeLot" type="text" name="make" th:value="*{make}"
-                       class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
-                <input form="changeLot" type="text" name="model" th:value="*{model}"
-                       class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
-                <input form="changeLot" type="number" min="1970" name="year" th:value="*{year}"
-                       class="form-control-lg bg-dark text-light read-only-input header-text" readonly/>
-            </div>
-            <div class="col-3 d-flex align-items-center justify-content-end flex-wrap"
-                 sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
-                <input form="changeLot" id="btn-change" type="button" onclick="clickChangeCar()"
-                       class="btn btn-outline-warning" style="display: inline-block" value="<< править"/>
-                <input form="changeLot" id="btn-submit" type="submit"
-                       class="btn btn-outline-success" style="display: none" value="сохранить >>"/>
-                <input form="deleteLot" id="btn-delete" type="button" th:onclick="clickDeleteCar()"
-                       class="btn btn-outline-danger ml-2" style="display: inline-block" value="&#10008; удалить"/>
-            </div>
+<main class="card" th:object="${lot}">
+    <div class="card-header">
+        <form id="changeLot" method="post">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <input type="hidden" name="_method" value="put"/>
+        </form>
+        <form id="deleteLot" method="post" onsubmit="return confirm('Вы действительно хотите удалить машину?');">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <input type="hidden" name="_method" value="delete"/>
+        </form>
+        <input form="changeLot" type="text" name="make" th:value="*{make}"
+               class="read-only-input h2" readonly/>
+        <input form="changeLot" type="text" name="model" th:value="*{model}"
+               class="read-only-input h2" readonly/>
+        <input form="changeLot" type="number" min="1970" name="year" th:value="*{year}"
+               class="read-only-input h2" readonly/>
+        <div class="v-center row nowrap jc-sb" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+            <input form="changeLot" id="btn-change" type="button" onclick="clickChangeCar()"
+                   class="btn outline yellow" value="<< править"/>
+            <input form="changeLot" id="btn-submit" type="submit"
+                   class="btn outline green" style="display: none" value="сохранить >>"/>
+            <input form="deleteLot" type="submit" class="btn outline red" value="&#10008; удалить"/>
         </div>
     </div>
-    <div class="card-body bg-darkgray">
-        <div class="row">
-            <div id="carousel" class="col-xl carousel slide" data-interval="false">
-                <div class="carousel-inner img-wrapper" role="listbox">
-                    <div class="carousel-item active img-inner" th:if="${lot.currentImg.equals('0_0.png')}">
-                        <img class="d-block" src="/img/0_0.png" alt="#" style="width: 100%"/>
-                    </div>
-                    <div th:each="img:${lot.imgs}" class="carousel-item img-inner"
-                         th:classappend="${lot.currentImg.contains('lot' + img.lot.id + '_' + img.id + '.') ? 'active' : ''}">
-                        <a href="#" class="modal-show"
-                           th:data-content="'<img class=\'modal-img\' src=\'/img/lot/lot'+${lot.id}+'_'+${img.id}+'.jpg\'/>'">
-                            <img class="d-block" th:src="|/img/lot/lot${lot.id}_${img.id}.jpg|" src="#"
-                                 alt="#" title="Увеличить" style="width: 100%"/>
-                        </a>
-                        <form method="post" th:action="|/auc/${lot.id}|"
-                              sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
-                            <input type="hidden" name="_method" value="put"/>
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                            <input type="hidden" name="currentImg" th:value="|lot${lot.id}_${img.id}.jpg|"/>
-                            <input type="submit" class="btn btn-outline-success"
-                                   style="position: absolute; top: 5px; left: 12%;" value="&#10003;"/>
-                        </form>
-                        <form method="post" th:action="|/auc/${lot.id}/img|"
-                              sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
-                            <input type="hidden" name="_method" value="delete"/>
-                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                            <input type="hidden" name="id" th:value="${img.id}"/>
-                            <input type="submit" class="btn btn-outline-danger"
-                                   style="position: absolute; bottom: 5px; right: 12%;" value="&#10008;"/>
-                        </form>
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-                <form id="form-send-file" method="post" th:action="|/auc/${lot.id}/img|"
-                      enctype="multipart/form-data" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
-                    <div class="mt-3 input-group">
+    <div class="card-body list-grid">
+        <div class="card">
+            <div th:each="img:${lot.imgs}" th:id="|modal${img.id}|" class="modal"
+                 onclick="location.href='#close'">
+                <img th:src="|/img/lot/${lot.id}/${img.id}.jpg|" src="#" alt="#" title="Скрыть"/>
+            </div>
+            <div class="slider">
+                <div th:each="img:${lot.imgs}">
+                    <a th:id="${img.id}" class="anchor"></a>
+                    <a th:href="|#modal${img.id}|">
+                        <img th:src="|/img/lot/${lot.id}/${img.id}.jpg|" src="#" alt="#" title="Увеличить"/>
+                    </a>
+                    <form method="post" th:action="|/auc/${lot.id}|"
+                          sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+                        <input type="hidden" name="_method" value="put"/>
                         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                        <input id="input-file" name="file" type="file" class="custom-file"/>
-                        <div class="input-group-append">
-                            <input type="button" class="btn btn-outline-success"
-                                   th:onclick="|sendFile('${maxFileSize}')|" value=">>">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-xl card bg-dark mx-1 px-0">
-                <div class="card-header">АВТОМОБИЛЬ</div>
-                <div class="card-body">
-                    <div class="float-row selectable">
-                        <label for="vin">VIN:</label>
-                        <input form="changeLot" type="text" id="vin" name="vin" th:value="*{vin}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
-                    <div class="float-row selectable">
-                        <label for="odometer">Одометр, миль:</label>
-                        <input form="changeLot" type="number" id="odometer" name="odometer" th:value="*{odometer}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
-                    <div class="float-row selectable">
-                        <label for="engine">Двигатель:</label>
-                        <input form="changeLot" type="number" step=".1" id="engine" name="engine"
-                               th:value="*{engine}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
-                    <div class="float-row selectable">
-                        <label for="fuel">Топливо:</label>
-                        <input form="changeLot" type="text" id="fuel" name="fuel" th:value="*{fuel}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
-                    <div class="float-row selectable">
-                        <label for="driveLine">Привод:</label>
-                        <input form="changeLot" type="text" id="driveLine" name="driveLine" th:value="*{driveLine}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
-                    <div class="float-row selectable">
-                        <label for="transmission">Трансмиссия:</label>
-                        <input form="changeLot" type="text" id="transmission" name="transmission"
-                               th:value="*{transmission}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
-                    <div class="float-row selectable">
-                        <label for="color">Цвет:</label>
-                        <input form="changeLot" type="text" id="color" name="color" th:value="*{color}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
+                        <input type="hidden" name="currentImg" th:value="|lot/${lot.id}/${img.id}.jpg|"/>
+                        <input type="hidden" name="location"
+                               th:value="${#httpServletRequest.requestURL}"/>
+                        <input type="submit" class="btn outline green btn-cur" value="&#10003;"/>
+                    </form>
+                    <form method="post" th:action="|/auc/${lot.id}/img|"
+                          sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                        <input type="hidden" name="id" th:value="${img.id}"/>
+                        <input type="submit" class="btn outline red btn-del" value="&#10008;"/>
+                    </form>
                 </div>
             </div>
-            <div class="col-xl card bg-dark mx-1 px-0">
-                <div class="card-header">ПРОИСШЕСТВИЕ</div>
-                <div class="card-body">
-                    <div class="float-row selectable">
-                        <label for="loss">Урон:</label>
-                        <input form="changeLot" type="text" id="loss" name="loss" th:value="*{loss}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
-                    <div class="float-row selectable">
-                        <label for="damage">Повреждение:</label>
-                        <input form="changeLot" type="text" id="damage" name="damage" th:value="*{damage}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
-                    <div class="float-row selectable">
-                        <label for="runAndDrive">Заводится и едет:</label>
-                        <input form="changeLot" type="text" id="runAndDrive" name="runAndDrive"
-                               th:value="*{runAndDrive}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
-                    <div class="float-row selectable">
-                        <label for="starts">Заводится:</label>
-                        <input form="changeLot" type="text" id="starts" name="starts" th:value="*{starts}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
-                    <div class="float-row selectable">
-                        <label for="carKeys">Ключи:</label>
-                        <input form="changeLot" type="text" id="carKeys" name="carKeys" th:value="*{carKeys}"
-                               class="form-control-sm bg-dark text-light read-only-input" readonly/>
-                    </div>
-                </div>
+            <div class="row wrap">
+                <img th:each="img:${lot.imgs}"
+                     th:src="|/img/lot/${lot.id}/${img.id}.jpg|"
+                     th:onclick="'location.href=\'#' + ${img.id} + '\''"
+                     class="img-thumbnail" src="#" alt="#" title="Показать"/>
             </div>
-            <div class="col-xl card bg-dark mx-1 px-0">
-                <form id="bid" method="post" th:action="|/auc/${lot.id}/bid|">
+
+            <div class="card-footer">
+                <form id="form-send-file" method="post" th:action="|/auc/${lot.id}/img|" enctype="multipart/form-data"
+                      sec:authorize="hasAnyAuthority('POWER', 'ADMIN')" class="row w-100">
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                    <input type="hidden" name="_method" value="put"/>
+                    <input id="input-file" name="file" type="file"/>
+                    <input type="button" class="btn outline green f1"
+                           th:onclick="|sendFile('${maxFileSize}')|" value=">>"/>
                 </form>
-                <div class="card-header">СТАВКА</div>
-                <div class="card-body">
-                    <div class="float-row selectable">
-                        <div class="input-group input-group-sm">
-                            <label for="currentBid">Текущая ставка:</label>
-                            <input form="changeLot" type="number" step="1" id="currentBid"
-                                   name="currentBid" th:value="${lot.currentBid}"
-                                   class="form-control fc-sm bg-dark text-light read-only-input" readonly/>
-                            <div class="input-group-append">
-                                <div class="align-self-center">USD</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="float-row selectable">
-                        <div class="input-group input-group-sm">
-                            <label for="step">Шаг аукциона:</label>
-                            <input form="bid" id="step" type="number" step="1" name="step" value="150"
-                                   class="form-control fc-sm bg-transparent text-light border-0 shadow-none" readonly/>
-                            <div class="input-group-append">
-                                <div class="align-self-center">USD</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="float-row selectable">
-                        <div class="input-group input-group-sm">
-                            <label for="userPhone">Номер телефона:</label>
-                            <div class="input-group-prepend">
-                                <label for="userPhone" class="p-1 m-0">+380</label>
-                            </div>
-                            <input form="bid" type="tel"
-                                   pattern="\d{2}[ -]?(\d{3}[ -]?\d{2}[ -]?\d{2}||\d{2}[ -]?\d{2}[ -]?\d{3})"
-                                   id="userPhone" name="userPhone" placeholder="YY XXX XXXX"
-                                   class="form-control fc-sm bg-dark text-light text-left"
-                                   required/>
-                        </div>
-                    </div>
-                    <div class="row p-3">
-                        <input form="bid" type="submit" class="btn btn-success" value="Повысить ставку"/>
-                    </div>
-                    <div class="float-row selectable" sec:authorize="${hasAnyAuthority('ADMIN', 'POWER')}">
-                        <div>Телефон последнего участника:</div>
-                        <span th:if="${lot.userPhone}"
-                              th:text="'+380&nbsp;'+${lot.userPhone.replaceAll('\s', '&nbsp;').replaceAll('-', '&#8209;')}"></span>
-                    </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">АВТОМОБИЛЬ</div>
+            <div class="card-body">
+                <div class="row selectable">
+                    <label for="vin">VIN:</label>
+                    <input form="changeLot" type="text" id="vin" name="vin" th:value="*{vin}"
+                           class="read-only-input f1 right" readonly/>
+                </div>
+                <div class="row selectable">
+                    <label for="odometer">Одометр, миль:</label>
+                    <input form="changeLot" type="number" id="odometer" name="odometer" th:value="*{odometer}"
+                           class="read-only-input f1 right" readonly/>
+                </div>
+                <div class="row selectable">
+                    <label for="engine">Двигатель:</label>
+                    <input form="changeLot" type="number" step=".1" id="engine" name="engine"
+                           th:value="*{engine}"
+                           class="read-only-input f1 right" readonly/>
+                </div>
+                <div class="row selectable">
+                    <label for="fuel">Топливо:</label>
+                    <input form="changeLot" type="text" id="fuel" name="fuel" th:value="*{fuel}"
+                           class="read-only-input f1 right" readonly/>
+                </div>
+                <div class="row selectable">
+                    <label for="driveLine">Привод:</label>
+                    <input form="changeLot" type="text" id="driveLine" name="driveLine" th:value="*{driveLine}"
+                           class="read-only-input f1 right" readonly/>
+                </div>
+                <div class="row selectable">
+                    <label for="transmission">Трансмиссия:</label>
+                    <input form="changeLot" type="text" id="transmission" name="transmission"
+                           th:value="*{transmission}"
+                           class="read-only-input f1 right" readonly/>
+                </div>
+                <div class="row selectable">
+                    <label for="color">Цвет:</label>
+                    <input form="changeLot" type="text" id="color" name="color" th:value="*{color}"
+                           class="read-only-input f1 right" readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">ПРОИСШЕСТВИЕ</div>
+            <div class="card-body">
+                <div class="row selectable">
+                    <label for="loss">Урон:</label>
+                    <input form="changeLot" type="text" id="loss" name="loss" th:value="*{loss}"
+                           class="read-only-input f1 right" readonly/>
+                </div>
+                <div class="row selectable">
+                    <label for="damage">Повреждение:</label>
+                    <input form="changeLot" type="text" id="damage" name="damage" th:value="*{damage}"
+                           class="read-only-input f1 right" readonly/>
+                </div>
+                <div class="row selectable">
+                    <label for="runAndDrive">Заводится и едет:</label>
+                    <input form="changeLot" type="text" id="runAndDrive" name="runAndDrive"
+                           th:value="*{runAndDrive}" class="read-only-input f1 right" readonly/>
+                </div>
+                <div class="row selectable">
+                    <label for="starts">Заводится:</label>
+                    <input form="changeLot" type="text" id="starts" name="starts" th:value="*{starts}"
+                           class="read-only-input f1 right" readonly/>
+                </div>
+                <div class="row selectable">
+                    <label for="carKeys">Ключи:</label>
+                    <input form="changeLot" type="text" id="carKeys" name="carKeys" th:value="*{carKeys}"
+                           class="read-only-input f1 right" readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <form id="bid" method="post" th:action="|/auc/${lot.id}/bid|">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <input type="hidden" name="_method" value="put"/>
+            </form>
+            <div class="card-header">СТАВКА</div>
+            <div class="card-body">
+                <div class="row selectable">
+                    <label for="currentBid">Текущая ставка:</label>
+                    <input form="changeLot" type="number" step="1" id="currentBid" name="currentBid"
+                           th:value="${lot.currentBid}" class="read-only-input f1 right" readonly/>
+                    <label for="currentBid">USD</label>
+                </div>
+                <div class="row selectable">
+                    <label for="step">Шаг аукциона:</label>
+                    <input form="bid" id="step" type="number" step="1" name="step" value="150"
+                           class="f1 right" readonly/>
+                    <label for="step">USD</label>
+                </div>
+                <div class="row selectable">
+                    <label for="userPhone">Номер телефона: +380</label>
+                    <input form="bid" type="tel" class="f1"
+                           pattern="\d{2}[ -]?(\d{3}[ -]?\d{2}[ -]?\d{2}||\d{2}[ -]?\d{2}[ -]?\d{3})"
+                           id="userPhone" name="userPhone" placeholder="YY XXX XXXX" required/>
+                </div>
+                <input form="bid" type="submit" class="btn green" value="Повысить ставку"/>
+                <div class="row selectable" sec:authorize="hasAnyAuthority('ADMIN', 'POWER')">
+                    <div>Телефон последнего участника:</div>
+                    <span th:if="${lot.userPhone}"
+                          th:text="'+380&nbsp;'+${lot.userPhone.replaceAll('\s', '&nbsp;').replaceAll('-', '&#8209;')}"></span>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</main>
 
-<div th:insert="~{parts/header-menu :: menu}"></div>
+<nav th:insert="~{parts/header-menu :: menu}"></nav>
 
 <script src="/js/car.js"></script>
 <script src="/js/app.js"></script>
-<script src="/js/modal.js"></script>
 </body>
 </html>

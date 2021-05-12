@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -93,21 +94,22 @@ public class UserController {
             @AuthenticationPrincipal User activeUser,
             @PathVariable("id") User user,
             @RequestParam Map<String, String> form,
+            @RequestParam(required = false) MultipartFile file,
             Model model
     ) {
         String password = form.get("password");
         String passwordConfirm = form.get("passwordConfirm");
-        if (!activeUser.getRoles().contains(Role.ADMIN) &&
-                (user.getRoles().contains(Role.ADMIN) || user.getRoles().contains(Role.POWER)) &&
-                activeUser.getId() != user.getId()) {
+
+        if ((!activeUser.getRoles().contains(Role.ADMIN) && !activeUser.getRoles().contains(Role.POWER) && activeUser.getId() != user.getId())
+                || (!activeUser.getRoles().contains(Role.ADMIN) && (user.getRoles().contains(Role.ADMIN) || user.getRoles().contains(Role.POWER)) && activeUser.getId() != user.getId())) {
             model.addAttribute("accessError", "Недостаточно полномочий.");
         }
-        if (!password.equals(passwordConfirm)) {
+        if (!passwordConfirm.equals(password)) {
             model.addAttribute("passConfirmError", "Пароли не совпадают.");
         }
         if (model.asMap().size() == 0) {
-            userService.update(user, form);
-            return "redirect:../";
+            userService.update(user, form, file);
+            return "redirect:/user";
         }
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
@@ -116,14 +118,17 @@ public class UserController {
         return "user";
     }
 
+
     @DeleteMapping("/{id}")
     public String delete(
             @PathVariable("id") User user,
             @AuthenticationPrincipal User activeUser,
             Model model
     ) {
-        if (!activeUser.getRoles().contains(Role.ADMIN) &&
-                (user.getRoles().contains(Role.ADMIN) || user.getRoles().contains(Role.POWER))) {
+        if (
+                !activeUser.getRoles().contains(Role.ADMIN) && !activeUser.getRoles().contains(Role.POWER)
+                || (!activeUser.getRoles().contains(Role.ADMIN) && (user.getRoles().contains(Role.ADMIN) || user.getRoles().contains(Role.POWER)))
+        ) {
             model.addAttribute("accessError", "Недостаточно полномочий.");
             model.addAttribute("user", user);
             model.addAttribute("roles", Role.values());
