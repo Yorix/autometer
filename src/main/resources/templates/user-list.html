@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Список пользователей</title>
@@ -11,39 +11,42 @@
         <div class="tab">
             <h2>Пользователи</h2>
         </div>
+        <div>
+            <a href="/user/get-visits?from=&to=" class="btn">Активность</a>
+        </div>
     </div>
     <main class="card">
-        <div class="card-header">
-            <div>
+        <div class="card-header" sec:authorize="hasAnyAuthority('ADMIN', 'POWER')">
+            <div class="f1">
+                <a href="../" class="btn outline"><< Назад</a>
+            </div>
+            <div class="f4">
                 <h3>Регистрация нового пользователя</h3>
                 <form method="post" class="row collapsing">
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                    <div class="f4 bot">
+                    <div class="f1 bot">
                         <div class="alert-danger" th:if="${userExistsError}" th:text="${userExistsError}"></div>
                         <div class="alert-danger" th:if="${usernameError}" th:text="${usernameError}"></div>
                         <label for="username">Имя пользователя</label>
                         <input id="username" name="username" type="text"
                                th:classappend="(${userExistsError}or${usernameError})?'is-invalid':''"/>
                     </div>
-                    <div class="f4 bot">
+                    <div class="f1 bot">
                         <div class="alert-danger" th:if="${passwordError}" th:text="${passwordError}"></div>
                         <label for="password">Пароль</label>
                         <input id="password" name="password" type="password" class="form-control"
                                th:classappend="(${passConfirmError}or${passwordError})?'is-invalid':''"/>
                     </div>
-                    <div class="f4 bot">
+                    <div class="f1 bot">
                         <div class="alert-danger" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
                         <label for="passwordConfirm">Повторите&nbsp;пароль</label>
                         <input id="passwordConfirm" name="passwordConfirm" type="password" class="form-control"
                                th:classappend="${passConfirmError}?'is-invalid'"/>
                     </div>
-                    <div class="f1 bot">
-                        <input type="submit" class="btn outline green" value=">>"/>
+                    <div class="bot">
+                        <input type="submit" class="bot btn outline green" value=">>"/>
                     </div>
                 </form>
-            </div>
-            <div class="right top">
-                <a href="/user/get-visits?from=&to=" class="btn outline">Активность</a>
             </div>
         </div>
 
@@ -55,7 +58,10 @@
                              style="max-width: 100%; max-height: 100px;"/>
                     </div>
                     <div class="f4">
-                        <div th:text="${user.username}" class="u"></div>
+                        <div class="underline">
+                            <span th:text="${user.username}"></span>
+                            <span th:if="${!user.isActive()}">&#9940;</span>
+                        </div>
                         <div th:each="role:${user.roles}" th:text="${role}"></div>
                     </div>
                 </a>

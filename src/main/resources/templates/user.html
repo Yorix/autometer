@@ -58,6 +58,11 @@
                            th:classappend="${passConfirmError}?'is-invalid'"/>
                     <div class="alert-danger" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
                 </div>
+                <div sec:authorize="hasAnyAuthority('ADMIN', 'POWER')">
+                    <input form="user" id="active" type="checkbox" name="active"
+                           th:checked="${user.active}"/>
+                    <label for="active">Вход разрешён</label>
+                </div>
             </form>
             <div class="card">
                 <div th:each="role:${roles}" sec:authorize="hasAuthority('ADMIN')">

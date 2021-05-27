@@ -595,7 +595,7 @@ label {
     border-color: #c6c8ca
 }
 
-.u {
+.underline {
     border-bottom: gray solid 1px;
 }
 
@@ -613,9 +613,9 @@ label {
     justify-content: space-evenly;
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1600px), (min-resolution: 100dpi) {
     .list-grid {
-        grid-template-columns: repeat(auto-fit, minmax(500px, .5fr));
+        grid-template-columns: repeat(auto-fit, minmax(600px, .5fr));
     }
 }
 

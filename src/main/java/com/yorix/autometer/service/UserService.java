@@ -54,6 +54,7 @@ public class UserService extends AppService implements UserDetailsService {
             user.setRoles(Collections.singleton(Role.USER));
         String curImg = getAppProperties().getDefaultUserImageFilename();
         user.setCurrentImg(curImg);
+        user.setActive(true);
         userRepository.save(user);
         saveData();
     }
@@ -64,6 +65,8 @@ public class UserService extends AppService implements UserDetailsService {
                 .filter(s -> Arrays.stream(Role.values()).map(Enum::name).collect(Collectors.toList()).contains(s))
                 .map(Role::valueOf)
                 .collect(Collectors.toSet());
+
+        user.setActive(form.get("active") != null);
 
         if (!StringUtils.isEmpty(password)) {
             user.setPassword(passwordEncoder.encode(password));
