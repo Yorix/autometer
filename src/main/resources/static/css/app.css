@@ -512,7 +512,6 @@ label {
 .selectable:hover,
 .selectable:hover > * {
     background: #242a30 !important;
-    opacity: 1;
 }
 
 

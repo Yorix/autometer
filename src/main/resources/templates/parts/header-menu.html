@@ -35,7 +35,7 @@
 
             <label for="input-budget">Баланс: </label>
             <label for="input-budget" class="money" th:text="${budget+balance}"></label>
-            <input id="input-budget" type="number" name="paramValue" step="0.01" min="0" max="9999999"
+            <input id="input-budget" type="number" name="paramValue" step="0.01"
                    style="display: none" oninput="cuttingDecimalPlaces(this)"/>
             <input id="btn-add-to-budget" type="button" onclick="editBudget();"
                    class="btn outline green f1" value="&#10010;">

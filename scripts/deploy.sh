@@ -4,16 +4,16 @@ mvn clean package
 
 echo "Copy files..."
 
-scp -i ~/.ssh/autometer \
+scp -i ~/.ssh/am \
 	target/autometer-2.0.jar \
-	yorix@93.189.45.47:~/autometer/
+	yorix@autometer.pp.ua:~/autometer/
 
 echo "Restart server..."
 
-ssh -i ~/.ssh/autometer yorix@93.189.45.47 << EOF
+ssh -i ~/.ssh/am yorix@autometer.pp.ua << EOF
 
 pgrep java | xargs kill -9
-nohup java -jar ~/autometer/autometer-2.0.jar > ~/autometer/log.txt &
+nohup java -jar ~/autometer/autometer-2.0.jar > ~/app.log &
 
 EOF
 

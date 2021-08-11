@@ -9,6 +9,7 @@ const dutyDiv = document.getElementById("div-duty");
 const exciseDiv = document.getElementById("div-excise");
 const vatDiv = document.getElementById("div-vat");
 const totalDiv = document.getElementById("div-total");
+const totalUsdDiv = document.getElementById("div-total-usd");
 
 const allInputs = document.getElementsByTagName("input");
 for (let i = 0; i < allInputs.length; i++) {
@@ -29,15 +30,17 @@ function calculate() {
     const excise = volumeInput.value * age * factor * eurInput.value;
     const vat = (Number(additionalSumInput.value) * Number(usdInput.value) + duty + excise) * .2;
     const total = duty + excise + vat;
+    const totalUsd = total / usdInput.value;
 
     dutyDiv.innerText = duty.toString();
     exciseDiv.innerText = excise.toString();
     vatDiv.innerText = vat.toString();
     totalDiv.innerText = total.toString();
+    totalUsdDiv.innerText = totalUsd.toString();
 
     toMoneyFormat(dutyDiv);
     toMoneyFormat(exciseDiv);
     toMoneyFormat(vatDiv);
     toMoneyFormat(totalDiv);
+    toMoneyFormat(totalUsdDiv);
 }
-
