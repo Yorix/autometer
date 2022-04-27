@@ -27,10 +27,10 @@
             </div>
             <div class="card-footer row jc-sb">
                 <div class="money" th:text="*{currentBid}" title="Текущая ставка"></div>
-                <div sec:authorize="hasAnyAuthority('ADMIN', 'POWER')" class="right gray-white"
+                <div sec:authorize="hasAnyAuthority('ADMIN', 'POWER')" class="right gray-white nowrap"
                      title="Телефон последнего участника"
                      th:if="*{userPhone}"
-                     th:text="'+380&nbsp;'+*{userPhone.replaceAll('\s', '&nbsp;').replaceAll('-', '&#8209;')}">
+                     th:text="'+380 '+*{userPhone}">
                 </div>
             </div>
         </a>

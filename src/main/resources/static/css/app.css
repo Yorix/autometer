@@ -514,6 +514,9 @@ label {
     background: #242a30 !important;
 }
 
+.nowrap {
+    white-space: nowrap;
+}
 
 .img-wrapper {
     height: 0;

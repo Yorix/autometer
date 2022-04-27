@@ -183,8 +183,7 @@
                 <input form="bid" type="submit" class="btn green" value="Повысить ставку"/>
                 <div class="row selectable" sec:authorize="hasAnyAuthority('ADMIN', 'POWER')">
                     <div>Телефон последнего участника:</div>
-                    <span th:if="${lot.userPhone}"
-                          th:text="'+380&nbsp;'+${lot.userPhone.replaceAll('\s', '&nbsp;').replaceAll('-', '&#8209;')}"></span>
+                    <div th:if="${lot.userPhone}" class="f1 right nowrap" th:text="'+380 '+${lot.userPhone}"></div>
                 </div>
             </div>
         </div>

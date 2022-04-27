@@ -36,7 +36,7 @@
                     <img th:src="|/img/${user.currentImg}|" src="#" alt="#" title="Увеличить"/>
                 </a>
             </div>
-                <input form="user" id="input-file" name="file" type="file"/>
+            <input form="user" id="input-file" name="file" type="file"/>
         </div>
 
         <div class="card">
@@ -66,9 +66,9 @@
             </form>
             <div class="card">
                 <div th:each="role:${roles}" sec:authorize="hasAuthority('ADMIN')">
-                    <input form="user" id="role" type="checkbox" th:name="${role.name()}"
+                    <input form="user" th:id="${role}" type="checkbox" th:name="${role.name()}"
                            th:checked="${#lists.contains(user.roles, role)}"/>
-                    <label for="role" th:text="${role}"></label>
+                    <label th:for="${role}" th:text="${role}"></label>
                 </div>
             </div>
         </div>
