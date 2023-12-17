@@ -19,34 +19,34 @@ public class ImgController {
     }
 
     @GetMapping("*/img/{id}")
-    public Img getByFilename(@PathVariable int id) {
+    public Img getByFilename(@PathVariable("id") int id) {
         return imgService.read(id);
     }
 
     @PostMapping("/car/{car}/{album}/img")
     public String create(
-            @RequestParam("file") MultipartFile file,
-            @PathVariable Car car,
-            @PathVariable String album
+            @RequestParam("files") MultipartFile[] files,
+            @PathVariable("car") Car car,
+            @PathVariable("album") String album
     ) {
-        imgService.create(car, album, file);
+        imgService.create(car, album, files);
         return "redirect:/car/" + car.getId();
     }
 
     @PostMapping("/auc/{lotId}/img")
-    public String createLotImg(@RequestParam("file") MultipartFile file, @PathVariable("lotId") Lot lot) {
-        imgService.create(lot, file);
+    public String createLotImg(@RequestParam("files") MultipartFile[] files, @PathVariable("lotId") Lot lot) {
+        imgService.create(lot, files);
         return "redirect:/auc/" + lot.getId();
     }
 
     @DeleteMapping("/car/{car}/img")
-    public String delete(@PathVariable Car car, @RequestParam Img img) {
+    public String delete(@PathVariable("car") Car car, @RequestParam("img") Img img) {
         imgService.delete(img, car);
         return "redirect:/car/" + car.getId();
     }
 
     @DeleteMapping("/auc/{lot}/img")
-    public String deleteAucImg(@PathVariable Lot lot, @RequestParam int id) {
+    public String deleteAucImg(@PathVariable("lot") Lot lot, @RequestParam("id") int id) {
         imgService.delete(id, lot);
         return "redirect:/auc/" + lot.getId();
     }

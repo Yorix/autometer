@@ -9,11 +9,11 @@
 <div class="w-75">
     <div class="tabs">
         <a class="tab" href="/car/new-car"
-           th:classappend="${#httpServletRequest.requestURI.equals('/car/new-car')?'disabled active':null}">
+           th:classappend="${servletPath.equals('/car/new-car')?'disabled active':null}">
             <h2>Новое авто</h2>
         </a>
         <a class="tab" href="/auc/new-lot"
-           th:classappend="${#httpServletRequest.requestURI.equals('/auc/new-lot')?'disabled active':null}">
+           th:classappend="${servletPath.equals('/auc/new-lot')?'disabled active':null}">
             <h2>Новый лот</h2>
         </a>
     </div>

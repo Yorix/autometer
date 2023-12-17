@@ -36,43 +36,43 @@ public class AuctionService extends AppService {
     public void update(int id, Lot newLot) {
         Lot lotFromDb = read(id);
 
-        if (!StringUtils.isEmpty(newLot.getMake()))
+        if (StringUtils.hasText(newLot.getMake()))
             lotFromDb.setMake(newLot.getMake().replace(Character.toString(160), " ").trim());
-        if (!StringUtils.isEmpty(newLot.getModel()))
+        if (StringUtils.hasText(newLot.getModel()))
             lotFromDb.setModel(newLot.getModel().replace(Character.toString(160), " ").trim());
         if (newLot.getYear() != 0)
             lotFromDb.setYear(newLot.getYear());
-        if (!StringUtils.isEmpty(newLot.getCurrentImg()))
+        if (StringUtils.hasText(newLot.getCurrentImg()))
             lotFromDb.setCurrentImg(newLot.getCurrentImg());
         if (newLot.getImgs() != null)
             lotFromDb.setImgs(newLot.getImgs());
-        if (!StringUtils.isEmpty(newLot.getLot()))
+        if (newLot.getLot() != 0)
             lotFromDb.setLot(newLot.getLot());
-        if (!StringUtils.isEmpty(newLot.getVin()))
+        if (StringUtils.hasText(newLot.getVin()))
             lotFromDb.setVin(newLot.getVin());
         if (newLot.getOdometer() != 0)
             lotFromDb.setOdometer(newLot.getOdometer());
         if (newLot.getEngine() != 0)
             lotFromDb.setEngine(newLot.getEngine());
-        if (!StringUtils.isEmpty(newLot.getFuel()))
+        if (StringUtils.hasText(newLot.getFuel()))
             lotFromDb.setFuel(newLot.getFuel());
-        if (!StringUtils.isEmpty(newLot.getDriveLine()))
+        if (StringUtils.hasText(newLot.getDriveLine()))
             lotFromDb.setDriveLine(newLot.getDriveLine());
-        if (!StringUtils.isEmpty(newLot.getTransmission()))
+        if (StringUtils.hasText(newLot.getTransmission()))
             lotFromDb.setTransmission(newLot.getTransmission());
-        if (!StringUtils.isEmpty(newLot.getColor()))
+        if (StringUtils.hasText(newLot.getColor()))
             lotFromDb.setColor(newLot.getColor());
-        if (!StringUtils.isEmpty(newLot.getLoss()))
+        if (StringUtils.hasText(newLot.getLoss()))
             lotFromDb.setLoss(newLot.getLoss());
-        if (!StringUtils.isEmpty(newLot.getDamage()))
+        if (StringUtils.hasText(newLot.getDamage()))
             lotFromDb.setDamage(newLot.getDamage());
-        if (!StringUtils.isEmpty(newLot.getRunAndDrive()))
+        if (StringUtils.hasText(newLot.getRunAndDrive()))
             lotFromDb.setRunAndDrive(newLot.getRunAndDrive());
-        if (!StringUtils.isEmpty(newLot.getStarts()))
+        if (StringUtils.hasText(newLot.getStarts()))
             lotFromDb.setStarts(newLot.getStarts());
-        if (!StringUtils.isEmpty(newLot.getCarKeys()))
+        if (StringUtils.hasText(newLot.getCarKeys()))
             lotFromDb.setCarKeys(newLot.getCarKeys());
-        if (!StringUtils.isEmpty(newLot.getUserPhone()))
+        if (StringUtils.hasText(newLot.getUserPhone()))
             lotFromDb.setUserPhone(newLot.getUserPhone());
         lotFromDb.setCurrentBid(newLot.getCurrentBid());
 

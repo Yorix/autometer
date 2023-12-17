@@ -8,12 +8,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -36,8 +37,8 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/{id}")
-    public ModelAndView get(@PathVariable("id") User user) {
+    @GetMapping("/{user}")
+    public ModelAndView get(@PathVariable("user") User user) {
         ModelAndView modelAndView = new ModelAndView("user");
         modelAndView.addObject("user", user);
         modelAndView.addObject("roles", Role.values());
@@ -54,8 +55,8 @@ public class UserController {
 
     @GetMapping("/get-visits")
     public ModelAndView getVisits(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to
+            @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+            @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to
     ) {
         if (from == null) from = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
         if (to == null) to = LocalDateTime.now();
@@ -80,7 +81,7 @@ public class UserController {
         if (!passwordConfirm.equals(user.getPassword())) {
             modelAndView.addObject("passConfirmError", "Пароли не совпадают.");
         }
-        if (modelAndView.getModel().size() == 0) {
+        if (modelAndView.getModel().isEmpty()) {
             userService.create(user);
         }
         modelAndView.addObject("users", userService.readAll());
@@ -89,12 +90,12 @@ public class UserController {
         return modelAndView;
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{user}")
     public String update(
             @AuthenticationPrincipal User activeUser,
-            @PathVariable("id") User user,
+            @PathVariable("user") User user,
             @RequestParam Map<String, String> form,
-            @RequestParam(required = false) MultipartFile file,
+            @RequestParam(name = "file", required = false) MultipartFile file,
             Model model
     ) {
         String password = form.get("password");
@@ -107,7 +108,7 @@ public class UserController {
         if (!passwordConfirm.equals(password)) {
             model.addAttribute("passConfirmError", "Пароли не совпадают.");
         }
-        if (model.asMap().size() == 0) {
+        if (model.asMap().size() <= 1) {
             userService.update(user, form, file);
             return "redirect:/user";
         }
@@ -119,9 +120,9 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{user}")
     public String delete(
-            @PathVariable("id") User user,
+            @PathVariable("user") User user,
             @AuthenticationPrincipal User activeUser,
             Model model
     ) {

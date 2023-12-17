@@ -45,7 +45,7 @@
             </div>
             <form id="user" method="post" th:action="|/user/${user.id}|" enctype="multipart/form-data">
                 <input type="hidden" name="_method" value="put"/>
-                <input type="hidden" name="_csrf" th:name="${_csrf.token}"/>
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                 <div class="half">
                     <label for="password" class="right">Пароль:</label>
                     <input id="password" type="password" name="password"
@@ -59,10 +59,11 @@
                     <div class="alert-danger" th:if="${passConfirmError}" th:text="${passConfirmError}"></div>
                 </div>
                 <div sec:authorize="hasAnyAuthority('ADMIN', 'POWER')">
-                    <input form="user" id="active" type="checkbox" name="active"
-                           th:checked="${user.active}"/>
+                    <input form="user" id="active" type="checkbox" name="active" th:checked="${user.active}"/>
                     <label for="active">Вход разрешён</label>
                 </div>
+                <input sec:authorize="!hasAnyAuthority('ADMIN', 'POWER')"
+                       form="user" type="hidden" name="active" th:value="${user.active}"/>
             </form>
             <div class="card">
                 <div th:each="role:${roles}" sec:authorize="hasAuthority('ADMIN')">

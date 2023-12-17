@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,37 +32,47 @@ public class ImgService extends AppService {
         this.auctionRepository = auctionRepository;
     }
 
-    public void create(Car car, String album, MultipartFile file) {
-        if (StringUtils.isEmpty(file.getOriginalFilename()))
+    public void create(Car car, String album, MultipartFile[] files) {
+        if (files.length < 1)
             throw new StorageException("Файл не выбран.");
 
-        Img img = saveImg(car, album);
-        String filepath = getFilepath(car, album, img);
+        String dirPath = getDirPath(car, album);
+        Path.of(dirPath).toFile().mkdirs();
 
-        try {
-            File dir = new File(filepath).getParentFile();
-            dir.mkdirs();
-            file.transferTo(new File(filepath));
-        } catch (IOException e) {
-            throw new StorageException("Ошибка загрузки файла " + file.getOriginalFilename(), e);
+        for (MultipartFile file : files) {
+            Img img = saveImg(car, album);
+            String filepath = dirPath
+                    .concat(Integer.toString(img.getId()))
+                    .concat(".jpg");
+
+            try {
+                file.transferTo(new File(filepath));
+            } catch (IOException e) {
+                throw new StorageException("Ошибка загрузки файла " + file.getOriginalFilename(), e);
+            }
         }
 
         saveData();
     }
 
-    public void create(Lot lot, MultipartFile file) {
-        if (StringUtils.isEmpty(file.getOriginalFilename()))
+    public void create(Lot lot, MultipartFile[] files) {
+        if (files.length < 1)
             throw new StorageException("Файл не выбран.");
 
-        Img img = saveImg(lot);
-        String filepath = getFilepath(lot, img);
+        String dirPath = getDirPath(lot);
+        Path.of(dirPath).toFile().mkdirs();
 
-        try {
-            File dir = new File(filepath).getParentFile();
-            dir.mkdirs();
-            file.transferTo(new File(filepath));
-        } catch (IOException e) {
-            throw new StorageException("Ошибка загрузки файла " + file.getOriginalFilename(), e);
+        for (MultipartFile file : files) {
+            Img img = saveImg(lot);
+            String filepath = dirPath
+                    .concat(Integer.toString(img.getId()))
+                    .concat(".jpg");
+
+            try {
+                file.transferTo(new File(filepath));
+            } catch (IOException e) {
+                throw new StorageException("Ошибка загрузки файла " + file.getOriginalFilename(), e);
+            }
         }
 
         saveData();
@@ -82,26 +93,22 @@ public class ImgService extends AppService {
         return img;
     }
 
-    private String getFilepath(Car car, String album, Img img) {
+    private String getDirPath(Car car, String album) {
         return getAppProperties().getImageStorageLocation()
                 .concat("car")
                 .concat(File.separator)
                 .concat(Integer.toString(car.getId()))
                 .concat(File.separator)
                 .concat(album)
-                .concat(File.separator)
-                .concat(Integer.toString(img.getId()))
-                .concat(".jpg");
+                .concat(File.separator);
     }
 
-    private String getFilepath(Lot lot, Img img) {
+    private String getDirPath(Lot lot) {
         return getAppProperties().getImageStorageLocation()
                 .concat("lot")
                 .concat(File.separator)
                 .concat(Integer.toString(lot.getId()))
-                .concat(File.separator)
-                .concat(Integer.toString(img.getId()))
-                .concat(".jpg");
+                .concat(File.separator);
     }
 
     public Img read(int id) {
@@ -113,7 +120,7 @@ public class ImgService extends AppService {
     }
 
     public void delete(Img img, Car car) {
-        Pattern pattern = Pattern.compile("(?<=\\/)(\\d+)(?=\\.)");
+        Pattern pattern = Pattern.compile("(?<=/)(\\d+)(?=\\.)");
         Matcher matcher = pattern.matcher(car.getCurrentImg());
 
         if (matcher.find() && img.getId() == Integer.parseInt(matcher.group())) {
@@ -136,7 +143,10 @@ public class ImgService extends AppService {
     }
 
     public void delete(int id, Lot lot) {
-        if (id == Integer.parseInt(lot.getCurrentImg().replaceAll("^lot/\\d+/|.jpg$|.png$", ""))) {
+        Pattern pattern = Pattern.compile("(?<=/)(\\d+)(?=\\.)");
+        Matcher matcher = pattern.matcher(lot.getCurrentImg());
+
+        if (matcher.find() && id == Integer.parseInt(matcher.group())) {
             lot.setCurrentImg(getAppProperties().getDefaultCarImageFilename());
             auctionRepository.save(lot);
         }

@@ -6,23 +6,23 @@
 <div th:fragment="menu" class="navbar">
     <div class="navbar-menu">
         <a class="nav-item" href="/car" sec:authorize="${authenticated}"
-           th:classappend="${#httpServletRequest.requestURI.equals('/car')||#httpServletRequest.requestURI.equals('/car/order')?'active':null}">
+           th:classappend="${servletPath.equals('/car')||servletPath.equals('/car/order')?'active':null}">
             Список авто
         </a>
         <a class="nav-item" href="/spare" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}"
-           th:classappend="${#httpServletRequest.requestURI.equals('/spare')?'active':null}">
+           th:classappend="${servletPath.equals('/spare')?'active':null}">
             Запчасти
         </a>
         <a class="nav-item" href="/calculator" sec:authorize="${authenticated}"
-           th:classappend="${#httpServletRequest.requestURI.equals('/calculator')?'active':null}">
+           th:classappend="${servletPath.equals('/calculator')?'active':null}">
             Калькулятор
         </a>
         <a class="nav-item" href="/auc" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}"
-           th:classappend="${#httpServletRequest.requestURI.equals('/auc')?'active':null}">
+           th:classappend="${servletPath.equals('/auc')?'active':null}">
             Аукцион
         </a>
         <a class="nav-item" href="/user" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}"
-           th:classappend="${#httpServletRequest.requestURI.contains('/user')?'active':null}">
+           th:classappend="${servletPath.contains('/user')?'active':null}">
             Пользователи
         </a>
     </div>
@@ -31,7 +31,7 @@
         <form method="post" action="/param/budget" class="row m-0" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
             <input type="hidden" name="_method" value="put">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-            <input type="hidden" name="location" th:value="${#httpServletRequest.requestURI}">
+            <input type="hidden" name="location" th:value="${requestURI}">
 
             <label for="input-budget">Баланс: </label>
             <label for="input-budget" class="money" th:text="${budget+balance}"></label>

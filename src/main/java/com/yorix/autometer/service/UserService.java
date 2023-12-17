@@ -6,12 +6,7 @@ import com.yorix.autometer.model.User;
 import com.yorix.autometer.model.Visit;
 import com.yorix.autometer.storage.UserRepository;
 import com.yorix.autometer.storage.VisitRepository;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -62,13 +58,13 @@ public class UserService extends AppService implements UserDetailsService {
     public void update(User user, Map<String, String> form, MultipartFile file) {
         String password = form.get("password");
         Set<Role> roles = form.keySet().stream()
-                .filter(s -> Arrays.stream(Role.values()).map(Enum::name).collect(Collectors.toList()).contains(s))
+                .filter(s -> Arrays.stream(Role.values()).map(Enum::name).toList().contains(s))
                 .map(Role::valueOf)
                 .collect(Collectors.toSet());
 
         user.setActive(form.get("active") != null);
 
-        if (!StringUtils.isEmpty(password)) {
+        if (StringUtils.hasText(password)) {
             user.setPassword(passwordEncoder.encode(password));
         }
         if (!roles.isEmpty()) {
@@ -81,7 +77,7 @@ public class UserService extends AppService implements UserDetailsService {
     }
 
     public void saveFile(User user, MultipartFile file) {
-        if (file == null || StringUtils.isEmpty(file.getOriginalFilename()))
+        if (file == null || !StringUtils.hasText(file.getOriginalFilename()))
             return;
 
         String filepath = getAppProperties().getImageStorageLocation()
@@ -93,8 +89,7 @@ public class UserService extends AppService implements UserDetailsService {
 
         try {
             File dir = new File(filepath).getParentFile();
-            FileUtils.deleteDirectory(dir);
-            FileUtils.forceMkdir(dir);
+            dir.mkdirs();
             file.transferTo(new File(filepath));
         } catch (IOException e) {
             throw new StorageException("Ошибка загрузки файла " + file.getOriginalFilename(), e);

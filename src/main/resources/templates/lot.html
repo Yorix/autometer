@@ -48,13 +48,11 @@
                     <a th:href="|#modal${img.id}|">
                         <img th:src="|/img/lot/${lot.id}/${img.id}.jpg|" src="#" alt="#" title="Увеличить"/>
                     </a>
-                    <form method="post" th:action="|/auc/${lot.id}|"
-                          sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
+                    <form method="post" th:action="|/auc/${lot.id}|" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
                         <input type="hidden" name="_method" value="put"/>
                         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                         <input type="hidden" name="currentImg" th:value="|lot/${lot.id}/${img.id}.jpg|"/>
-                        <input type="hidden" name="location"
-                               th:value="${#httpServletRequest.requestURL}"/>
+                        <input type="hidden" name="location" th:value="${servletPath}"/>
                         <input type="submit" class="btn outline green btn-cur" value="&#10003;"/>
                     </form>
                     <form method="post" th:action="|/auc/${lot.id}/img|"
@@ -77,7 +75,7 @@
                 <form id="form-send-file" method="post" th:action="|/auc/${lot.id}/img|" enctype="multipart/form-data"
                       sec:authorize="hasAnyAuthority('POWER', 'ADMIN')" class="row w-100">
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                    <input id="input-file" name="file" type="file"/>
+                    <input id="input-file" type="file" multiple name="files"/>
                     <input type="button" class="btn outline green f1"
                            th:onclick="|sendFile('${maxFileSize}')|" value=">>"/>
                 </form>

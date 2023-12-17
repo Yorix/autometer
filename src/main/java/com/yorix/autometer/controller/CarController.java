@@ -3,6 +3,7 @@ package com.yorix.autometer.controller;
 import com.yorix.autometer.model.*;
 import com.yorix.autometer.service.CarService;
 import com.yorix.autometer.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.MultipartProperties;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -54,7 +55,7 @@ public class CarController {
     }
 
     @GetMapping("/{carFromDb}")
-    public ModelAndView get(@PathVariable Car carFromDb) {
+    public ModelAndView get(@PathVariable("carFromDb") Car carFromDb) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!(currentUser.getRoles().contains(Role.ADMIN) || currentUser.getRoles().contains(Role.POWER)) && !carFromDb.getUser().equals(currentUser))
             throw new RuntimeException();
@@ -91,8 +92,8 @@ public class CarController {
 
     @PutMapping("/{id}")
     public String update(
-            @PathVariable int id,
-            @RequestParam User user,
+            @PathVariable("id") int id,
+            @RequestParam("user") User user,
             Car car
     ) {
         car.setUser(user);

@@ -30,7 +30,7 @@ public class NoteService extends AppService {
         String newNoteDescription = newNote.getDescription();
         double newNoteValue = newNote.getValue();
 
-        if (!StringUtils.isEmpty(newNoteDescription))
+        if (StringUtils.hasText(newNoteDescription))
             noteFromDb.setDescription(newNoteDescription);
         noteFromDb.setValue(newNoteValue);
         noteFromDb.setDate(newNoteDate);

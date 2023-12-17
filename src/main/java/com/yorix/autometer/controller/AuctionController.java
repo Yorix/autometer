@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -33,8 +33,8 @@ public class AuctionController {
         return modelAndView;
     }
 
-    @GetMapping("/{lotFromDb}")
-    public ModelAndView getLot(@PathVariable Lot lotFromDb) {
+    @GetMapping("/{lot}")
+    public ModelAndView getLot(@PathVariable("lot") Lot lotFromDb) {
         ModelAndView modelAndView = new ModelAndView("lot");
         long maxFileSize = multipartProperties.getMaxFileSize().toBytes();
         modelAndView.addObject("lot", lotFromDb);
@@ -60,15 +60,15 @@ public class AuctionController {
     }
 
     @PutMapping("/{id}")
-    public String updateLot(@PathVariable int id, Lot lot) {
+    public String updateLot(@PathVariable("id") int id, Lot lot) {
         auctionService.update(id, lot);
         return "redirect:/auc/" + id;
     }
 
     @PutMapping("/{lot}/bid")
-    public String bid(@PathVariable Lot lot,
-                      @RequestParam int step,
-                      @RequestParam String userPhone,
+    public String bid(@PathVariable("lot") Lot lot,
+                      @RequestParam("step") int step,
+                      @RequestParam("userPhone") String userPhone,
                       HttpServletRequest request) {
         String clientIp = request.getRemoteAddr();
         if (auctionService.checkIp(lot.getId(), clientIp))
@@ -80,7 +80,7 @@ public class AuctionController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable int id) {
+    public String delete(@PathVariable("id") int id) {
         auctionService.delete(id);
         return "redirect:/auc";
     }

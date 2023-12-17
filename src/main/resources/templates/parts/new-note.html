@@ -6,7 +6,7 @@
 <form method="post" th:action="|/car/${car.id}/note|" th:object="${note}" th:fragment="create"
       class="row collapsing" sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-    <input type="hidden" name="location" th:value="${#httpServletRequest.requestURL}"/>
+    <input type="hidden" name="location" th:value="${servletPath}"/>
     <input class="f1" id="input-date" type="date" th:field="*{date}"/>
     <input class="f2" type="text" placeholder="Наименование"  th:field="*{description}"/>
     <select class="f1" id="select-negative">

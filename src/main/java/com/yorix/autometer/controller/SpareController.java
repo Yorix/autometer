@@ -39,13 +39,13 @@ public class SpareController {
     }
 
     @PutMapping("/{spareId}")
-    public String update(@PathVariable int spareId, Spare spare) {
+    public String update(@PathVariable("spareId") int spareId, Spare spare) {
         spareService.update(spareId, spare);
         return "redirect:/spare";
     }
 
     @DeleteMapping("/{spareId}")
-    public String delete(@PathVariable int spareId) {
+    public String delete(@PathVariable("spareId") int spareId) {
         spareService.delete(spareId);
         return "redirect:/spare";
     }

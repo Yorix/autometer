@@ -17,8 +17,7 @@
                   sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}">
                 <input type="hidden" name="_method" value="put"/>
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <input type="hidden" name="location"
-                       th:value="${#httpServletRequest.requestURL}"/>
+                <input type="hidden" name="location" th:value="${servletPath}"/>
                 <input type="hidden" name="currentImg" th:value="|car/${car.id}/${album}/${img.id}.jpg|"/>
                 <input type="hidden" name="user" th:value="${car.user.id}">
                 <input type="submit" class="btn outline green btn-cur" value="&#10003;"/>
@@ -43,7 +42,7 @@
 <form th:fragment="upload(album)" th:id="|form-send-file${album}|" method="post" th:action="|/car/*{id}/${album}/img|"
       enctype="multipart/form-data" sec:authorize="${hasAnyAuthority('POWER', 'ADMIN')}" class="row w-100">
     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-    <input type="file" name="file" th:id="|input-file${album}|"/>
+    <input type="file" multiple name="files" th:id="|input-file${album}|"/>
     <input type="button" class="btn outline green f1" th:data1="${maxFileSize}" th:data2="${album}"
            th:onclick="|sendFile(this.getAttribute('data1'), this.getAttribute('data2'))|" value=">>"/>
 </form>

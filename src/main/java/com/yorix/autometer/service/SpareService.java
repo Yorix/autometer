@@ -35,7 +35,7 @@ public class SpareService extends AppService {
         double newSpareBuy = newSpare.getBuy();
         double newSpareSale = newSpare.getSale();
 
-        if (!StringUtils.isEmpty(newSpareDescription))
+        if (StringUtils.hasText(newSpareDescription))
             spareFromDb.setDescription(newSpareDescription);
         spareFromDb.setDate(newSpareDate);
         spareFromDb.setBuy(newSpareBuy);

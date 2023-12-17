@@ -9,11 +9,11 @@
 
 <div class="tabs">
     <a class="tab" href="/car"
-       th:classappend="${#httpServletRequest.requestURI.equals('/car')?'disabled active':null}">
+       th:classappend="${servletPath.equals('/car')?'disabled active':null}">
         <h2>Мои авто</h2>
     </a>
     <a class="tab" href="/car/order"
-       th:classappend="${#httpServletRequest.requestURI.equals('/car/order')?'disabled active':null}"
+       th:classappend="${servletPath.equals('/car/order')?'disabled active':null}"
        sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">
         <h2>Заказы</h2>
     </a>
@@ -27,7 +27,7 @@
     <div class="list-grid">
         <div th:each="car:${cars.?[income==0]}" th:insert="~{parts/car-card :: car}"></div>
     </div>
-    <div th:if="${#httpServletRequest.requestURI.equals('/car')}" class="sold"
+    <div th:if="${servletPath.equals('/car')}" class="sold"
          sec:authorize="hasAnyAuthority('POWER', 'ADMIN')">Продано
     </div>
     <div class="list-grid">

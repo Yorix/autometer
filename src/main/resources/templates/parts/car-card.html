@@ -8,7 +8,7 @@
             <div class="card-header">
                 <div th:text="|${car.make} ${car.model} ${car.year}|"></div>
                 <div class="right usr-img"
-                     th:if="${#httpServletRequest.requestURI.equals('/car/order')}"
+                     th:if="${servletPath.equals('/car/order')}"
                      th:style="|background-image: url('/img/${car.user.currentImg}');|"
                      th:text="${car.user.username}"></div>
             </div>

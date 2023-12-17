@@ -2,9 +2,12 @@ package com.yorix.autometer.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Component;
 
 @Component
+@PropertySource({"classpath:application.properties", "classpath:application-dev.properties", "classpath:constants.properties"})
 @ConfigurationProperties("app")
 @Data
 public class AppProperties {
